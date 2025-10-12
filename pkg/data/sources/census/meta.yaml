@@ -1,0 +1,10 @@
+
+---
+name: census
+description: U.S. Census Bureau Data
+license: Public Domain
+url: https://www.census.gov/data/developers/data-sets.html
+maintainer: Aaron Samuel
+supported:
+  - name: American Community Survey (ACS)
+    url: https://api.census.gov/data/2024/acs/acs1.html
