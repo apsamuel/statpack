@@ -1,4 +1,4 @@
-state_fips_map: dict = {
+us_state_mapping: dict = {
     1: "Alabama",
     2: "Alaska",
     4: "Arizona",
@@ -53,7 +53,7 @@ state_fips_map: dict = {
     72: "Puerto Rico",
 }
 
-census_race_map: dict = {
+us_race_mapping: dict = {
     1000: "White",
     2790: "Hispanic or Latino",
     3000: "Black or African American",

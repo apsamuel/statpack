@@ -5,7 +5,10 @@ from bs4 import BeautifulSoup
 import pandas as pd
 from . import CENSUS_API_BASE_URL, CENSUS_API_KEY
 
-from .data import state_fips_map, census_race_map
+from .data import (
+    us_state_mapping,
+    us_race_mapping
+)
 
 
 def get_census_acs_variables(
@@ -46,7 +49,7 @@ def get_census_acs_variables(
 # https://api.census.gov/data/2024/acs/acs1.html -
 def get_census_acs_detailed(
     year: int = 2024,
-):
+) -> pd.DataFrame:
     results = []
     # https://api.census.gov/data/2024/acs/acs1?get=NAME,B01001_001E&for=us:*&key=YOUR_KEY_GOES_HERE
     url = f"{CENSUS_API_BASE_URL}/{year}/acs/acs1?get=NAME,B01001_001E&for=us:*&key={CENSUS_API_KEY}"
@@ -67,7 +70,7 @@ def get_census_acs_detailed(
 def get_census_acs_detailed_by_state(
     year: int = 2024,
     state_fips: str = None,  # Default to New York
-):
+) -> pd.DataFrame:
     results = []
     if state_fips is None:
         url = f"{CENSUS_API_BASE_URL}/{year}/acs/acs1?get=NAME,B01001_001E&for=state:*&key={CENSUS_API_KEY}"
@@ -93,7 +96,7 @@ def get_census_acs_detailed_by_state_county(
     state_fips: str = None,
     county_fips: str = None,  # Default to New York County
 
-):
+) -> pd.DataFrame:
     results = []
     if state_fips is None or county_fips is None:
         url = f"{CENSUS_API_BASE_URL}/{year}/acs/acs1?get=NAME,B01001_001E&for=county:*&in=state:*&key={CENSUS_API_KEY}"

@@ -2,7 +2,7 @@
 ---
 description: U.S. Federal Bureau of Investigation Data
 license: Public Domain
-url: https://www.fbi.gov/services/cjis/ucr
+url: https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/docApi
 maintainer: Aaron Samuel
 supported:
   - Crime Data Explorer (CDE)

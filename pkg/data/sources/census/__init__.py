@@ -6,6 +6,7 @@ CENSUS_API_BASE_URL = os.getenv("CENSUS_API_BASE_URL")
 name = "census"
 description = "U.S. Census Bureau Data"
 license = "Public Domain"
+provider = "U.S. Census Bureau"
 maintainer = "Aaron Samuel"
 url = "https://www.census.gov/data/developers/data-sets.html"
 supported = [

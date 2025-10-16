@@ -1,0 +1,112 @@
+{
+    "11": {
+        "name": "Murder and Nonnegligent Manslaughter",
+        "category": "Violent Crime",
+        "short_name": "Murder"
+    },
+    "12": {
+        "name": "Manslaughter by Negligence",
+        "category": "Violent Crime",
+        "short_name": "Manslaughter"
+    },
+    "23": {
+        "name": "Rape",
+        "category": "Violent Crime",
+        "short_name": "Rape"
+    },
+    "30": {
+        "name": "Robbery",
+        "category": "Violent Crime",
+        "short_name": "Robbery"
+    },
+    "55": {
+        "name": "Simple Assault",
+        "category": "Violent Crime",
+        "short_name": "Assault"
+    },
+    "70": {
+        "name": "Larceny - Theft",
+        "category": "Property Crime",
+        "short_name": "Theft"
+    },
+    "90": {
+        "name": "Motor Vehicle Theft",
+        "category": "Property Crime",
+        "short_name": "Motor Vehicle Theft"
+    },
+    "110": {
+        "name": "Arson",
+        "category": "Property Crime",
+        "short_name": "Arson"
+    },
+    "150": {
+        "name": "Drug Abuse Violations",
+        "category": "Drug Crime",
+        "short_name": "Drug Abuse"
+    },
+    "152": {
+        "name": "Drug Sale and Manufacturing - Opium, Cocaine or Their Derivatives",
+        "category": "Drug Crime",
+        "short_name": "Drug Sale - Opium/Cocaine"
+    },
+    "153": {
+        "name": "Drug Sale and Manufacturing - Marijuana",
+        "category": "Drug Crime",
+        "short_name": "Drug Sale - Marijuana"
+    },
+    "155": {
+        "name": "Drug Sale and Manufacturing - Dangerous Nonnarcotic Drugs",
+        "category": "Drug Crime",
+        "short_name": "Drug Sale - Dangerous Nonnarcotic Drugs"
+    },
+    "157": {
+        "name": "Drug Possession - Opium, Cocaine or Their Derivatives",
+        "category": "Drug Crime",
+        "short_name": "Drug Possession - Opium/Cocaine"
+    },
+    "158": {
+        "name": "Drug Possession - Marijuana",
+        "category": "Drug Crime",
+        "short_name": "Drug Possession - Marijuana"
+    },
+    "159": {
+        "name": "Drug Possession - Synthetic Narcotics",
+        "category": "Drug Crime",
+        "short_name": "Drug Possession - Synthetic Narcotics"
+    },
+    "160": {
+        "name": "Drug Possession - Dangerous Nonnarcotic Drugs",
+        "category": "Drug Crime",
+        "short_name": "Drug Possession - Dangerous Nonnarcotic Drugs"
+    },
+    "180": {
+        "name": "Forgery and Counterfeiting",
+        "category": "Property Crime",
+        "short_name": "Forgery"
+    },
+    "190": {
+        "name": "Fraud",
+        "category": "Property Crime",
+        "short_name": "Fraud"
+    },
+    "200": {
+        "name": "Embezzlement",
+        "category": "Property Crime",
+        "short_name": "Embezzlement"
+    },
+    "240": {
+        "name": "Sex Offenses (Except Rape and Prostitution and Commercialized Vice)",
+        "category": "Sex Crime",
+        "short_name": "Sex Offenses"
+    },
+    "280": {
+        "name": "Drunkenness",
+        "category": "Public Order Crime",
+        "short_name": "Drunkenness"
+    },
+    "310": {
+        "name": "All Other Offenses (Except Traffic)",
+        "category": "Other",
+        "short_name": "All Other Offenses"
+    }
+}
