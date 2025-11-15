@@ -3,6 +3,7 @@ import requests
 import json
 import os
 import pandas as pd
+import time
 
 from . import FBI_API_BASE_URL, FBI_API_KEY
 from .data import (
@@ -15,7 +16,6 @@ from .data import (
     nibrs_offense_codes,
     nibrs_offense_mapping,
 )
-
 
 def get_cde_reporting_agencies() -> pd.DataFrame:
     """
@@ -39,7 +39,6 @@ def get_cde_reporting_agencies() -> pd.DataFrame:
         else:
             response.raise_for_status()
     return pd.DataFrame(results)
-
 
 def get_cde_arrest_totals_by_state(
     start_date: str = None,
@@ -88,7 +87,6 @@ def get_cde_arrest_totals_by_state(
 
     return pd.DataFrame(results)
 
-
 def get_cde_arrest_counts_by_state(
     start_date: str = None,
     end_date: str = None,
@@ -106,8 +104,10 @@ def get_cde_arrest_counts_by_state(
     ]
     if offense_code is None:
         offense_code = "all"
+
     if start_date is None:
         start_date = "01-2020"
+
     if end_date is None:
         end_date = "12-2020"
 
@@ -210,12 +210,16 @@ def get_cde_arrest_totals_by_origin(
 
     if offense_code is None:
         offense_code = "all"
+
     if origin_code is None:
         origin_code = "AL0430200"
+
     if start_date is None:
         start_date = "01-2020"
+
     if end_date is None:
         end_date = "12-2020"
+
     url = f"{FBI_API_BASE_URL}/crime/fbi/cde/arrest/agency/{origin_code}/{offense_code}?type=totals&from={start_date}&to={end_date}&API_KEY={FBI_API_KEY}"
 
     response = requests.get(url, headers=headers)
@@ -244,12 +248,16 @@ def get_cde_arrest_counts_by_origin(
 
     if offense_code is None:
         offense_code = "all"
+
     if origin_code is None:
         origin_code = "AL0430200"
+
     if start_date is None:
         start_date = "01-2020"
+
     if end_date is None:
         end_date = "12-2020"
+
     url = f"{FBI_API_BASE_URL}/crime/fbi/cde/arrest/agency/{origin_code}/{offense_code}?type=counts&from={start_date}&to={end_date}&API_KEY={FBI_API_KEY}"
 
     response = requests.get(url, headers=headers)
@@ -299,30 +307,23 @@ def get_cde_nibrs_totals_by_state(
                     if response.status_code == 200:
                         print(f"Data fetched successfully for {state_abbr} and NIBRS code {nibrs_code}")
                         data = response.json()
-
-
                         results.append({
                             "state_code": state_abbr,
                             "nibrs_code": nibrs_code,
                             "crime": nibrs_offense_mapping[nibrs_code]["name"],
-                            **{f"victim.age_{k}": v for k, v in data["victim"]["age"].items()},
-                            **{f"victim.sex_{k}": v for k, v in data["victim"]["sex"].items()},
-                            **{f"victim.race_{k}": v for k, v in data["victim"]["race"].items()},
-                            **{f"victim.location_{k}": v for k, v in data["victim"]["location"].items()},
-                            **{f"victim.ethnicity_{k}": v for k, v in data["victim"]["ethnicity"].items()},
-                            **{f"offender.age_{k}": v for k, v in data["offender"]["age"].items()},
-                            **{f"offender.sex_{k}": v for k, v in data["offender"]["sex"].items()},
-                            **{f"offender.race_{k}": v for k, v in data["offender"]["race"].items()},
-                            **{f"offender.ethnicity_{k}": v for k, v in data["offender"]["ethnicity"].items()},
-                            # **{f"offender_relationship_{k}": v for k, v in data["offender"]["relationship"].items()},
-
-
-                            # "state": state,
-
+                            **{f"victim.age.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["age"].items()},
+                            **{f"victim.sex.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["sex"].items()},
+                            **{f"victim.race.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["race"].items()},
+                            **{f"victim.location.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["location"].items()},
+                            **{f"victim.ethnicity.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["ethnicity"].items()},
+                            **{f"offender.age.{k.lower().replace(' ', '_')}": v for k, v in data["offender"]["age"].items()},
+                            **{f"offender.sex.{k.lower().replace(' ', '_')}": v for k, v in data["offender"]["sex"].items()},
+                            **{f"offender.race.{k.lower().replace(' ', '_')}": v for k, v in data["offender"]["race"].items()},
+                            **{f"offender.ethnicity.{k.lower().replace(' ', '_')}": v for k, v in data["offender"]["ethnicity"].items()},
                             "nibrs_code": nibrs_code,
                             "crime": nibrs_offense_mapping[nibrs_code]["name"],
-                            # "data": data
                         })
+                        time.sleep(1)
                     else:
                         response.raise_for_status()
             else:
@@ -335,19 +336,20 @@ def get_cde_nibrs_totals_by_state(
                         "state": state_abbr,
                         "nibrs_code": nibrs_code,
                         "crime": nibrs_offense_mapping[nibrs_code]["name"],
-                        **{f"victim_age_{k}": v for k, v in data["victim"]["age"].items()},
-                        **{f"victim_sex_{k}": v for k, v in data["victim"]["sex"].items()},
-                        **{f"victim_race_{k}": v for k, v in data["victim"]["race"].items()},
-                        **{f"victim_location_{k}": v for k, v in data["victim"]["location"].items()},
-                        **{f"victim_ethnicity_{k}": v for k, v in data["victim"]["ethnicity"].items()},
-                        **{f"offender_age_{k}": v for k, v in data["offender"]["age"].items()},
-                        **{f"offender_sex_{k}": v for k, v in data["offender"]["sex"].items()},
-                        **{f"offender_race_{k}": v for k, v in data["offender"]["race"].items()},
-                        **{f"offender_ethnicity_{k}": v for k, v in data["offender"]["ethnicity"].items()},
+                        **{f"victim.age.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["age"].items()},
+                        **{f"victim.sex.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["sex"].items()},
+                        **{f"victim.race.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["race"].items()},
+                        **{f"victim.location.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["location"].items()},
+                        **{f"victim.ethnicity.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["ethnicity"].items()},
+                        **{f"offender.age.{k.lower().replace(' ', '_')}": v for k, v in data["offender"]["age"].items()},
+                        **{f"offender.sex.{k.lower().replace(' ', '_')}": v for k, v in data["offender"]["sex"].items()},
+                        **{f"offender.race.{k.lower().replace(' ', '_')}": v for k, v in data["offender"]["race"].items()},
+                        **{f"offender.ethnicity.{k.lower().replace(' ', '_')}": v for k, v in data["offender"]["ethnicity"].items()},
                         # **{f"offender_relationship_{k}": v for k, v in data["offender"]["relationship"].items()},
 
                         # "data": data
                     })
+                    time.sleep(1)
                 else:
                     response.raise_for_status()
 
@@ -365,18 +367,18 @@ def get_cde_nibrs_totals_by_state(
                         "state": state_abbr,
                         "nibrs_code": nibrs_code,
                         "crime": nibrs_offense_mapping[nibrs_code]["name"],
-                        **{f"victim_age_{k}": v for k, v in data["victim"]["age"].items()},
-                        **{f"victim_sex_{k}": v for k, v in data["victim"]["sex"].items()},
-                        **{f"victim_race_{k}": v for k, v in data["victim"]["race"].items()},
-                        **{f"victim_location_{k}": v for k, v in data["victim"]["location"].items()},
-                        **{f"victim_ethnicity_{k}": v for k, v in data["victim"]["ethnicity"].items()},
-                        **{f"offender_age_{k}": v for k, v in data["offender"]["age"].items()},
-                        **{f"offender_sex_{k}": v for k, v in data["offender"]["sex"].items()},
-                        **{f"offender_race_{k}": v for k, v in data["offender"]["race"].items()},
-                        **{f"offender_ethnicity_{k}": v for k, v in data["offender"]["ethnicity"].items()},
+                        **{f"victim.age.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["age"].items()},
+                        **{f"victim.sex.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["sex"].items()},
+                        **{f"victim.race.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["race"].items()},
+                        **{f"victim.location.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["location"].items()},
+                        **{f"victim.ethnicity.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["ethnicity"].items()},
+                        **{f"offender.age.{k.lower().replace(' ', '_')}": v for k, v in data["offender"]["age"].items()},
+                        **{f"offender.sex.{k.lower().replace(' ', '_')}": v for k, v in data["offender"]["sex"].items()},
+                        **{f"offender.race.{k.lower().replace(' ', '_')}": v for k, v in data["offender"]["race"].items()},
+                        **{f"offender.ethnicity.{k.lower().replace(' ', '_')}": v for k, v in data["offender"]["ethnicity"].items()},
                         # **{f"offender_relationship_{k}": v for k, v in data["offender"]["relationship"].items()},
-
                     })
+                    time.sleep(1)
                 else:
                     response.raise_for_status()
         else:
@@ -389,17 +391,15 @@ def get_cde_nibrs_totals_by_state(
                     "state": state_abbr,
                     "nibrs_code": nibrs_code,
                     "crime": nibrs_offense_mapping[nibrs_code]["name"],
-                    **{f"victim_age_{k}": v for k, v in data["victim"]["age"].items()},
-                    **{f"victim_sex_{k}": v for k, v in data["victim"]["sex"].items()},
-                    **{f"victim_race_{k}": v for k, v in data["victim"]["race"].items()},
-                    **{f"victim_location_{k}": v for k, v in data["victim"]["location"].items()},
-                    **{f"victim_ethnicity_{k}": v for k, v in data["victim"]["ethnicity"].items()},
-                    **{f"offender_age_{k}": v for k, v in data["offender"]["age"].items()},
-                    **{f"offender_sex_{k}": v for k, v in data["offender"]["sex"].items()},
-                    **{f"offender_race_{k}": v for k, v in data["offender"]["race"].items()},
-                    **{f"offender_ethnicity_{k}": v for k, v in data["offender"]["ethnicity"].items()},
-                    # **{f"offender_relationship_{k}": v for k, v in data["offender"]["relationship"].items()},
-
+                    **{f"victim.age.{k.lower().replace(' ', '_').replace(',', '-')}": v for k, v in data["victim"]["age"].items()},
+                    **{f"victim.sex.{k.lower().replace(' ', '_').replace(',', '-')}": v for k, v in data["victim"]["sex"].items()},
+                    **{f"victim.race.{k.lower().replace(' ', '_').replace(',', '-')}": v for k, v in data["victim"]["race"].items()},
+                    **{f"victim.location.{k.lower().replace(' ', '_').replace(',', '-')}": v for k, v in data["victim"]["location"].items()},
+                    **{f"victim.ethnicity.{k.lower().replace(' ', '_').replace(',', '-')}": v for k, v in data["victim"]["ethnicity"].items()},
+                    **{f"offender.age.{k.lower().replace(' ', '_').replace(',', '-')}": v for k, v in data["offender"]["age"].items()},
+                    **{f"offender.sex.{k.lower().replace(' ', '_').replace(',', '-')}": v for k, v in data["offender"]["sex"].items()},
+                    **{f"offender.race.{k.lower().replace(' ', '_').replace(',', '-')}": v for k, v in data["offender"]["race"].items()},
+                    **{f"offender.ethnicity.{k.lower().replace(' ', '_').replace(',', '-')}": v for k, v in data["offender"]["ethnicity"].items()},
                 })
             else:
                 response.raise_for_status()

@@ -1,5 +1,6 @@
 # from os import nice
 from pydantic import BaseModel, Field
+import pandas as pd
 
 
 class FBIOffense(BaseModel):
@@ -7,6 +8,7 @@ class FBIOffense(BaseModel):
     name: str = Field(..., description="FBI Offense Name")
     category: str = Field(..., description="FBI Offense Category")
     short_name: str = Field(..., description="FBI Offense Short Name")
+
 
 class NIBRSOffense(BaseModel):
     code: str = Field(..., description="NIBRS Offense Code")
@@ -120,7 +122,11 @@ us_offense_mapping: dict[int, str] = {
 }
 
 nibrs_offense_mapping: dict[str, dict[str, str]] = {
-    "ASS": {"name": "Aggravated Assault","category": "Violent Crime","short_name": "Aggravated Assault",},
+    "ASS": {
+        "name": "Aggravated Assault",
+        "category": "Violent Crime",
+        "short_name": "Aggravated Assault",
+    },
     "HOM": {"name": "Homicide", "category": "Violent Crime", "short_name": "Homicide"},
     "RPE": {"name": "Rape", "category": "Violent Crime", "short_name": "Rape"},
     "ROB": {"name": "Robbery", "category": "Violent Crime", "short_name": "Robbery"},
@@ -461,6 +467,7 @@ legacy_offense_codes = [
 nibrs_offense_codes = [
     NIBRSOffense(code=code, **info) for code, info in nibrs_offense_mapping.items()
 ]
+
 
 def get_offense_from_code(code: int) -> str:
     return us_offense_mapping.get(code, {}).get("name", None)
