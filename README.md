@@ -1,8 +1,8 @@
 # Statpack
 
-![statpack](./docs/assets/statpack.png)
+**An Open-Source statistical data gathering Library.**
 
-## An Open-Source Statistical Data Gathering Library
+![statpack](./docs/assets/statpack.png)
 
 As engineering & scientific workflows grow in complexity, the need for a reliable and efficient data gathering increases.
 
