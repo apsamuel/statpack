@@ -17,7 +17,132 @@ from .data import (
     nibrs_offense_mapping,
 )
 
-def get_cde_reporting_agencies() -> pd.DataFrame:
+
+def _flatten_get_cde_summarized_by_state_payload_wide(
+    payload: dict,
+    requested_state_abbr: str,
+    requested_offense_code: str,
+) -> pd.DataFrame:
+    """Flatten one summarized API payload into a super-wide monthly DataFrame.
+
+    Output grain: one row per date for the requested state/offense.
+    """
+
+    def _normalize_key(value: str) -> str:
+        normalized = str(value).strip().lower()
+        normalized = re.sub(r"[\s/\-]+", "_", normalized)
+        normalized = normalized.replace("%", "percent")
+        normalized = re.sub(r"[^a-z0-9_\.]+", "", normalized)
+        normalized = re.sub(r"_+", "_", normalized).strip("_")
+        return normalized
+
+    monthly_maps: list[tuple[str, dict]] = []
+
+    offense_rates = payload.get("offenses", {}).get("rates", {})
+    for series_name, series_values in offense_rates.items():
+        monthly_maps.append((f"offenses.rates.{_normalize_key(series_name)}", series_values))
+
+    offense_actuals = payload.get("offenses", {}).get("actuals", {})
+    for series_name, series_values in offense_actuals.items():
+        monthly_maps.append((f"offenses.actuals.{_normalize_key(series_name)}", series_values))
+
+    coverage = payload.get("tooltips", {}).get("Percent of Population Coverage", {})
+    for series_name, series_values in coverage.items():
+        monthly_maps.append((f"tooltips.coverage_percent.{_normalize_key(series_name)}", series_values))
+
+    populations = payload.get("populations", {}).get("population", {})
+    for series_name, series_values in populations.items():
+        monthly_maps.append((f"populations.population.{_normalize_key(series_name)}", series_values))
+
+    participated_populations = payload.get("populations", {}).get("participated_population", {})
+    for series_name, series_values in participated_populations.items():
+        monthly_maps.append((f"populations.participated_population.{_normalize_key(series_name)}", series_values))
+
+    all_dates: set[str] = set()
+    for _, series_values in monthly_maps:
+        if isinstance(series_values, dict):
+            all_dates.update(series_values.keys())
+
+    left_headers = payload.get("tooltips", {}).get("leftYAxisHeaders", {})
+    max_data_date = payload.get("cde_properties", {}).get("max_data_date", {}).get("UCR")
+    last_refresh_date = payload.get("cde_properties", {}).get("last_refresh_date", {}).get("UCR")
+
+    rows: list[dict] = []
+    for date_value in sorted(all_dates):
+        row = {
+            "date": date_value,
+            "requested.state_abbr": requested_state_abbr,
+            "requested.state_name": get_state_from_abbr(requested_state_abbr),
+            "requested.offense_code": requested_offense_code,
+            "meta.max_data_date.ucr": max_data_date,
+            "meta.last_refresh_date.ucr": last_refresh_date,
+            "tooltips.left_y_axis_header.rates": left_headers.get("yAxisHeaderRates"),
+            "tooltips.left_y_axis_header.actual": left_headers.get("yAxisHeaderActual"),
+        }
+        for column_name, series_values in monthly_maps:
+            row[column_name] = series_values.get(date_value) if isinstance(series_values, dict) else None
+        rows.append(row)
+
+    return pd.DataFrame(rows)
+
+def get_cde_summarized_by_state(
+    start_date: str = None,
+    end_date: str = None,
+    state_abbr: str = None,
+    offense_code: str = None,
+) -> pd.DataFrame:
+    """Fetch FBI CDE summarized offense data by state and return a wide DataFrame.
+
+    Each row represents one date for a given state/offense combination.
+    """
+    frames: list[pd.DataFrame] = []
+    headers = {
+        "X-API-KEY": FBI_API_KEY,
+        "User-Agent": "StatPack/1.0",
+    }
+    supported_offense_codes = ["V", "ASS", "LAR", "MVT", "HOM", "RPE", "ROB", "ARS", "P"]
+
+    if start_date is None:
+        start_date = "01-2020"
+    if end_date is None:
+        end_date = "12-2020"
+
+    states_to_query = (
+        list(us_territory_mapping.keys()) if state_abbr is None else [state_abbr]
+    )
+    offenses_to_query = (
+        supported_offense_codes if offense_code is None else [str(offense_code)]
+    )
+
+    for abbr in states_to_query:
+        for code in offenses_to_query:
+            url = (
+                f"{FBI_API_BASE_URL}/crime/fbi/cde/summarized/state/{abbr}/{code}"
+                f"?from={start_date}&to={end_date}&API_KEY={FBI_API_KEY}"
+            )
+            response = requests.get(url, headers=headers)
+            if response.status_code == 200:
+                data = response.json()
+                frames.append(
+                    _flatten_get_cde_summarized_by_state_payload_wide(
+                        payload=data,
+                        requested_state_abbr=abbr,
+                        requested_offense_code=code,
+                    )
+                )
+            else:
+                response.raise_for_status()
+
+    if not frames:
+        return pd.DataFrame()
+
+    return pd.concat(frames, ignore_index=True).sort_values(
+        by=["date", "requested.state_abbr", "requested.offense_code"],
+        ignore_index=True,
+    )
+
+def get_cde_reporting_agencies(
+) -> pd.DataFrame:
     """
     Fetches FBI agency crosswalk data.
     """
@@ -27,7 +152,7 @@ def get_cde_reporting_agencies() -> pd.DataFrame:
         url = f"{FBI_API_BASE_URL}/crime/fbi/cde/agency/byStateAbbr/{state_abbr}?API_KEY={FBI_API_KEY}"
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
-            print(f"Data fetched successfully for {state_abbr}")
+            # print(f"Data fetched successfully for {state_abbr}")
             data = response.json()
             for ori, agency in data.items():
                 if isinstance(agency, list):
@@ -36,8 +161,8 @@ def get_cde_reporting_agencies() -> pd.DataFrame:
                             continue
                         results.append(item)
 
-        else:
-            response.raise_for_status()
+        # else:
+        #     response.raise_for_status()
     return pd.DataFrame(results)
 
 def get_cde_arrest_totals_by_state(
@@ -82,8 +207,8 @@ def get_cde_arrest_totals_by_state(
             if table_name.lower() == table.lower():
                 for entry, value in table_data.items():
                     results.append({table_name: entry, "Value": value})
-    else:
-        response.raise_for_status()
+    # else:
+    #     response.raise_for_status()
 
     return pd.DataFrame(results)
 
@@ -145,8 +270,8 @@ def get_cde_arrest_counts_by_state(
                             ),
                         }
                     )
-            else:
-                response.raise_for_status()
+            # else:
+            #     response.raise_for_status()
     else:
         url = f"{FBI_API_BASE_URL}/crime/fbi/cde/arrest/state/{state_abbr}/{offense_code}?type=counts&from={start_date}&to={end_date}&API_KEY={FBI_API_KEY}"
         response = requests.get(url, headers=headers)
@@ -188,47 +313,52 @@ def get_cde_arrest_counts_by_state(
                     # ]
                 )
 
-        else:
-            response.raise_for_status()
+        # else:
+        #     response.raise_for_status()
     return pd.DataFrame(results).set_index(['Date', 'State']).sort_index()
-
 
 def get_cde_arrest_totals_by_origin(
     start_date: str = None,
     end_date: str = None,
     origin_code: str = None,
     offense_code: int = None,
-):
+) -> pd.DataFrame:
     """
-    Fetches FBI arrest data from the government API for the specified year range and origin code.
+    Fetches FBI arrest totals by agency ORI code and returns a DataFrame.
+    Each row represents one date with rate and actual arrest counts.
     """
     headers = {
         "X-API-KEY": FBI_API_KEY,
         "User-Agent": "StatPack/1.0",
     }
-    results = []
 
     if offense_code is None:
         offense_code = "all"
-
     if origin_code is None:
         origin_code = "AL0430200"
-
     if start_date is None:
         start_date = "01-2020"
-
     if end_date is None:
         end_date = "12-2020"
 
     url = f"{FBI_API_BASE_URL}/crime/fbi/cde/arrest/agency/{origin_code}/{offense_code}?type=totals&from={start_date}&to={end_date}&API_KEY={FBI_API_KEY}"
-
     response = requests.get(url, headers=headers)
-    if response.status_code == 200:
-        print(f"Data fetched successfully for origin code {origin_code}")
-        data = response.json()
-        return data
-    else:
-        response.raise_for_status()
+    response.raise_for_status()
+
+    data = response.json()
+    results = []
+    rates = data.get("rates", {})
+    actuals = data.get("actuals", {})
+    all_dates = sorted(set(list(rates.keys()) + list(actuals.keys())))
+    for date in all_dates:
+        results.append({
+            "date": date,
+            "ori_code": origin_code,
+            "offense_code": offense_code,
+            "arrest_rate": rates.get(date),
+            "arrest_total": actuals.get(date),
+        })
+    return pd.DataFrame(results)
 
 
 def get_cde_arrest_counts_by_origin(
@@ -236,9 +366,10 @@ def get_cde_arrest_counts_by_origin(
     end_date: str = None,
     origin_code: str = None,
     offense_code: int = None,
-):
+) -> pd.DataFrame:
     """
-    Fetches FBI arrest data from the government API for the specified year range and origin code.
+    Fetches FBI arrest counts by agency ORI code and returns a DataFrame.
+    Each row represents one date/offense combination with rate, total, and population.
     """
     headers = {
         "X-API-KEY": FBI_API_KEY,
@@ -248,25 +379,33 @@ def get_cde_arrest_counts_by_origin(
 
     if offense_code is None:
         offense_code = "all"
-
     if origin_code is None:
         origin_code = "AL0430200"
-
     if start_date is None:
         start_date = "01-2020"
-
     if end_date is None:
         end_date = "12-2020"
 
     url = f"{FBI_API_BASE_URL}/crime/fbi/cde/arrest/agency/{origin_code}/{offense_code}?type=counts&from={start_date}&to={end_date}&API_KEY={FBI_API_KEY}"
-
     response = requests.get(url, headers=headers)
-    if response.status_code == 200:
-        print(f"Data fetched successfully for origin code {origin_code}")
-        data = response.json()
-        return data
-    else:
-        response.raise_for_status()
+    response.raise_for_status()
+
+    data = response.json()
+    results = []
+    rates = data.get("rates", {})
+    actuals = data.get("actuals", {})
+    populations = data.get("populations", {}).get("population", {})
+    all_dates = sorted(set(list(rates.keys()) + list(actuals.keys())))
+    for date in all_dates:
+        results.append({
+            "date": date,
+            "ori_code": origin_code,
+            "offense_code": offense_code,
+            "arrest_rate": rates.get(date),
+            "arrest_total": actuals.get(date),
+            "population": populations.get(date),
+        })
+    return pd.DataFrame(results)
 
 def get_cde_nibrs_totals_by_state(
     start_date: str = None,
@@ -324,13 +463,13 @@ def get_cde_nibrs_totals_by_state(
                             "crime": nibrs_offense_mapping[nibrs_code]["name"],
                         })
                         time.sleep(1)
-                    else:
-                        response.raise_for_status()
+                    # else:
+                    #     response.raise_for_status()
             else:
                 url = f"{FBI_API_BASE_URL}/crime/fbi/cde/nibrs/state/{state_abbr}/{nibrs_code}?from={start_date}&to={end_date}&type=totals&API_KEY={FBI_API_KEY}"
                 response = requests.get(url, headers=headers)
                 if response.status_code == 200:
-                    print(f"Data fetched successfully for {state_abbr}")
+                    # print(f"Data fetched successfully for {state_abbr}")
                     data = response.json()
                     results.append({
                         "state": state_abbr,
@@ -350,8 +489,8 @@ def get_cde_nibrs_totals_by_state(
                         # "data": data
                     })
                     time.sleep(1)
-                else:
-                    response.raise_for_status()
+                # else:
+                #     response.raise_for_status()
 
     else:
         if nibrs_code is None:
@@ -379,8 +518,8 @@ def get_cde_nibrs_totals_by_state(
                         # **{f"offender_relationship_{k}": v for k, v in data["offender"]["relationship"].items()},
                     })
                     time.sleep(1)
-                else:
-                    response.raise_for_status()
+                # else:
+                #     response.raise_for_status()
         else:
             url = f"{FBI_API_BASE_URL}/crime/fbi/cde/nibrs/state/{state_abbr}/{nibrs_code}?from={start_date}&to={end_date}&type=totals&API_KEY={FBI_API_KEY}"
             response = requests.get(url, headers=headers)
@@ -399,8 +538,8 @@ def get_cde_nibrs_totals_by_state(
                     **{f"offender.age.{k.lower().replace(' ', '_').replace(',', '-')}": v for k, v in data["offender"]["age"].items()},
                     **{f"offender.sex.{k.lower().replace(' ', '_').replace(',', '-')}": v for k, v in data["offender"]["sex"].items()},
                     **{f"offender.race.{k.lower().replace(' ', '_').replace(',', '-')}": v for k, v in data["offender"]["race"].items()},
-                    **{f"offender.ethnicity.{k.lower().replace(' ', '_').replace(',', '-')}": v for k, v in data["offender"]["ethnicity"].items()},
+                    **{f"offender.ethnicity.{k.lower().replace(' ', '_').replace(',', '-')}" : v for k, v in data["offender"]["ethnicity"].items()},
                 })
-            else:
-                response.raise_for_status()
-    return results
+            # else:
+            #     response.raise_for_status()
+    return pd.DataFrame(results)
