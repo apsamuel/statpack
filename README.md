@@ -1,11 +1,13 @@
 # Statpack
 
+![statpack](./docs/assets/stat-main.png)
+
+> "You asked for a fact. I brought seventeen." -- St@T
+
 Statpack is a data-ingestion toolkit focused on public statistical sources, with a CLI-first workflow for:
 
 - FBI Crime Data Explorer (CDE)
 - U.S. Census ACS
-
-![statpack](./docs/assets/stat-main.png)
 
 ## Quick Start
 
