@@ -1,8 +1,13 @@
-# STAT
+# `St@T`
 
 ---
 
-![STAT](./assets/stat3.png)
+| Variant  |           Appearance            |
+| :------: | :-----------------------------: |
+|  Prime   | ![STAT](./assets/stat-main.png) |
+|  Spicy   |   ![STAT](./assets/stat3.png)   |
+| Unhinged |   ![STAT](./assets/stat2.png)   |
+| Focused  |   ![STAT](./assets/stat.png)    |
 
 ---
 
