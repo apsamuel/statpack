@@ -25,6 +25,8 @@ docs = [
 if FBI_API_BASE_URL is None or FBI_API_KEY is None:
     raise EnvironmentError("GOV_API_BASE_URL and GOV_API_KEY must be set in environment variables.")
 
+
+
 from .client import Client
 
 from .main import (
@@ -33,5 +35,6 @@ from .main import (
     get_cde_arrest_counts_by_state,
     get_cde_arrest_counts_by_origin,
     get_cde_arrest_totals_by_origin,
-    get_cde_nibrs_totals_by_state
+    get_cde_nibrs_totals_by_state,
+    get_cde_summarized_by_state
 )
