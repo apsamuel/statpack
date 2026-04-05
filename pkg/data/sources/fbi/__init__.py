@@ -30,6 +30,7 @@ if FBI_API_BASE_URL is None or FBI_API_KEY is None:
 from .client import Client
 
 from .main import (
+    get_cde_expanded_homicide_counts_by_state,
     get_cde_reporting_agencies,
     get_cde_arrest_totals_by_state,
     get_cde_arrest_counts_by_state,
