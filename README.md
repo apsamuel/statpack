@@ -2,9 +2,9 @@
 
 **An Open-Source statistical data gathering Library.**
 
-![statpack](./docs/assets/statpack.png)
+![statpack](./docs/assets/stat-main.png)
 
-As engineering & scientific workflows grow in complexity, the need for a reliable and efficient data gathering increases.
+When engineering & scientific workflows scale in complexity and capacity the need for reliable and efficient datasets increases.
 
 Existing solutions are often brittle, difficult to maintain, proprietary and expensive; **Statpack** is an *open-source* library designed to simplify the process of gathering, cleaning, and analyzing statistical data from a variety of sources.
 

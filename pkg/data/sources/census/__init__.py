@@ -1,3 +1,13 @@
+# ---
+# name: census
+# description: U.S. Census Bureau Data
+# license: Public Domain
+# url: https://www.census.gov/data/developers/data-sets.html
+# maintainer: Aaron Samuel
+# supported:
+#   - name: American Community Survey (ACS)
+#     url: https://api.census.gov/data/2024/acs/acs1.html
+
 import os
 
 CENSUS_API_KEY = os.getenv("CENSUS_API_KEY")
@@ -26,16 +36,3 @@ from .main import (
     get_census_acs_detailed_by_state,
     get_census_acs_detailed_by_state_county,
 )
-
-
-
-
-# ---
-# name: census
-# description: U.S. Census Bureau Data
-# license: Public Domain
-# url: https://www.census.gov/data/developers/data-sets.html
-# maintainer: Aaron Samuel
-# supported:
-#   - name: American Community Survey (ACS)
-#     url: https://api.census.gov/data/2024/acs/acs1.html
