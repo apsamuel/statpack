@@ -63,76 +63,95 @@ Base:
 python main.py fbi <command> ...
 ```
 
-### `agencies`
+### `list-reporting-agencies`
 
 Fetch FBI reporting agencies.
 
 ```bash
-python main.py fbi agencies --format csv --output stdout
+python main.py fbi list-reporting-agencies --format csv --output stdout
 ```
 
 Args: none (besides common output args).
 
-### `arrests`
+### `arrests-by-state`
 
 Fetch arrests by state.
 
 ```bash
-python main.py fbi arrests --state NY --offense 11 --start-year 2020 --end-year 2024 --format json
+python main.py fbi arrests-by-state --state NY --offense 11 --start-date 01-2020 --end-date 12-2024 --format json
 ```
 
 | Arg | Required | Type | Description |
 | --- | --- | --- | --- |
 | `--state` | No | string | State abbreviation or name (defaults to all states at CLI layer) |
-| `--offense` | Yes | int | FBI offense code |
-| `--start-year` | Yes | int | Starting year |
-| `--end-year` | Yes | int | Ending year |
+| `--offense` | No | int | FBI offense code (defaults to all offenses) |
+| `--start-date` | Yes | string | Start date in `MM-YYYY` format |
+| `--end-date` | Yes | string | End date in `MM-YYYY` format |
 | `--breakdown` | No | string | Demographic breakdown hint (example: `by_race`, `by_age`) |
+
+Behavior note:
+
+- with `--breakdown`: uses arrest counts endpoint (`get_cde_arrest_counts_by_state`)
+- without `--breakdown`: uses arrest totals endpoint (`get_cde_arrest_totals_by_state`)
 
 ### `arrests-by-origin`
 
 Fetch arrests by agency ORI code.
 
 ```bash
-python main.py fbi arrests-by-origin --ori-code AL0430200 --offense 11 --start-year 2020 --end-year 2024 --format csv
+python main.py fbi arrests-by-origin --ori-code AL0430200 --offense 11 --start-date 01-2020 --end-date 12-2024 --format csv
 ```
 
 | Arg | Required | Type | Description |
 | --- | --- | --- | --- |
 | `--ori-code` | Yes | string | Agency ORI code |
 | `--offense` | Yes | int | FBI offense code |
-| `--start-year` | Yes | int | Starting year |
-| `--end-year` | Yes | int | Ending year |
+| `--start-date` | Yes | string | Start date in `MM-YYYY` format |
+| `--end-date` | Yes | string | End date in `MM-YYYY` format |
 
-### `nibrs`
+### `nibrs-by-state`
 
 Fetch NIBRS data by state and offense code.
 
 ```bash
-python main.py fbi nibrs --nibrs-code HOM --start-year 2020 --end-year 2024 --format csv
+python main.py fbi nibrs-by-state --nibrs-code HOM --start-date 01-2020 --end-date 12-2024 --format csv
 ```
 
 | Arg | Required | Type | Description |
 | --- | --- | --- | --- |
 | `--state` | No | string | State abbreviation or name (default: all states) |
 | `--nibrs-code` | Yes | string | NIBRS offense code (`HOM`, `ASS`, `ROB`, etc.) |
-| `--start-year` | Yes | int | Starting year |
-| `--end-year` | Yes | int | Ending year |
+| `--start-date` | Yes | string | Start date in `MM-YYYY` format |
+| `--end-date` | Yes | string | End date in `MM-YYYY` format |
 
 ### `summarized`
 
 Fetch summarized offense trend data by state.
 
 ```bash
-python main.py fbi summarized --state NY --offense HOM --start-year 2020 --end-year 2024 --format csv
+python main.py fbi summarized --state NY --offense HOM --start-date 01-2020 --end-date 12-2024 --format csv
 ```
 
 | Arg | Required | Type | Description |
 | --- | --- | --- | --- |
 | `--state` | No | string | State abbreviation (default: all states) |
 | `--offense` | No | enum | One of: `V`, `ASS`, `LAR`, `MVT`, `HOM`, `RPE`, `ROB`, `ARS`, `P` |
-| `--start-year` | Yes | int | Starting year |
-| `--end-year` | Yes | int | Ending year |
+| `--start-date` | Yes | string | Start date in `MM-YYYY` format |
+| `--end-date` | Yes | string | End date in `MM-YYYY` format |
+
+### `expanded-homicide`
+
+Fetch expanded homicide counts by state.
+
+```bash
+python main.py fbi expanded-homicide --state NY --start-date 01-2020 --end-date 12-2024 --format csv
+```
+
+| Arg | Required | Type | Description |
+| --- | --- | --- | --- |
+| `--state` | No | string | State abbreviation (default: all states) |
+| `--start-date` | Yes | string | Start date in `MM-YYYY` format |
+| `--end-date` | Yes | string | End date in `MM-YYYY` format |
 
 ## Census Commands
 
@@ -204,13 +223,13 @@ python main.py census acs-by-state-county --variables B01001_001E --states NY,CA
 Write to stdout:
 
 ```bash
-python main.py fbi agencies --output stdout --format markdown
+python main.py fbi list-reporting-agencies --output stdout --format markdown
 ```
 
 Write to file:
 
 ```bash
-python main.py fbi nibrs --nibrs-code HOM --start-year 2020 --end-year 2024 --output file:out/nibrs.csv --format csv
+python main.py fbi nibrs-by-state --nibrs-code HOM --start-date 01-2020 --end-date 12-2024 --output file:out/nibrs.csv --format csv
 ```
 
 ## Making CLI Extension Easy
