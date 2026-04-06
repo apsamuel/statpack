@@ -213,12 +213,12 @@ def setup_fbi_subparsers(subparsers):
     fbi_subparsers = fbi_parser.add_subparsers(dest="fbi_command", required=True)
 
     # Agencies command
-    agencies = fbi_subparsers.add_parser("list-reporting-agencies", help="Fetch FBI reporting agencies")
+    agencies = fbi_subparsers.add_parser("get-reporting-agencies", help="Fetch FBI reporting agencies")
     agencies.set_defaults(func=FBICommands.agencies)
     _add_output_args(agencies)
 
     # Arrests by state command
-    arrests_state = fbi_subparsers.add_parser("arrests-by-state", help="Fetch arrests by state")
+    arrests_state = fbi_subparsers.add_parser("get-arrests-by-state", help="Fetch arrests by state")
     arrests_state.add_argument("--state", help="State abbreviation or name (default: all states)")
     arrests_state.add_argument("--offense", type=int, required=False, help="FBI offense code", default=None)
     arrests_state.add_argument("--start-date", type=str, required=True, help="Start date (MM-YYYY format, e.g., 01-2020)")
@@ -228,7 +228,7 @@ def setup_fbi_subparsers(subparsers):
     _add_output_args(arrests_state)
 
     # Arrests by origin (agency) command
-    arrests_origin = fbi_subparsers.add_parser("arrests-by-origin", help="Fetch arrests by agency ORI code")
+    arrests_origin = fbi_subparsers.add_parser("get-arrests-by-origin", help="Fetch arrests by agency ORI code")
     arrests_origin.add_argument("--ori-code", required=True, help="Agency ORI code")
     arrests_origin.add_argument("--offense", type=int, required=True, help="FBI offense code")
     arrests_origin.add_argument("--start-date", type=str, required=True, help="Start date (MM-YYYY format, e.g., 01-2020)")
@@ -237,7 +237,7 @@ def setup_fbi_subparsers(subparsers):
     _add_output_args(arrests_origin)
 
     # NIBRS command
-    nibrs = fbi_subparsers.add_parser("nibrs-by-state", help="Fetch NIBRS data by state")
+    nibrs = fbi_subparsers.add_parser("get-nibrs-by-state", help="Fetch NIBRS data by state")
     nibrs.add_argument("--state", help="State abbreviation or name (default: all states)")
     nibrs.add_argument("--nibrs-code", required=True, help="NIBRS offense code (e.g., HOM, ASS, ROB)")
     nibrs.add_argument("--start-date", type=str, required=True, help="Start date (MM-YYYY format, e.g., 01-2020)")
@@ -246,7 +246,7 @@ def setup_fbi_subparsers(subparsers):
     _add_output_args(nibrs)
 
     # Summarized by state command
-    summarized = fbi_subparsers.add_parser("summarized", help="Fetch summarized offense data by state")
+    summarized = fbi_subparsers.add_parser("get-summary-by-state", help="Fetch summarized offense data by state")
     summarized.add_argument("--state", help="State abbreviation (default: all states)")
     summarized.add_argument(
         "--offense",
@@ -259,7 +259,7 @@ def setup_fbi_subparsers(subparsers):
     _add_output_args(summarized)
 
     # Expanded Homicide By State
-    expanded_homicide = fbi_subparsers.add_parser("expanded-homicide", help="Fetch expanded homicide counts by state")
+    expanded_homicide = fbi_subparsers.add_parser("get-expanded-homicide-by-state", help="Fetch expanded homicide counts by state")
     expanded_homicide.add_argument("--state", help="State abbreviation (default: all states)")
     expanded_homicide.add_argument("--start-date", type=str, required=True, help="Start date (MM-YYYY format, e.g., 01-2020)")
     expanded_homicide.add_argument("--end-date", type=str, required=True, help="End date (MM-YYYY format, e.g., 12-2024)")
@@ -273,14 +273,14 @@ def setup_census_subparsers(subparsers):
     census_subparsers = census_parser.add_subparsers(dest="census_command", required=True)
 
     # ACS Variables command
-    acs_vars = census_subparsers.add_parser("acs-variables", help="List available ACS variables")
+    acs_vars = census_subparsers.add_parser("get-acs-variables", help="List available ACS variables")
     acs_vars.add_argument("--year", type=int, default=2024, help="Survey year (default: 2024)")
     acs_vars.add_argument("--dataset", default="acs/acs1", help="Dataset identifier (default: acs/acs1)")
     acs_vars.set_defaults(func=CensusCommands.acs_variables)
     _add_output_args(acs_vars)
 
     # ACS Detailed (national) command
-    acs_detailed = census_subparsers.add_parser("acs-detailed", help="Fetch ACS data (national level)")
+    acs_detailed = census_subparsers.add_parser("get-acs-detailed", help="Fetch ACS data (national level)")
     acs_detailed.add_argument("--variables", required=True, help="Comma-separated variable codes")
     acs_detailed.add_argument("--year", type=int, default=2024, help="Survey year (default: 2024)")
     acs_detailed.add_argument("--dataset", default="acs/ acs1", help="Dataset identifier (default: acs/acs1)")
@@ -288,7 +288,7 @@ def setup_census_subparsers(subparsers):
     _add_output_args(acs_detailed)
 
     # ACS by State command
-    acs_state = census_subparsers.add_parser("acs-by-state", help="Fetch ACS data by state")
+    acs_state = census_subparsers.add_parser("get-acs-by-state", help="Fetch ACS data by state")
     acs_state.add_argument("--variables", required=True, help="Comma-separated variable codes")
     acs_state.add_argument("--states", required=True, help="Comma-separated state abbreviations")
     acs_state.add_argument("--year", type=int, default=2024, help="Survey year (default: 2024)")
@@ -297,7 +297,7 @@ def setup_census_subparsers(subparsers):
     _add_output_args(acs_state)
 
     # ACS by State and County command
-    acs_county = census_subparsers.add_parser("acs-by-state-county", help="Fetch ACS data by state and county")
+    acs_county = census_subparsers.add_parser("get-acs-by-state-county", help="Fetch ACS data by state and county")
     acs_county.add_argument("--variables", required=True, help="Comma-separated variable codes")
     acs_county.add_argument("--states", required=True, help="Comma-separated state abbreviations")
     acs_county.add_argument("--year", type=int, default=2024, help="Survey year (default: 2024)")
