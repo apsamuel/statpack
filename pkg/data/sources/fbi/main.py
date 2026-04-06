@@ -17,9 +17,10 @@ from .data import (
     nibrs_offense_mapping,
 )
 
-headers = {
+headers: dict  = {
     "X-API-KEY": FBI_API_KEY,
     "User-Agent": "StatPack/1.0",
+    "Accept": "application/json",
 }
 
 
@@ -32,54 +33,83 @@ def _normalize_wide_key(value: str) -> str:
     return normalized
 
 
-def _flatten_nested_mapping_wide(
-    value,
-    prefix: str = "",
-) -> dict:
-    flattened: dict = {}
-
-    if isinstance(value, dict):
-        for key, nested_value in value.items():
-            key_part = _normalize_wide_key(key)
-            next_prefix = f"{prefix}.{key_part}" if prefix else key_part
-            flattened.update(_flatten_nested_mapping_wide(nested_value, next_prefix))
-        return flattened
-
-    flattened[prefix] = value
-    return flattened
+def _normalize_dataframe_columns_wide(df: pd.DataFrame) -> pd.DataFrame:
+    rename_map = {}
+    for column in df.columns:
+        parts = str(column).split(".")
+        rename_map[column] = ".".join(_normalize_wide_key(part) for part in parts)
+    return df.rename(columns=rename_map)
 
 
-def _flatten_get_cde_expanded_homicide_payload_wide(
-    payload: dict,
-    requested_state_abbr: str,
-    requested_start_date: str,
-    requested_end_date: str,
-) -> dict:
-    row = {
-        "requested.state_abbr": requested_state_abbr,
-        "requested.state_name": get_state_from_abbr(requested_state_abbr),
-        "requested.start_date": requested_start_date,
-        "requested.end_date": requested_end_date,
-    }
-    row.update(_flatten_nested_mapping_wide(payload))
-    return row
+def _records_to_wide_dataframe(
+    records: list[dict],
+    ordered_columns: list[str] = None,
+    sort_by: list[str] = None,
+    index_cols: list[str] = None,
+    normalize_columns: bool = False,
+) -> pd.DataFrame:
+    if not records:
+        return pd.DataFrame()
+
+    result = pd.json_normalize(records, sep=".")
+
+    if normalize_columns:
+        result = _normalize_dataframe_columns_wide(result)
+
+    if ordered_columns:
+        present_ordered = [column for column in ordered_columns if column in result.columns]
+        dynamic_columns = sorted(column for column in result.columns if column not in present_ordered)
+        result = result[present_ordered + dynamic_columns]
+
+    if index_cols:
+        present_index_cols = [column for column in index_cols if column in result.columns]
+        if present_index_cols:
+            return result.set_index(present_index_cols).sort_index()
+
+    if sort_by:
+        present_sort_cols = [column for column in sort_by if column in result.columns]
+        if present_sort_cols:
+            result = result.sort_values(by=present_sort_cols, ignore_index=True)
+
+    return result
+
+
+def _finalize_records(
+    records: list[dict],
+    raw: bool = False,
+    ordered_columns: list[str] = None,
+    sort_by: list[str] = None,
+    index_cols: list[str] = None,
+    normalize_columns: bool = False,
+) -> pd.DataFrame | list[dict]:
+    if raw:
+        return records
+    return _records_to_wide_dataframe(
+        records=records,
+        ordered_columns=ordered_columns,
+        sort_by=sort_by,
+        index_cols=index_cols,
+        normalize_columns=normalize_columns,
+    )
 
 def get_cde_expanded_homicide_counts_by_state(
     start_date: str = None,
     end_date:  str = None,
     state_abbr: str = None,
-) -> pd.DataFrame:
-    """Fetch expanded homicide SHR totals and return a super-wide DataFrame.
+    raw: bool = False
+) -> pd.DataFrame | list[dict]:
+    """Fetch expanded homicide SHR () totals and return a super-wide DataFrame.
 
     Args:
         start_date (str, optional): Start date for the data. Defaults to None.
         end_date (str, optional): End date for the data. Defaults to None.
         state_abbr (str, optional): Two-letter state abbreviation. If None, all states are queried.
+        raw (bool, optional): When True, return raw list[dict] records; otherwise return DataFrame.
 
     Returns:
-        pd.DataFrame: One row per requested state with flattened nested SHR totals.
+        pd.DataFrame | list[dict]: Flattened DataFrame (default) or raw records.
     """
-    rows = []
+    records = []
     if start_date is None:
         start_date = "01-2020"
     if end_date is None:
@@ -94,13 +124,19 @@ def get_cde_expanded_homicide_counts_by_state(
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
             data = response.json()
-            rows.append(
-                _flatten_get_cde_expanded_homicide_payload_wide(
-                    payload=data,
-                    requested_state_abbr=abbr,
-                    requested_start_date=start_date,
-                    requested_end_date=end_date,
-                )
+            state_name = get_state_from_abbr(abbr)
+            requested = {
+                "state_abbr": abbr,
+                "state_name": state_name,
+                "start_date": start_date,
+                "end_date": end_date,
+            }
+            records.append(
+                {
+                    "requested": requested,
+                    **requested,
+                    **data,
+                }
             )
         elif state_abbr is not None:
             response.raise_for_status()
@@ -108,24 +144,22 @@ def get_cde_expanded_homicide_counts_by_state(
         if state_abbr is None:
             time.sleep(1)
 
-    if not rows:
-        return pd.DataFrame()
-
-    ordered_columns = [
-        "requested.state_abbr",
-        "requested.state_name",
-        "requested.start_date",
-        "requested.end_date",
-    ]
-    result = pd.DataFrame(rows)
-    dynamic_columns = sorted(c for c in result.columns if c not in ordered_columns)
-    return result[ordered_columns + dynamic_columns].sort_values(
-        by=["requested.state_abbr"],
-        ignore_index=True,
+    return _finalize_records(
+        records=records,
+        raw=raw,
+        ordered_columns=[
+            "requested.state_abbr",
+            "requested.state_name",
+            "requested.start_date",
+            "requested.end_date",
+        ],
+        sort_by=["requested.state_abbr"],
+        normalize_columns=True,
     )
 
 
 def _flatten_get_cde_summarized_by_state_payload_wide(
+    # raw: bool,
     payload: dict,
     requested_state_abbr: str,
     requested_offense_code: str,
@@ -134,6 +168,8 @@ def _flatten_get_cde_summarized_by_state_payload_wide(
 
     Output grain: one row per date for the requested state/offense.
     """
+
+    # if raw: return payload
 
     monthly_maps: list[tuple[str, dict]] = []
 
@@ -189,12 +225,14 @@ def get_cde_summarized_by_state(
     end_date: str = None,
     state_abbr: str = None,
     offense_code: str = None,
+    raw: bool = False
 ) -> pd.DataFrame:
     """Fetch FBI CDE summarized offense data by state and return a wide DataFrame.
 
     Each row represents one date for a given state/offense combination.
     """
-    frames: list[pd.DataFrame] = []
+    frames: list[pd.DataFrame]  = []
+    records: list = []
     supported_offense_codes = ["V", "ASS", "LAR", "MVT", "HOM", "RPE", "ROB", "ARS", "P"]
 
     if start_date is None:
@@ -218,13 +256,17 @@ def get_cde_summarized_by_state(
             response = requests.get(url, headers=headers)
             if response.status_code == 200:
                 data = response.json()
+                records.append(data)
                 frames.append(
                     _flatten_get_cde_summarized_by_state_payload_wide(
+                        # raw=raw,
                         payload=data,
                         requested_state_abbr=abbr,
                         requested_offense_code=code,
                     )
                 )
+
+    if raw: return records
 
     if not frames:
         return pd.DataFrame()
@@ -235,6 +277,7 @@ def get_cde_summarized_by_state(
     )
 
 def get_cde_reporting_agencies(
+    raw: bool = False
 ) -> pd.DataFrame:
     """
     Fetches FBI agency crosswalk data.
@@ -253,7 +296,7 @@ def get_cde_reporting_agencies(
                         if not isinstance(item, dict):
                             continue
                         results.append(item)
-    return pd.DataFrame(results)
+    return _records_to_wide_dataframe(records=results)
 
 def get_cde_arrest_totals_by_state(
     start_date: str = None,
@@ -261,14 +304,11 @@ def get_cde_arrest_totals_by_state(
     state_abbr: str = None,
     offense_code: int = None,
     table: str = "arrestee race",
+    raw: bool = False
 ) -> pd.DataFrame:
     """
     Fetches FBI arrest data from the government API for the specified year range and state abbreviation.
     """
-    headers = {
-        "X-API-KEY": FBI_API_KEY,
-        "User-Agent": "StatPack/1.0",
-    }
     results = []
     if offense_code is None:
         offense_code = "all"
@@ -291,28 +331,24 @@ def get_cde_arrest_totals_by_state(
             raise ValueError(
                 f"Table '{table}' not found in response. Available tables: {available_keys}"
             )
-        # we need to add the header row to results
 
         for table_name, table_data in data.items():
             if table_name.lower() == table.lower():
                 for entry, value in table_data.items():
                     results.append({table_name: entry, "Value": value})
 
-    return pd.DataFrame(results)
+    return _records_to_wide_dataframe(records=results)
 
 def get_cde_arrest_counts_by_state(
     start_date: str = None,
     end_date: str = None,
     state_abbr: str = None,
     offense_code: int = None,
+    raw: bool = False
 ) -> pd.DataFrame:
     """
     Fetches FBI arrest data from the government API for the specified year range and state abbreviation.
     """
-    headers = {
-        "X-API-KEY": FBI_API_KEY,
-        "User-Agent": "StatPack/1.0",
-    }
     results = [
     ]
     if offense_code is None:
@@ -391,23 +427,19 @@ def get_cde_arrest_counts_by_state(
                     }
                 )
 
-    return pd.DataFrame(results).set_index(['Date', 'State']).sort_index()
+    return _records_to_wide_dataframe(records=results, index_cols=["Date", "State"])
 
 def get_cde_arrest_totals_by_origin(
     start_date: str = None,
     end_date: str = None,
     origin_code: str = None,
     offense_code: int = None,
+    raw: bool = False,
 ) -> pd.DataFrame:
     """
     Fetches FBI arrest totals by agency ORI code and returns a DataFrame.
     Each row represents one date with rate and actual arrest counts.
     """
-    headers = {
-        "X-API-KEY": FBI_API_KEY,
-        "User-Agent": "StatPack/1.0",
-    }
-
     if offense_code is None:
         offense_code = "all"
     if origin_code is None:
@@ -419,7 +451,7 @@ def get_cde_arrest_totals_by_origin(
 
     url = f"{FBI_API_BASE_URL}/crime/fbi/cde/arrest/agency/{origin_code}/{offense_code}?type=totals&from={start_date}&to={end_date}&API_KEY={FBI_API_KEY}"
     response = requests.get(url, headers=headers)
-    response.raise_for_status()
+    # response.raise_for_status()
 
     data = response.json()
     results = []
@@ -434,24 +466,19 @@ def get_cde_arrest_totals_by_origin(
             "arrest_rate": rates.get(date),
             "arrest_total": actuals.get(date),
         })
-    return pd.DataFrame(results)
+    return _records_to_wide_dataframe(records=results)
 
 def get_cde_arrest_counts_by_origin(
     start_date: str = None,
     end_date: str = None,
     origin_code: str = None,
     offense_code: int = None,
+    raw: bool = False,
 ) -> pd.DataFrame:
     """
     Fetches FBI arrest counts by agency ORI code and returns a DataFrame.
     Each row represents one date/offense combination with rate, total, and population.
     """
-    headers = {
-        "X-API-KEY": FBI_API_KEY,
-        "User-Agent": "StatPack/1.0",
-        "Accept": "application/json",
-    }
-
     if offense_code is None:
         offense_code = "all"
     if origin_code is None:
@@ -480,14 +507,15 @@ def get_cde_arrest_counts_by_origin(
             "arrest_total": actuals.get(date),
             "population": populations.get(date),
         })
-    return pd.DataFrame(results)
+    return _records_to_wide_dataframe(records=results)
 
 def get_cde_nibrs_totals_by_state(
     start_date: str = None,
     end_date: str = None,
     state_abbr: str = None,
     nibrs_code: int = None,
-):
+    raw: bool = False,
+) -> pd.DataFrame | list[dict]:
     """gather a state wide NIBRS
 
     Args:
@@ -495,120 +523,56 @@ def get_cde_nibrs_totals_by_state(
         end_date (str, optional): _description_. Defaults to None.
         state_abbr (str, optional): _description_. Defaults to None.
         nibrs_code (int, optional): _description_. Defaults to None.
+        raw (bool, optional): When True, return raw list[dict] records; otherwise return DataFrame.
     """
-
-    headers = {
-        "X-API-KEY": FBI_API_KEY,
-        "User-Agent": "StatPack/1.0",
-        "Accept": "application/json",
-    }
-
-    results = []
+    records = []
     if start_date is None:
         start_date = "01-2020"
 
     if end_date is None:
         end_date = "12-2020"
 
-    if state_abbr is None:
-        for state_abbr, state in us_territory_mapping.items():
-            if nibrs_code is None:
-                for nibrs_info in nibrs_offense_codes:
-                    nibrs_code = nibrs_info.code
+    states_to_query = (
+        list(us_territory_mapping.keys()) if state_abbr is None else [state_abbr]
+    )
+    nibrs_codes_to_query = (
+        [info.code for info in nibrs_offense_codes] if nibrs_code is None else [nibrs_code]
+    )
 
-                    url = f"{FBI_API_BASE_URL}/crime/fbi/cde/nibrs/state/{state_abbr}/{nibrs_code}?from={start_date}&to={end_date}&type=totals&API_KEY={FBI_API_KEY}"
-                    response = requests.get(url, headers=headers)
-                    if response.status_code == 200:
-                        print(f"Data fetched successfully for {state_abbr} and NIBRS code {nibrs_code}")
-                        data = response.json()
-                        results.append({
-                            "state_code": state_abbr,
-                            "nibrs_code": nibrs_code,
-                            "crime": nibrs_offense_mapping[nibrs_code]["name"],
-                            **{f"victim.age.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["age"].items()},
-                            **{f"victim.sex.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["sex"].items()},
-                            **{f"victim.race.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["race"].items()},
-                            **{f"victim.location.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["location"].items()},
-                            **{f"victim.ethnicity.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["ethnicity"].items()},
-                            **{f"offender.age.{k.lower().replace(' ', '_')}": v for k, v in data["offender"]["age"].items()},
-                            **{f"offender.sex.{k.lower().replace(' ', '_')}": v for k, v in data["offender"]["sex"].items()},
-                            **{f"offender.race.{k.lower().replace(' ', '_')}": v for k, v in data["offender"]["race"].items()},
-                            **{f"offender.ethnicity.{k.lower().replace(' ', '_')}": v for k, v in data["offender"]["ethnicity"].items()},
-                            "nibrs_code": nibrs_code,
-                            "crime": nibrs_offense_mapping[nibrs_code]["name"],
-                        })
-                        time.sleep(1)
-                    # else:
-                    #     response.raise_for_status()
-            else:
-                url = f"{FBI_API_BASE_URL}/crime/fbi/cde/nibrs/state/{state_abbr}/{nibrs_code}?from={start_date}&to={end_date}&type=totals&API_KEY={FBI_API_KEY}"
-                response = requests.get(url, headers=headers)
-                if response.status_code == 200:
-                    # print(f"Data fetched successfully for {state_abbr}")
-                    data = response.json()
-                    results.append({
-                        "state": state_abbr,
-                        "nibrs_code": nibrs_code,
-                        "crime": nibrs_offense_mapping[nibrs_code]["name"],
-                        **{f"victim.age.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["age"].items()},
-                        **{f"victim.sex.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["sex"].items()},
-                        **{f"victim.race.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["race"].items()},
-                        **{f"victim.location.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["location"].items()},
-                        **{f"victim.ethnicity.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["ethnicity"].items()},
-                        **{f"offender.age.{k.lower().replace(' ', '_')}": v for k, v in data["offender"]["age"].items()},
-                        **{f"offender.sex.{k.lower().replace(' ', '_')}": v for k, v in data["offender"]["sex"].items()},
-                        **{f"offender.race.{k.lower().replace(' ', '_')}": v for k, v in data["offender"]["race"].items()},
-                        **{f"offender.ethnicity.{k.lower().replace(' ', '_')}": v for k, v in data["offender"]["ethnicity"].items()},
-                    })
-                    time.sleep(1)
-    else:
-        if nibrs_code is None:
-            for nibrs_info in nibrs_offense_codes:
-                nibrs_code = nibrs_info.code
-
-                url = f"{FBI_API_BASE_URL}/crime/fbi/cde/nibrs/state/{state_abbr}/{nibrs_code}?from={start_date}&to={end_date}&type=totals&API_KEY={FBI_API_KEY}"
-                response = requests.get(url, headers=headers)
-                if response.status_code == 200:
-                    print(f"Data fetched successfully for {state_abbr} and NIBRS code {nibrs_code}")
-                    data = response.json()
-                    results.append({
-                        "state": state_abbr,
-                        "nibrs_code": nibrs_code,
-                        "crime": nibrs_offense_mapping[nibrs_code]["name"],
-                        **{f"victim.age.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["age"].items()},
-                        **{f"victim.sex.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["sex"].items()},
-                        **{f"victim.race.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["race"].items()},
-                        **{f"victim.location.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["location"].items()},
-                        **{f"victim.ethnicity.{k.lower().replace(' ', '_')}": v for k, v in data["victim"]["ethnicity"].items()},
-                        **{f"offender.age.{k.lower().replace(' ', '_')}": v for k, v in data["offender"]["age"].items()},
-                        **{f"offender.sex.{k.lower().replace(' ', '_')}": v for k, v in data["offender"]["sex"].items()},
-                        **{f"offender.race.{k.lower().replace(' ', '_')}": v for k, v in data["offender"]["race"].items()},
-                        **{f"offender.ethnicity.{k.lower().replace(' ', '_')}": v for k, v in data["offender"]["ethnicity"].items()},
-                        # **{f"offender_relationship_{k}": v for k, v in data["offender"]["relationship"].items()},
-                    })
-                    time.sleep(1)
-                # else:
-                #     response.raise_for_status()
-        else:
-            url = f"{FBI_API_BASE_URL}/crime/fbi/cde/nibrs/state/{state_abbr}/{nibrs_code}?from={start_date}&to={end_date}&type=totals&API_KEY={FBI_API_KEY}"
+    for abbr in states_to_query:
+        for code in nibrs_codes_to_query:
+            code_key = int(code) if str(code).isdigit() else code
+            crime_name = nibrs_offense_mapping.get(code_key, {}).get("name")
+            url = f"{FBI_API_BASE_URL}/crime/fbi/cde/nibrs/state/{abbr}/{code}?from={start_date}&to={end_date}&type=totals&API_KEY={FBI_API_KEY}"
             response = requests.get(url, headers=headers)
             if response.status_code == 200:
-                print(f"Data fetched successfully for {state_abbr} and NIBRS code {nibrs_code}")
                 data = response.json()
-                results.append({
-                    "state": state_abbr,
-                    "nibrs_code": nibrs_code,
-                    "crime": nibrs_offense_mapping[nibrs_code]["name"],
-                    **{f"victim.age.{k.lower().replace(' ', '_').replace(',', '-')}": v for k, v in data["victim"]["age"].items()},
-                    **{f"victim.sex.{k.lower().replace(' ', '_').replace(',', '-')}": v for k, v in data["victim"]["sex"].items()},
-                    **{f"victim.race.{k.lower().replace(' ', '_').replace(',', '-')}": v for k, v in data["victim"]["race"].items()},
-                    **{f"victim.location.{k.lower().replace(' ', '_').replace(',', '-')}": v for k, v in data["victim"]["location"].items()},
-                    **{f"victim.ethnicity.{k.lower().replace(' ', '_').replace(',', '-')}": v for k, v in data["victim"]["ethnicity"].items()},
-                    **{f"offender.age.{k.lower().replace(' ', '_').replace(',', '-')}": v for k, v in data["offender"]["age"].items()},
-                    **{f"offender.sex.{k.lower().replace(' ', '_').replace(',', '-')}": v for k, v in data["offender"]["sex"].items()},
-                    **{f"offender.race.{k.lower().replace(' ', '_').replace(',', '-')}": v for k, v in data["offender"]["race"].items()},
-                    **{f"offender.ethnicity.{k.lower().replace(' ', '_').replace(',', '-')}" : v for k, v in data["offender"]["ethnicity"].items()},
-                })
-            # else:
-            #     response.raise_for_status()
-    return pd.DataFrame(results)
+                records.append(
+                    {
+                        "state_abbr": abbr,
+                        "state_name": get_state_from_abbr(abbr),
+                        "nibrs_code": code_key,
+                        "crime": crime_name,
+                        "start_date": start_date,
+                        "end_date": end_date,
+                        **data,
+                    }
+                )
+
+            if state_abbr is None:
+                time.sleep(1)
+
+    return _finalize_records(
+        records=records,
+        raw=raw,
+        ordered_columns=[
+            "state_abbr",
+            "state_name",
+            "nibrs_code",
+            "crime",
+            "start_date",
+            "end_date",
+        ],
+        sort_by=["state_abbr", "nibrs_code"],
+        normalize_columns=True,
+    )

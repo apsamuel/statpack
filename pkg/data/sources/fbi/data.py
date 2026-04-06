@@ -127,17 +127,42 @@ nibrs_offense_mapping: dict[str, dict[str, str]] = {
         "category": "Violent Crime",
         "short_name": "Aggravated Assault",
     },
+    "13A": {
+        "name": "Aggravated Assault",
+        "category": "Violent Crime",
+        "short_name": "Aggravated Assault",
+    },
     "HOM": {"name": "Homicide", "category": "Violent Crime", "short_name": "Homicide"},
     "RPE": {"name": "Rape", "category": "Violent Crime", "short_name": "Rape"},
     "ROB": {"name": "Robbery", "category": "Violent Crime", "short_name": "Robbery"},
+    "120": {
+        "name": "Robbery",
+        "category": "Violent Crime",
+        "short_name": "Robbery",
+    },
     "ARS": {"name": "Arson", "category": "Property Crime", "short_name": "Arson"},
+    "200": {
+        "name": "Arson",
+        "category": "Property Crime",
+        "short_name": "Arson",
+    },
     "BUR": {"name": "Burglary", "category": "Property Crime", "short_name": "Burglary"},
+    "220": {
+        "name": "Burglary/Breaking & Entering",
+        "category": "Property Crime",
+        "short_name": "Burglary",
+    },
     "LAR": {
         "name": "Larceny-theft",
         "category": "Property Crime",
         "short_name": "Larceny",
     },
     "MVT": {
+        "name": "Motor Vehicle Theft",
+        "category": "Property Crime",
+        "short_name": "Motor Vehicle Theft",
+    },
+    "240": {
         "name": "Motor Vehicle Theft",
         "category": "Property Crime",
         "short_name": "Motor Vehicle Theft",
@@ -176,6 +201,21 @@ nibrs_offense_mapping: dict[str, dict[str, str]] = {
         "name": "Credit Card/Automated Teller Machine Fraud",
         "category": "White Collar Crime",
         "short_name": "Credit Card Fraud",
+    },
+    "11A": {
+        "name": "Rape",
+        "category": "Sex Crime",
+        "short_name": "Rape",
+    },
+    "11B": {
+        "name": "Sodomy",
+        "category": "Sex Crime",
+        "short_name": "Sodomy",
+    },
+    "11C": {
+        "name": "Sexual Assault With An Object",
+        "category": "Sex Crime",
+        "short_name": "Sexual Assault With Object",
     },
     "11D": {
         "name": "Criminal Sexual Contact",
