@@ -278,9 +278,15 @@ def get_cde_summarized_by_state(
 
 def get_cde_reporting_agencies(
     raw: bool = False
-) -> pd.DataFrame:
+) -> pd.DataFrame | list[dict]:
     """
     Fetches FBI agency crosswalk data.
+
+    Args:
+        raw (bool, optional): When True, return raw list[dict] records; otherwise return DataFrame.
+
+    Returns:
+        pd.DataFrame | list[dict]: Flattened DataFrame (default) or raw records.
     """
     headers = {"X-API-KEY": FBI_API_KEY, "User-Agent": "StatPack/1.0"}
     results = []
@@ -288,7 +294,6 @@ def get_cde_reporting_agencies(
         url = f"{FBI_API_BASE_URL}/crime/fbi/cde/agency/byStateAbbr/{state_abbr}?API_KEY={FBI_API_KEY}"
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
-            # print(f"Data fetched successfully for {state_abbr}")
             data = response.json()
             for ori, agency in data.items():
                 if isinstance(agency, list):
@@ -296,7 +301,7 @@ def get_cde_reporting_agencies(
                         if not isinstance(item, dict):
                             continue
                         results.append(item)
-    return _records_to_wide_dataframe(records=results)
+    return _finalize_records(records=results, raw=raw)
 
 def get_cde_arrest_totals_by_state(
     start_date: str = None,
@@ -305,9 +310,20 @@ def get_cde_arrest_totals_by_state(
     offense_code: int = None,
     table: str = "arrestee race",
     raw: bool = False
-) -> pd.DataFrame:
+) -> pd.DataFrame | list[dict]:
     """
-    Fetches FBI arrest data from the government API for the specified year range and state abbreviation.
+    Fetches FBI arrest totals by state and breakdown table.
+
+    Args:
+        start_date (str, optional): Start date (MM-YYYY). Defaults to "01-2020".
+        end_date (str, optional): End date (MM-YYYY). Defaults to "12-2020".
+        state_abbr (str, optional): Two-letter state abbreviation. Defaults to "NY".
+        offense_code (int, optional): FBI offense code. Defaults to "all".
+        table (str, optional): Breakdown table name to extract. Defaults to "arrestee race".
+        raw (bool, optional): When True, return raw list[dict] records; otherwise return DataFrame.
+
+    Returns:
+        pd.DataFrame | list[dict]: Flattened DataFrame (default) or raw records.
     """
     results = []
     if offense_code is None:
@@ -333,11 +349,12 @@ def get_cde_arrest_totals_by_state(
             )
 
         for table_name, table_data in data.items():
-            if table_name.lower() == table.lower():
-                for entry, value in table_data.items():
-                    results.append({table_name: entry, "Value": value})
+                if table_name.lower() == table.lower():
+                    for entry, value in table_data.items():
+                        results.append({table_name: entry, "Value": value})
 
-    return _records_to_wide_dataframe(records=results)
+    return _finalize_records(records=results, raw=raw)
+
 
 def get_cde_arrest_counts_by_state(
     start_date: str = None,
@@ -345,9 +362,19 @@ def get_cde_arrest_counts_by_state(
     state_abbr: str = None,
     offense_code: int = None,
     raw: bool = False
-) -> pd.DataFrame:
+) -> pd.DataFrame | list[dict]:
     """
-    Fetches FBI arrest data from the government API for the specified year range and state abbreviation.
+    Fetches FBI arrest counts by state with demographic breakdown.
+
+    Args:
+        start_date (str, optional): Start date (MM-YYYY). Defaults to "01-2020".
+        end_date (str, optional): End date (MM-YYYY). Defaults to "12-2020".
+        state_abbr (str, optional): Two-letter state abbreviation. If None, all states are queried.
+        offense_code (int, optional): FBI offense code. Defaults to "all".
+        raw (bool, optional): When True, return raw list[dict] records; otherwise return DataFrame.
+
+    Returns:
+        pd.DataFrame | list[dict]: Flattened DataFrame (default) or raw records.
     """
     results = [
     ]
@@ -427,7 +454,11 @@ def get_cde_arrest_counts_by_state(
                     }
                 )
 
-    return _records_to_wide_dataframe(records=results, index_cols=["Date", "State"])
+    return _finalize_records(
+        records=results,
+        raw=raw,
+        index_cols=["Date", "State"],
+    )
 
 def get_cde_arrest_totals_by_origin(
     start_date: str = None,
@@ -435,10 +466,19 @@ def get_cde_arrest_totals_by_origin(
     origin_code: str = None,
     offense_code: int = None,
     raw: bool = False,
-) -> pd.DataFrame:
+) -> pd.DataFrame | list[dict]:
     """
-    Fetches FBI arrest totals by agency ORI code and returns a DataFrame.
-    Each row represents one date with rate and actual arrest counts.
+    Fetches FBI arrest totals by agency ORI code.
+
+    Args:
+        start_date (str, optional): Start date (MM-YYYY). Defaults to "01-2020".
+        end_date (str, optional): End date (MM-YYYY). Defaults to "12-2020".
+        origin_code (str, optional): Agency ORI code. Defaults to "AL0430200".
+        offense_code (int, optional): FBI offense code. Defaults to "all".
+        raw (bool, optional): When True, return raw list[dict] records; otherwise return DataFrame.
+
+    Returns:
+        pd.DataFrame | list[dict]: Flattened DataFrame (default) or raw records.
     """
     if offense_code is None:
         offense_code = "all"
@@ -466,7 +506,11 @@ def get_cde_arrest_totals_by_origin(
             "arrest_rate": rates.get(date),
             "arrest_total": actuals.get(date),
         })
-    return _records_to_wide_dataframe(records=results)
+    return _finalize_records(
+        records=results,
+        raw=raw,
+        sort_by=["date"],
+    )
 
 def get_cde_arrest_counts_by_origin(
     start_date: str = None,
@@ -474,10 +518,19 @@ def get_cde_arrest_counts_by_origin(
     origin_code: str = None,
     offense_code: int = None,
     raw: bool = False,
-) -> pd.DataFrame:
+) -> pd.DataFrame | list[dict]:
     """
-    Fetches FBI arrest counts by agency ORI code and returns a DataFrame.
-    Each row represents one date/offense combination with rate, total, and population.
+    Fetches FBI arrest counts by agency ORI code.
+
+    Args:
+        start_date (str, optional): Start date (MM-YYYY). Defaults to "01-2020".
+        end_date (str, optional): End date (MM-YYYY). Defaults to "12-2020".
+        origin_code (str, optional): Agency ORI code. Defaults to "AL0430200".
+        offense_code (int, optional): FBI offense code. Defaults to "all".
+        raw (bool, optional): When True, return raw list[dict] records; otherwise return DataFrame.
+
+    Returns:
+        pd.DataFrame | list[dict]: Flattened DataFrame (default) or raw records.
     """
     if offense_code is None:
         offense_code = "all"
@@ -507,7 +560,11 @@ def get_cde_arrest_counts_by_origin(
             "arrest_total": actuals.get(date),
             "population": populations.get(date),
         })
-    return _records_to_wide_dataframe(records=results)
+    return _finalize_records(
+        records=results,
+        raw=raw,
+        sort_by=["date"],
+    )
 
 def get_cde_nibrs_totals_by_state(
     start_date: str = None,
