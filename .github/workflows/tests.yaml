@@ -1,5 +1,10 @@
 name: Run Tests
 on: [push]
+env:
+  GOV_API_BASE_URL: ${{ vars.GOV_API_BASE_URL }}
+  GOV_API_KEY: ${{ secrets.GOV_API_KEY }}
+  CENSUS_API_BASE_URL: ${{ vars.CENSUS_API_BASE_URL }}
+  CENSUS_API_KEY: ${{ secrets.CENSUS_API_KEY }}
 jobs:
   run-pytest:
     runs-on: ubuntu-latest
