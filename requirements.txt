@@ -12,3 +12,5 @@ pytest-cov==7.1.0
 pytest-mock==3.14.0
 pytest-randomly==3.16.0
 responses==0.25.3
+# dev dependencies
+markitdown[all]==0.1.5
