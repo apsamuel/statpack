@@ -22,14 +22,14 @@ import pandas as pd
 
 # Import data source modules
 from pkg.data.sources.fbi import (
-    get_cde_reporting_agencies,
-    get_cde_arrest_totals_by_state,
-    get_cde_arrest_counts_by_state,
-    get_cde_arrest_totals_by_origin,
-    get_cde_arrest_counts_by_origin,
-    get_cde_nibrs_totals_by_state,
-    get_cde_summarized_by_state,
-    get_cde_expanded_homicide_counts_by_state,
+    get_reporting_agencies,
+    get_arrest_totals_by_state,
+    get_arrest_counts_by_state,
+    get_arrest_totals_by_origin,
+    get_arrest_counts_by_origin,
+    get_nibrs_totals_by_state,
+    get_summarized_by_state,
+    get_expanded_homicide_counts_by_state,
 )
 from pkg.data.sources.census import (
     get_census_acs_variables,
@@ -88,20 +88,20 @@ class FBICommands:
     @staticmethod
     def agencies(args) -> pd.DataFrame:
         """Fetch FBI reporting agencies."""
-        return get_cde_reporting_agencies()
+        return get_reporting_agencies()
 
     @staticmethod
     def arrests_by_state(args) -> pd.DataFrame:
         """Fetch arrest totals or counts by state."""
         if args.breakdown:
-            return get_cde_arrest_counts_by_state(
+            return get_arrest_counts_by_state(
                 state_abbr=args.state or None,
                 offense_code=args.offense,
                 start_date=args.start_date,
                 end_date=args.end_date,
             )
         else:
-            return get_cde_arrest_totals_by_state(
+            return get_arrest_totals_by_state(
                 state_abbr=args.state or None,
                 offense_code=args.offense,
                 start_date=args.start_date,
@@ -112,14 +112,14 @@ class FBICommands:
     def arrests_by_origin(args) -> pd.DataFrame:
         """Fetch arrests by agency (ORI code)."""
         if args.breakdown:
-            return get_cde_arrest_counts_by_origin(
+            return get_arrest_counts_by_origin(
                 origin_code=args.ori_code,
                 offense_code=args.offense,
                 start_date=args.start_date,
                 end_date=args.end_date,
             )
         else:
-            return get_cde_arrest_totals_by_origin(
+            return get_arrest_totals_by_origin(
                 origin_code=args.ori_code,
                 offense_code=args.offense,
                 start_date=args.start_date,
@@ -129,7 +129,7 @@ class FBICommands:
     @staticmethod
     def summarized_by_state(args) -> pd.DataFrame:
         """Fetch summarized offense data by state."""
-        return get_cde_summarized_by_state(
+        return get_summarized_by_state(
             start_date=args.start_date,
             end_date=args.end_date,
             state_abbr=args.state or None,
@@ -139,7 +139,7 @@ class FBICommands:
     @staticmethod
     def nibrs_by_state(args) -> pd.DataFrame:
         """Fetch NIBRS data by state."""
-        results = get_cde_nibrs_totals_by_state(
+        results = get_nibrs_totals_by_state(
             state_abbr=args.state or None,
             nibrs_code=args.nibrs_code,
             start_date=args.start_date,
@@ -154,7 +154,7 @@ class FBICommands:
     @staticmethod
     def expanded_homicide_counts_by_state(args) -> pd.DataFrame:
         """Fetch expanded homicide counts by state."""
-        return get_cde_expanded_homicide_counts_by_state(
+        return get_expanded_homicide_counts_by_state(
             start_date=args.start_date,
             end_date=args.end_date,
             state_abbr=args.state or None,
@@ -167,43 +167,44 @@ class CensusCommands:
     @staticmethod
     def acs_variables(args) -> pd.DataFrame:
         """Fetch available ACS variables."""
-        return get_census_acs_variables(
-            year=args.year,
-            dataset=args.dataset,
-        )
+        return get_census_acs_variables(year=args.year, dataset=args.dataset)
 
     @staticmethod
     def acs_detailed(args) -> pd.DataFrame:
         """Fetch ACS data at national level."""
-        variables = args.variables.split(",") if isinstance(args.variables, str) else args.variables
+        variables = (
+            args.variables.split(",")
+            if isinstance(args.variables, str)
+            else args.variables
+        )
         return get_census_acs_detailed(
-            variables=variables,
-            year=args.year,
-            dataset=args.dataset,
+            variables=variables, year=args.year, dataset=args.dataset
         )
 
     @staticmethod
     def acs_by_state(args) -> pd.DataFrame:
         """Fetch ACS data by state."""
-        variables = args.variables.split(",") if isinstance(args.variables, str) else args.variables
+        variables = (
+            args.variables.split(",")
+            if isinstance(args.variables, str)
+            else args.variables
+        )
         states = args.states.split(",") if isinstance(args.states, str) else args.states
         return get_census_acs_detailed_by_state(
-            variables=variables,
-            year=args.year,
-            dataset=args.dataset,
-            states=states,
+            variables=variables, year=args.year, dataset=args.dataset, states=states
         )
 
     @staticmethod
     def acs_by_state_county(args) -> pd.DataFrame:
         """Fetch ACS data by state and county."""
-        variables = args.variables.split(",") if isinstance(args.variables, str) else args.variables
+        variables = (
+            args.variables.split(",")
+            if isinstance(args.variables, str)
+            else args.variables
+        )
         states = args.states.split(",") if isinstance(args.states, str) else args.states
         return get_census_acs_detailed_by_state_county(
-            variables=variables,
-            year=args.year,
-            dataset=args.dataset,
-            states=states,
+            variables=variables, year=args.year, dataset=args.dataset, states=states
         )
 
 
@@ -213,56 +214,132 @@ def setup_fbi_subparsers(subparsers):
     fbi_subparsers = fbi_parser.add_subparsers(dest="fbi_command", required=True)
 
     # Agencies command
-    agencies = fbi_subparsers.add_parser("get-reporting-agencies", help="Fetch FBI reporting agencies")
+    agencies = fbi_subparsers.add_parser(
+        "get-reporting-agencies", help="Fetch FBI reporting agencies"
+    )
     agencies.set_defaults(func=FBICommands.agencies)
     _add_output_args(agencies)
 
     # Arrests by state command
-    arrests_state = fbi_subparsers.add_parser("get-arrests-by-state", help="Fetch arrests by state")
-    arrests_state.add_argument("--state", help="State abbreviation or name (default: all states)")
-    arrests_state.add_argument("--offense", type=int, required=False, help="FBI offense code", default=None)
-    arrests_state.add_argument("--start-date", type=str, required=True, help="Start date (MM-YYYY format, e.g., 01-2020)")
-    arrests_state.add_argument("--end-date", type=str, required=True, help="End date (MM-YYYY format, e.g., 12-2024)")
-    arrests_state.add_argument("--breakdown", help="Demographic breakdown (e.g., by_race, by_age)")
+    arrests_state = fbi_subparsers.add_parser(
+        "get-arrests-by-state", help="Fetch arrests by state"
+    )
+    arrests_state.add_argument(
+        "--state", help="State abbreviation or name (default: all states)"
+    )
+    arrests_state.add_argument(
+        "--offense", type=int, required=False, help="FBI offense code", default=None
+    )
+    arrests_state.add_argument(
+        "--start-date",
+        type=str,
+        required=True,
+        help="Start date (MM-YYYY format, e.g., 01-2020)",
+    )
+    arrests_state.add_argument(
+        "--end-date",
+        type=str,
+        required=True,
+        help="End date (MM-YYYY format, e.g., 12-2024)",
+    )
+    arrests_state.add_argument(
+        "--breakdown", help="Demographic breakdown (e.g., by_race, by_age)"
+    )
     arrests_state.set_defaults(func=FBICommands.arrests_by_state)
     _add_output_args(arrests_state)
 
     # Arrests by origin (agency) command
-    arrests_origin = fbi_subparsers.add_parser("get-arrests-by-origin", help="Fetch arrests by agency ORI code")
+    arrests_origin = fbi_subparsers.add_parser(
+        "get-arrests-by-origin", help="Fetch arrests by agency ORI code"
+    )
     arrests_origin.add_argument("--ori-code", required=True, help="Agency ORI code")
-    arrests_origin.add_argument("--offense", type=int, required=True, help="FBI offense code")
-    arrests_origin.add_argument("--start-date", type=str, required=True, help="Start date (MM-YYYY format, e.g., 01-2020)")
-    arrests_origin.add_argument("--end-date", type=str, required=True, help="End date (MM-YYYY format, e.g., 12-2024)")
+    arrests_origin.add_argument(
+        "--offense", type=int, required=True, help="FBI offense code"
+    )
+    arrests_origin.add_argument(
+        "--start-date",
+        type=str,
+        required=True,
+        help="Start date (MM-YYYY format, e.g., 01-2020)",
+    )
+    arrests_origin.add_argument(
+        "--end-date",
+        type=str,
+        required=True,
+        help="End date (MM-YYYY format, e.g., 12-2024)",
+    )
     arrests_origin.set_defaults(func=FBICommands.arrests_by_origin)
     _add_output_args(arrests_origin)
 
     # NIBRS command
-    nibrs = fbi_subparsers.add_parser("get-nibrs-by-state", help="Fetch NIBRS data by state")
-    nibrs.add_argument("--state", help="State abbreviation or name (default: all states)")
-    nibrs.add_argument("--nibrs-code", required=True, help="NIBRS offense code (e.g., HOM, ASS, ROB)")
-    nibrs.add_argument("--start-date", type=str, required=True, help="Start date (MM-YYYY format, e.g., 01-2020)")
-    nibrs.add_argument("--end-date", type=str, required=True, help="End date (MM-YYYY format, e.g., 12-2024)")
+    nibrs = fbi_subparsers.add_parser(
+        "get-nibrs-by-state", help="Fetch NIBRS data by state"
+    )
+    nibrs.add_argument(
+        "--state", help="State abbreviation or name (default: all states)"
+    )
+    nibrs.add_argument(
+        "--nibrs-code", required=True, help="NIBRS offense code (e.g., HOM, ASS, ROB)"
+    )
+    nibrs.add_argument(
+        "--start-date",
+        type=str,
+        required=True,
+        help="Start date (MM-YYYY format, e.g., 01-2020)",
+    )
+    nibrs.add_argument(
+        "--end-date",
+        type=str,
+        required=True,
+        help="End date (MM-YYYY format, e.g., 12-2024)",
+    )
     nibrs.set_defaults(func=FBICommands.nibrs_by_state)
     _add_output_args(nibrs)
 
     # Summarized by state command
-    summarized = fbi_subparsers.add_parser("get-summary-by-state", help="Fetch summarized offense data by state")
+    summarized = fbi_subparsers.add_parser(
+        "get-summary-by-state", help="Fetch summarized offense data by state"
+    )
     summarized.add_argument("--state", help="State abbreviation (default: all states)")
     summarized.add_argument(
         "--offense",
         choices=["V", "ASS", "LAR", "MVT", "HOM", "RPE", "ROB", "ARS", "P"],
         help="Offense code (default: all offenses)",
     )
-    summarized.add_argument("--start-date", type=str, required=True, help="Start date (MM-YYYY format, e.g., 01-2020)")
-    summarized.add_argument("--end-date", type=str, required=True, help="End date (MM-YYYY format, e.g., 12-2024)")
+    summarized.add_argument(
+        "--start-date",
+        type=str,
+        required=True,
+        help="Start date (MM-YYYY format, e.g., 01-2020)",
+    )
+    summarized.add_argument(
+        "--end-date",
+        type=str,
+        required=True,
+        help="End date (MM-YYYY format, e.g., 12-2024)",
+    )
     summarized.set_defaults(func=FBICommands.summarized_by_state)
     _add_output_args(summarized)
 
     # Expanded Homicide By State
-    expanded_homicide = fbi_subparsers.add_parser("get-expanded-homicide-by-state", help="Fetch expanded homicide counts by state")
-    expanded_homicide.add_argument("--state", help="State abbreviation (default: all states)")
-    expanded_homicide.add_argument("--start-date", type=str, required=True, help="Start date (MM-YYYY format, e.g., 01-2020)")
-    expanded_homicide.add_argument("--end-date", type=str, required=True, help="End date (MM-YYYY format, e.g., 12-2024)")
+    expanded_homicide = fbi_subparsers.add_parser(
+        "get-expanded-homicide-by-state", help="Fetch expanded homicide counts by state"
+    )
+    expanded_homicide.add_argument(
+        "--state", help="State abbreviation (default: all states)"
+    )
+    expanded_homicide.add_argument(
+        "--start-date",
+        type=str,
+        required=True,
+        help="Start date (MM-YYYY format, e.g., 01-2020)",
+    )
+    expanded_homicide.add_argument(
+        "--end-date",
+        type=str,
+        required=True,
+        help="End date (MM-YYYY format, e.g., 12-2024)",
+    )
     expanded_homicide.set_defaults(func=FBICommands.expanded_homicide_counts_by_state)
     _add_output_args(expanded_homicide)
 
@@ -270,38 +347,74 @@ def setup_fbi_subparsers(subparsers):
 def setup_census_subparsers(subparsers):
     """Set up Census subcommand parsers."""
     census_parser = subparsers.add_parser("census", help="U.S. Census Bureau Data")
-    census_subparsers = census_parser.add_subparsers(dest="census_command", required=True)
+    census_subparsers = census_parser.add_subparsers(
+        dest="census_command", required=True
+    )
 
     # ACS Variables command
-    acs_vars = census_subparsers.add_parser("get-acs-variables", help="List available ACS variables")
-    acs_vars.add_argument("--year", type=int, default=2024, help="Survey year (default: 2024)")
-    acs_vars.add_argument("--dataset", default="acs/acs1", help="Dataset identifier (default: acs/acs1)")
+    acs_vars = census_subparsers.add_parser(
+        "get-acs-variables", help="List available ACS variables"
+    )
+    acs_vars.add_argument(
+        "--year", type=int, default=2024, help="Survey year (default: 2024)"
+    )
+    acs_vars.add_argument(
+        "--dataset", default="acs/acs1", help="Dataset identifier (default: acs/acs1)"
+    )
     acs_vars.set_defaults(func=CensusCommands.acs_variables)
     _add_output_args(acs_vars)
 
     # ACS Detailed (national) command
-    acs_detailed = census_subparsers.add_parser("get-acs-detailed", help="Fetch ACS data (national level)")
-    acs_detailed.add_argument("--variables", required=True, help="Comma-separated variable codes")
-    acs_detailed.add_argument("--year", type=int, default=2024, help="Survey year (default: 2024)")
-    acs_detailed.add_argument("--dataset", default="acs/ acs1", help="Dataset identifier (default: acs/acs1)")
+    acs_detailed = census_subparsers.add_parser(
+        "get-acs-detailed", help="Fetch ACS data (national level)"
+    )
+    acs_detailed.add_argument(
+        "--variables", required=True, help="Comma-separated variable codes"
+    )
+    acs_detailed.add_argument(
+        "--year", type=int, default=2024, help="Survey year (default: 2024)"
+    )
+    acs_detailed.add_argument(
+        "--dataset", default="acs/ acs1", help="Dataset identifier (default: acs/acs1)"
+    )
     acs_detailed.set_defaults(func=CensusCommands.acs_detailed)
     _add_output_args(acs_detailed)
 
     # ACS by State command
-    acs_state = census_subparsers.add_parser("get-acs-by-state", help="Fetch ACS data by state")
-    acs_state.add_argument("--variables", required=True, help="Comma-separated variable codes")
-    acs_state.add_argument("--states", required=True, help="Comma-separated state abbreviations")
-    acs_state.add_argument("--year", type=int, default=2024, help="Survey year (default: 2024)")
-    acs_state.add_argument("--dataset", default="acs/acs1", help="Dataset identifier (default: acs/acs1)")
+    acs_state = census_subparsers.add_parser(
+        "get-acs-by-state", help="Fetch ACS data by state"
+    )
+    acs_state.add_argument(
+        "--variables", required=True, help="Comma-separated variable codes"
+    )
+    acs_state.add_argument(
+        "--states", required=True, help="Comma-separated state abbreviations"
+    )
+    acs_state.add_argument(
+        "--year", type=int, default=2024, help="Survey year (default: 2024)"
+    )
+    acs_state.add_argument(
+        "--dataset", default="acs/acs1", help="Dataset identifier (default: acs/acs1)"
+    )
     acs_state.set_defaults(func=CensusCommands.acs_by_state)
     _add_output_args(acs_state)
 
     # ACS by State and County command
-    acs_county = census_subparsers.add_parser("get-acs-by-state-county", help="Fetch ACS data by state and county")
-    acs_county.add_argument("--variables", required=True, help="Comma-separated variable codes")
-    acs_county.add_argument("--states", required=True, help="Comma-separated state abbreviations")
-    acs_county.add_argument("--year", type=int, default=2024, help="Survey year (default: 2024)")
-    acs_county.add_argument("--dataset", default="acs/acs1", help="Dataset identifier (default: acs/acs1)")
+    acs_county = census_subparsers.add_parser(
+        "get-acs-by-state-county", help="Fetch ACS data by state and county"
+    )
+    acs_county.add_argument(
+        "--variables", required=True, help="Comma-separated variable codes"
+    )
+    acs_county.add_argument(
+        "--states", required=True, help="Comma-separated state abbreviations"
+    )
+    acs_county.add_argument(
+        "--year", type=int, default=2024, help="Survey year (default: 2024)"
+    )
+    acs_county.add_argument(
+        "--dataset", default="acs/acs1", help="Dataset identifier (default: acs/acs1)"
+    )
     acs_county.set_defaults(func=CensusCommands.acs_by_state_county)
     _add_output_args(acs_county)
 

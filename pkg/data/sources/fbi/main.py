@@ -17,7 +17,7 @@ from .data import (
     nibrs_offense_mapping,
 )
 
-headers: dict  = {
+headers: dict = {
     "X-API-KEY": FBI_API_KEY,
     "User-Agent": "StatPack/1.0",
     "Accept": "application/json",
@@ -57,12 +57,18 @@ def _records_to_wide_dataframe(
         result = _normalize_dataframe_columns_wide(result)
 
     if ordered_columns:
-        present_ordered = [column for column in ordered_columns if column in result.columns]
-        dynamic_columns = sorted(column for column in result.columns if column not in present_ordered)
+        present_ordered = [
+            column for column in ordered_columns if column in result.columns
+        ]
+        dynamic_columns = sorted(
+            column for column in result.columns if column not in present_ordered
+        )
         result = result[present_ordered + dynamic_columns]
 
     if index_cols:
-        present_index_cols = [column for column in index_cols if column in result.columns]
+        present_index_cols = [
+            column for column in index_cols if column in result.columns
+        ]
         if present_index_cols:
             return result.set_index(present_index_cols).sort_index()
 
@@ -92,11 +98,12 @@ def _finalize_records(
         normalize_columns=normalize_columns,
     )
 
-def get_cde_expanded_homicide_counts_by_state(
+
+def get_expanded_homicide_counts_by_state(
     start_date: str = None,
-    end_date:  str = None,
+    end_date: str = None,
     state_abbr: str = None,
-    raw: bool = False
+    raw: bool = False,
 ) -> pd.DataFrame | list[dict]:
     """Fetch expanded homicide SHR () totals and return a super-wide DataFrame.
 
@@ -131,13 +138,7 @@ def get_cde_expanded_homicide_counts_by_state(
                 "start_date": start_date,
                 "end_date": end_date,
             }
-            records.append(
-                {
-                    "requested": requested,
-                    **requested,
-                    **data,
-                }
-            )
+            records.append({"requested": requested, **requested, **data})
         elif state_abbr is not None:
             response.raise_for_status()
 
@@ -158,7 +159,7 @@ def get_cde_expanded_homicide_counts_by_state(
     )
 
 
-def _flatten_get_cde_summarized_by_state_payload_wide(
+def _flatten_get_summarized_by_state_payload_wide(
     # raw: bool,
     payload: dict,
     requested_state_abbr: str,
@@ -168,30 +169,48 @@ def _flatten_get_cde_summarized_by_state_payload_wide(
 
     Output grain: one row per date for the requested state/offense.
     """
-
-    # if raw: return payload
-
     monthly_maps: list[tuple[str, dict]] = []
 
     offense_rates = payload.get("offenses", {}).get("rates", {})
     for series_name, series_values in offense_rates.items():
-        monthly_maps.append((f"offenses.rates.{_normalize_wide_key(series_name)}", series_values))
+        monthly_maps.append(
+            (f"offenses.rates.{_normalize_wide_key(series_name)}", series_values)
+        )
 
     offense_actuals = payload.get("offenses", {}).get("actuals", {})
     for series_name, series_values in offense_actuals.items():
-        monthly_maps.append((f"offenses.actuals.{_normalize_wide_key(series_name)}", series_values))
+        monthly_maps.append(
+            (f"offenses.actuals.{_normalize_wide_key(series_name)}", series_values)
+        )
 
     coverage = payload.get("tooltips", {}).get("Percent of Population Coverage", {})
     for series_name, series_values in coverage.items():
-        monthly_maps.append((f"tooltips.coverage_percent.{_normalize_wide_key(series_name)}", series_values))
+        monthly_maps.append(
+            (
+                f"tooltips.coverage_percent.{_normalize_wide_key(series_name)}",
+                series_values,
+            )
+        )
 
     populations = payload.get("populations", {}).get("population", {})
     for series_name, series_values in populations.items():
-        monthly_maps.append((f"populations.population.{_normalize_wide_key(series_name)}", series_values))
+        monthly_maps.append(
+            (
+                f"populations.population.{_normalize_wide_key(series_name)}",
+                series_values,
+            )
+        )
 
-    participated_populations = payload.get("populations", {}).get("participated_population", {})
+    participated_populations = payload.get("populations", {}).get(
+        "participated_population", {}
+    )
     for series_name, series_values in participated_populations.items():
-        monthly_maps.append((f"populations.participated_population.{_normalize_wide_key(series_name)}", series_values))
+        monthly_maps.append(
+            (
+                f"populations.participated_population.{_normalize_wide_key(series_name)}",
+                series_values,
+            )
+        )
 
     all_dates: set[str] = set()
     for _, series_values in monthly_maps:
@@ -199,8 +218,12 @@ def _flatten_get_cde_summarized_by_state_payload_wide(
             all_dates.update(series_values.keys())
 
     left_headers = payload.get("tooltips", {}).get("leftYAxisHeaders", {})
-    max_data_date = payload.get("cde_properties", {}).get("max_data_date", {}).get("UCR")
-    last_refresh_date = payload.get("cde_properties", {}).get("last_refresh_date", {}).get("UCR")
+    max_data_date = (
+        payload.get("cde_properties", {}).get("max_data_date", {}).get("UCR")
+    )
+    last_refresh_date = (
+        payload.get("cde_properties", {}).get("last_refresh_date", {}).get("UCR")
+    )
 
     rows: list[dict] = []
     for date_value in sorted(all_dates):
@@ -215,25 +238,40 @@ def _flatten_get_cde_summarized_by_state_payload_wide(
             "tooltips.left_y_axis_header.actual": left_headers.get("yAxisHeaderActual"),
         }
         for column_name, series_values in monthly_maps:
-            row[column_name] = series_values.get(date_value) if isinstance(series_values, dict) else None
+            row[column_name] = (
+                series_values.get(date_value)
+                if isinstance(series_values, dict)
+                else None
+            )
         rows.append(row)
 
     return pd.DataFrame(rows)
 
-def get_cde_summarized_by_state(
+
+def get_summarized_by_state(
     start_date: str = None,
     end_date: str = None,
     state_abbr: str = None,
     offense_code: str = None,
-    raw: bool = False
+    raw: bool = False,
 ) -> pd.DataFrame:
     """Fetch FBI CDE summarized offense data by state and return a wide DataFrame.
 
     Each row represents one date for a given state/offense combination.
     """
-    frames: list[pd.DataFrame]  = []
+    frames: list[pd.DataFrame] = []
     records: list = []
-    supported_offense_codes = ["V", "ASS", "LAR", "MVT", "HOM", "RPE", "ROB", "ARS", "P"]
+    supported_offense_codes = [
+        "V",
+        "ASS",
+        "LAR",
+        "MVT",
+        "HOM",
+        "RPE",
+        "ROB",
+        "ARS",
+        "P",
+    ]
 
     if start_date is None:
         start_date = "01-2020"
@@ -258,7 +296,7 @@ def get_cde_summarized_by_state(
                 data = response.json()
                 records.append(data)
                 frames.append(
-                    _flatten_get_cde_summarized_by_state_payload_wide(
+                    _flatten_get_summarized_by_state_payload_wide(
                         # raw=raw,
                         payload=data,
                         requested_state_abbr=abbr,
@@ -266,19 +304,18 @@ def get_cde_summarized_by_state(
                     )
                 )
 
-    if raw: return records
+    if raw:
+        return records
 
     if not frames:
         return pd.DataFrame()
 
     return pd.concat(frames, ignore_index=True).sort_values(
-        by=["date", "requested.state_abbr", "requested.offense_code"],
-        ignore_index=True,
+        by=["date", "requested.state_abbr", "requested.offense_code"], ignore_index=True
     )
 
-def get_cde_reporting_agencies(
-    raw: bool = False
-) -> pd.DataFrame | list[dict]:
+
+def get_reporting_agencies(raw: bool = False) -> pd.DataFrame | list[dict]:
     """
     Fetches FBI agency crosswalk data.
 
@@ -303,15 +340,15 @@ def get_cde_reporting_agencies(
                         results.append(item)
     return _finalize_records(records=results, raw=raw)
 
-def get_cde_arrest_counts_by_state(
+
+def get_arrest_counts_by_state(
     start_date: str = None,
     end_date: str = None,
     state_abbr: str = None,
     offense_code: int = None,
     table: str = "arrestee race",
-    raw: bool = False
+    raw: bool = False,
 ) -> pd.DataFrame | list[dict]:
-
     """
     Fetches FBI arrest rates by state and breakdown table.
 
@@ -337,8 +374,6 @@ def get_cde_arrest_counts_by_state(
     if end_date is None:
         end_date = "12-2020"
 
-
-
     if state_abbr is None:
         for state_abbr, state in us_territory_mapping.items():
             url = f"{FBI_API_BASE_URL}/crime/fbi/cde/arrest/state/{state_abbr}/{offense_code}?type=counts&from={start_date}&to={end_date}&API_KEY={FBI_API_KEY}"
@@ -355,20 +390,21 @@ def get_cde_arrest_counts_by_state(
                     )
 
                 for table_name, table_data in data.items():
-                        print(f"Checking table: {table_name}")
-                        if table_name.lower() == table.lower():
-                            for entry, value in table_data.items():
-                                results.append({table_name: entry, "Value": value})
+                    print(f"Checking table: {table_name}")
+                    if table_name.lower() == table.lower():
+                        for entry, value in table_data.items():
+                            results.append({table_name: entry, "Value": value})
 
     return _finalize_records(records=results, raw=raw)
 
-def get_cde_arrest_totals_by_state(
+
+def get_arrest_totals_by_state(
     start_date: str = None,
     end_date: str = None,
     state_abbr: str = None,
     offense_code: int = None,
     table: str = "arrestee race",
-    raw: bool = False
+    raw: bool = False,
 ) -> pd.DataFrame | list[dict]:
     """
     Fetches FBI arrest totals by state and breakdown table.
@@ -409,21 +445,21 @@ def get_cde_arrest_totals_by_state(
             )
 
         for table_name, table_data in data.items():
-                print(f"Checking table: {table_name}")
-                if table_name.lower() == table.lower():
-                    for entry, value in table_data.items():
-                        results.append({table_name: entry, "Value": value})
+            print(f"Checking table: {table_name}")
+            if table_name.lower() == table.lower():
+                for entry, value in table_data.items():
+                    results.append({table_name: entry, "Value": value})
 
     return _finalize_records(records=results, raw=raw)
     # return results
 
 
-def get_cde_arrest_counts_by_state(
+def get_arrest_counts_by_state(
     start_date: str = None,
     end_date: str = None,
     state_abbr: str = None,
     offense_code: int = None,
-    raw: bool = False
+    raw: bool = False,
 ) -> pd.DataFrame | list[dict]:
     """
     Fetches FBI arrest counts by state with demographic breakdown.
@@ -438,8 +474,7 @@ def get_cde_arrest_counts_by_state(
     Returns:
         pd.DataFrame | list[dict]: Flattened DataFrame (default) or raw records.
     """
-    results = [
-    ]
+    results = []
     if offense_code is None:
         offense_code = "all"
 
@@ -463,7 +498,9 @@ def get_cde_arrest_counts_by_state(
                 totals = data.get("actuals")
                 state_totals = totals.get(f"{state_name} Arrests", {})
                 population = data.get("populations")
-                state_population = population.get("population", {}).get(state_name, None)
+                state_population = population.get("population", {}).get(
+                    state_name, None
+                )
                 for d in dates:
                     results.append(
                         {
@@ -516,13 +553,10 @@ def get_cde_arrest_counts_by_state(
                     }
                 )
 
-    return _finalize_records(
-        records=results,
-        raw=raw,
-        index_cols=["Date", "State"],
-    )
+    return _finalize_records(records=results, raw=raw, index_cols=["Date", "State"])
 
-def get_cde_arrest_totals_by_origin(
+
+def get_arrest_totals_by_origin(
     start_date: str = None,
     end_date: str = None,
     origin_code: str = None,
@@ -561,20 +595,19 @@ def get_cde_arrest_totals_by_origin(
     actuals = data.get("actuals", {})
     all_dates = sorted(set(list(rates.keys()) + list(actuals.keys())))
     for date in all_dates:
-        results.append({
-            "date": date,
-            "ori_code": origin_code,
-            "offense_code": offense_code,
-            "arrest_rate": rates.get(date),
-            "arrest_total": actuals.get(date),
-        })
-    return _finalize_records(
-        records=results,
-        raw=raw,
-        sort_by=["date"],
-    )
+        results.append(
+            {
+                "date": date,
+                "ori_code": origin_code,
+                "offense_code": offense_code,
+                "arrest_rate": rates.get(date),
+                "arrest_total": actuals.get(date),
+            }
+        )
+    return _finalize_records(records=results, raw=raw, sort_by=["date"])
 
-def get_cde_arrest_counts_by_origin(
+
+def get_arrest_counts_by_origin(
     start_date: str = None,
     end_date: str = None,
     origin_code: str = None,
@@ -614,21 +647,20 @@ def get_cde_arrest_counts_by_origin(
     populations = data.get("populations", {}).get("population", {})
     all_dates = sorted(set(list(rates.keys()) + list(actuals.keys())))
     for date in all_dates:
-        results.append({
-            "date": date,
-            "ori_code": origin_code,
-            "offense_code": offense_code,
-            "arrest_rate": rates.get(date),
-            "arrest_total": actuals.get(date),
-            "population": populations.get(date),
-        })
-    return _finalize_records(
-        records=results,
-        raw=raw,
-        sort_by=["date"],
-    )
+        results.append(
+            {
+                "date": date,
+                "ori_code": origin_code,
+                "offense_code": offense_code,
+                "arrest_rate": rates.get(date),
+                "arrest_total": actuals.get(date),
+                "population": populations.get(date),
+            }
+        )
+    return _finalize_records(records=results, raw=raw, sort_by=["date"])
 
-def get_cde_nibrs_totals_by_state(
+
+def get_nibrs_totals_by_state(
     start_date: str = None,
     end_date: str = None,
     state_abbr: str = None,
@@ -655,7 +687,9 @@ def get_cde_nibrs_totals_by_state(
         list(us_territory_mapping.keys()) if state_abbr is None else [state_abbr]
     )
     nibrs_codes_to_query = (
-        [info.code for info in nibrs_offense_codes] if nibrs_code is None else [nibrs_code]
+        [info.code for info in nibrs_offense_codes]
+        if nibrs_code is None
+        else [nibrs_code]
     )
 
     for abbr in states_to_query:
