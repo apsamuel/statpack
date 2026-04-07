@@ -31,6 +31,7 @@ from .client import Client
 
 from .main import (
     get_cde_reporting_agencies,
+    get_cde_arrest_counts_by_state,
     get_cde_arrest_totals_by_state,
     get_cde_arrest_counts_by_state,
     get_cde_arrest_counts_by_origin,
