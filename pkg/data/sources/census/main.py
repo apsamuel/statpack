@@ -1,19 +1,13 @@
 import requests
 from bs4 import BeautifulSoup
-# import json
-# import os
 import pandas as pd
 from . import CENSUS_API_BASE_URL, CENSUS_API_KEY
 
-from .data import (
-    us_state_mapping,
-    us_race_mapping
-)
+from .data import us_state_mapping, us_race_mapping
 
 
 def get_census_acs_variables(
-    year: int = 2024,
-    dataset: str = "acs/acs1"
+    year: int = 2024, dataset: str = "acs/acs1"
 ) -> pd.DataFrame:
     """Scrapes the available variables for a dataset from the HTML page
 
@@ -27,15 +21,20 @@ def get_census_acs_variables(
     if response.status_code == 200:
         print(f"Data fetched successfully for year {year} and dataset {dataset}")
         html_content = response.text
-        soup = BeautifulSoup(html_content, 'html.parser')
-        table = soup.find('table')
+        soup = BeautifulSoup(html_content, "html.parser")
+        table = soup.find("table")
         variables = []
         if table:
-            headers = [th.get_text(strip=True) for th in table.find('tr').find_all('th')]
-            for row in table.find_all('tr')[1:]:
-                cols = row.find_all('td')
+            headers = [
+                th.get_text(strip=True) for th in table.find("tr").find_all("th")
+            ]
+            for row in table.find_all("tr")[1:]:
+                cols = row.find_all("td")
                 if len(cols) == len(headers):
-                    record = {headers[i]: cols[i].get_text(strip=True) for i in range(len(headers))}
+                    record = {
+                        headers[i]: cols[i].get_text(strip=True)
+                        for i in range(len(headers))
+                    }
                     variables.append(record)
         return pd.DataFrame(variables)
     else:
@@ -43,15 +42,11 @@ def get_census_acs_variables(
     return pd.DataFrame(variables)
 
 
-
 # ACS - American Community Survey
 # api.census.gov/data/2024/acs/acs1?get=NAME,group(B01001)&for=us:1&key=YOUR_KEY_GOES_HERE
 # https://api.census.gov/data/2024/acs/acs1.html -
-def get_census_acs_detailed(
-    year: int = 2024,
-) -> pd.DataFrame:
+def get_census_acs_detailed(year: int = 2024) -> pd.DataFrame:
     results = []
-    # https://api.census.gov/data/2024/acs/acs1?get=NAME,B01001_001E&for=us:*&key=YOUR_KEY_GOES_HERE
     url = f"{CENSUS_API_BASE_URL}/{year}/acs/acs1?get=NAME,B01001_001E&for=us:*&key={CENSUS_API_KEY}"
     response = requests.get(url)
     if response.status_code == 200:
@@ -67,9 +62,9 @@ def get_census_acs_detailed(
         response.raise_for_status()
     return pd.DataFrame(results)
 
+
 def get_census_acs_detailed_by_state(
-    year: int = 2024,
-    state_fips: str = None,  # Default to New York
+    year: int = 2024, state_fips: str = None  # Default to New York
 ) -> pd.DataFrame:
     results = []
     if state_fips is None:
@@ -81,7 +76,9 @@ def get_census_acs_detailed_by_state(
 
     response = requests.get(url)
     if response.status_code == 200:
-        print(f"Data fetched successfully for year {year} and state FIPS {state_fips or 'ALL'}")
+        print(
+            f"Data fetched successfully for year {year} and state FIPS {state_fips or 'ALL'}"
+        )
         data = response.json()
         headers = data[0]
         for row in data[1:]:
@@ -91,11 +88,11 @@ def get_census_acs_detailed_by_state(
         response.raise_for_status()
     return pd.DataFrame(results)
 
+
 def get_census_acs_detailed_by_state_county(
     year: int = 2024,
     state_fips: str = None,
     county_fips: str = None,  # Default to New York County
-
 ) -> pd.DataFrame:
     results = []
     if state_fips is None or county_fips is None:
@@ -107,7 +104,9 @@ def get_census_acs_detailed_by_state_county(
 
     response = requests.get(url)
     if response.status_code == 200:
-        print(f"Data fetched successfully for year {year}, state FIPS {state_fips or 'ALL'}, county FIPS {county_fips or 'ALL'}")
+        print(
+            f"Data fetched successfully for year {year}, state FIPS {state_fips or 'ALL'}, county FIPS {county_fips or 'ALL'}"
+        )
         data = response.json()
         headers = data[0]
         for row in data[1:]:
