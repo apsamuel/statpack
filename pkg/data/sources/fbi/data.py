@@ -1,6 +1,90 @@
 # from os import nice
 from pydantic import BaseModel, Field
 import pandas as pd
+import re
+
+# Codes present in the FBI Crime Data Explorer NIBRS drop-down (supported-offense-codes.html)
+_SUPPORTED_NIBRS_CODES: frozenset[str] = frozenset(
+    {
+        "09A",
+        "09B",
+        "09C",
+        "100",
+        "101",
+        "103",
+        "11A",
+        "11B",
+        "11C",
+        "11D",
+        "120",
+        "13A",
+        "13B",
+        "13C",
+        "200",
+        "210",
+        "220",
+        "23*",
+        "23A",
+        "23B",
+        "23C",
+        "23D",
+        "23E",
+        "23F",
+        "23G",
+        "23H",
+        "240",
+        "250",
+        "26A",
+        "26B",
+        "26C",
+        "26D",
+        "26E",
+        "26F",
+        "26G",
+        "26H",
+        "270",
+        "280",
+        "290",
+        "30A",
+        "30B",
+        "30C",
+        "30D",
+        "35A",
+        "35B",
+        "36A",
+        "36B",
+        "360",
+        "370",
+        "39A",
+        "39B",
+        "39C",
+        "39D",
+        "40A",
+        "40B",
+        "40C",
+        "49A",
+        "49B",
+        "49C",
+        "510",
+        "520",
+        "521",
+        "522",
+        "526",
+        "58A",
+        "58B",
+        "61A",
+        "61B",
+        "620",
+        "64A",
+        "64B",
+        "720",
+    }
+)
+
+
+class USTerritory(BaseModel):
+    name: str = Field(..., description="US Territory Name")
+    abbreviation: str = Field(..., description="US Territory Abbreviation")
 
 
 class FBIOffense(BaseModel):
@@ -15,6 +99,9 @@ class NIBRSOffense(BaseModel):
     name: str = Field(..., description="NIBRS Offense Name")
     category: str = Field(..., description="NIBRS Offense Category")
     short_name: str = Field(..., description="NIBRS Offense Short Name")
+    supported: bool = Field(
+        False, description="Whether the code is supported by the FBI CDE NIBRS endpoint"
+    )
 
 
 class State(BaseModel):
@@ -121,7 +208,7 @@ us_offense_mapping: dict[int, str] = {
     },
 }
 
-nibrs_offense_mapping: dict[str, dict[str, str]] = {
+nibrs_offense_mapping_v1: dict[str, dict[str, str | bool]] = {
     "ASS": {
         "name": "Aggravated Assault",
         "category": "Violent Crime",
@@ -135,17 +222,9 @@ nibrs_offense_mapping: dict[str, dict[str, str]] = {
     "HOM": {"name": "Homicide", "category": "Violent Crime", "short_name": "Homicide"},
     "RPE": {"name": "Rape", "category": "Violent Crime", "short_name": "Rape"},
     "ROB": {"name": "Robbery", "category": "Violent Crime", "short_name": "Robbery"},
-    "120": {
-        "name": "Robbery",
-        "category": "Violent Crime",
-        "short_name": "Robbery",
-    },
+    "120": {"name": "Robbery", "category": "Violent Crime", "short_name": "Robbery"},
     "ARS": {"name": "Arson", "category": "Property Crime", "short_name": "Arson"},
-    "200": {
-        "name": "Arson",
-        "category": "Property Crime",
-        "short_name": "Arson",
-    },
+    "200": {"name": "Arson", "category": "Property Crime", "short_name": "Arson"},
     "BUR": {"name": "Burglary", "category": "Property Crime", "short_name": "Burglary"},
     "220": {
         "name": "Burglary/Breaking & Entering",
@@ -202,16 +281,8 @@ nibrs_offense_mapping: dict[str, dict[str, str]] = {
         "category": "White Collar Crime",
         "short_name": "Credit Card Fraud",
     },
-    "11A": {
-        "name": "Rape",
-        "category": "Sex Crime",
-        "short_name": "Rape",
-    },
-    "11B": {
-        "name": "Sodomy",
-        "category": "Sex Crime",
-        "short_name": "Sodomy",
-    },
+    "11A": {"name": "Rape", "category": "Sex Crime", "short_name": "Rape"},
+    "11B": {"name": "Sodomy", "category": "Sex Crime", "short_name": "Sodomy"},
     "11C": {
         "name": "Sexual Assault With An Object",
         "category": "Sex Crime",
@@ -500,12 +571,424 @@ nibrs_offense_mapping: dict[str, dict[str, str]] = {
     },
 }
 
+nibrs_offense_mapping_v2: dict[str, dict[str, str | bool]] = {
+    "09A": {
+        "name": "Murder and Nonnegligent Manslaughter",
+        "category": "Crimes Against Persons",
+        "short_name": "Murder",
+    },
+    "09B": {
+        "name": "Negligent Manslaughter",
+        "category": "Crimes Against Persons",
+        "short_name": "Negligent Manslaughter",
+    },
+    "09C": {
+        "name": "Justifiable Homicide",
+        "category": "Not a Crime",
+        "short_name": "Justifiable Homicide",
+    },
+    "100": {
+        "name": "Kidnapping/Abduction",
+        "category": "Crimes Against Persons",
+        "short_name": "Kidnapping",
+    },
+    "101": {
+        "name": "Treason",
+        "category": "Crimes Against Society",
+        "short_name": "Treason",
+    },
+    "103": {
+        "name": "Espionage",
+        "category": "Crimes Against Society",
+        "short_name": "Espionage",
+    },
+    "11A": {"name": "Rape", "category": "Crimes Against Persons", "short_name": "Rape"},
+    "11B": {
+        "name": "Sodomy",
+        "category": "Crimes Against Persons",
+        "short_name": "Sodomy",
+    },
+    "11C": {
+        "name": "Sexual Assault With An Object",
+        "category": "Crimes Against Persons",
+        "short_name": "Sexual Assault (Object)",
+    },
+    "11D": {
+        "name": "Criminal Sexual Contact",
+        "category": "Crimes Against Persons",
+        "short_name": "Sexual Contact",
+    },
+    "120": {
+        "name": "Robbery",
+        "category": "Crimes Against Property",
+        "short_name": "Robbery",
+    },
+    "13A": {
+        "name": "Aggravated Assault",
+        "category": "Crimes Against Persons",
+        "short_name": "Aggravated Assault",
+    },
+    "13B": {
+        "name": "Simple Assault",
+        "category": "Crimes Against Persons",
+        "short_name": "Simple Assault",
+    },
+    "13C": {
+        "name": "Intimidation",
+        "category": "Crimes Against Persons",
+        "short_name": "Intimidation",
+    },
+    "200": {
+        "name": "Arson",
+        "category": "Crimes Against Property",
+        "short_name": "Arson",
+    },
+    "210": {
+        "name": "Extortion/Blackmail",
+        "category": "Crimes Against Property",
+        "short_name": "Extortion",
+    },
+    "220": {
+        "name": "Burglary/Breaking & Entering",
+        "category": "Crimes Against Property",
+        "short_name": "Burglary",
+    },
+    "23A": {
+        "name": "Pocket-picking",
+        "category": "Crimes Against Property",
+        "short_name": "Pocket-picking",
+    },
+    "23B": {
+        "name": "Purse-snatching",
+        "category": "Crimes Against Property",
+        "short_name": "Purse-snatching",
+    },
+    "23C": {
+        "name": "Shoplifting",
+        "category": "Crimes Against Property",
+        "short_name": "Shoplifting",
+    },
+    "23D": {
+        "name": "Theft From Building",
+        "category": "Crimes Against Property",
+        "short_name": "Theft (Building)",
+    },
+    "23E": {
+        "name": "Theft From Coin-Operated Machine or Device",
+        "category": "Crimes Against Property",
+        "short_name": "Theft (Coin-Op)",
+    },
+    "23F": {
+        "name": "Theft From Motor Vehicle",
+        "category": "Crimes Against Property",
+        "short_name": "Theft (Vehicle)",
+    },
+    "23G": {
+        "name": "Theft of Motor Vehicle Parts or Accessories",
+        "category": "Crimes Against Property",
+        "short_name": "Theft (Vehicle Parts)",
+    },
+    "23H": {
+        "name": "All Other Larceny",
+        "category": "Crimes Against Property",
+        "short_name": "Other Larceny",
+    },
+    "240": {
+        "name": "Motor Vehicle Theft",
+        "category": "Crimes Against Property",
+        "short_name": "Vehicle Theft",
+    },
+    "250": {
+        "name": "Counterfeiting/Forgery",
+        "category": "Crimes Against Property",
+        "short_name": "Forgery",
+    },
+    "26A": {
+        "name": "False Pretenses/Swindle/Confidence Game",
+        "category": "Crimes Against Property",
+        "short_name": "False Pretenses",
+    },
+    "26B": {
+        "name": "Credit Card/Automated Teller Machine Fraud",
+        "category": "Crimes Against Property",
+        "short_name": "Credit Card Fraud",
+    },
+    "26C": {
+        "name": "Impersonation",
+        "category": "Crimes Against Property",
+        "short_name": "Impersonation",
+    },
+    "26D": {
+        "name": "Welfare Fraud",
+        "category": "Crimes Against Property",
+        "short_name": "Welfare Fraud",
+    },
+    "26E": {
+        "name": "Wire Fraud",
+        "category": "Crimes Against Property",
+        "short_name": "Wire Fraud",
+    },
+    "26F": {
+        "name": "Identity Theft",
+        "category": "Crimes Against Property",
+        "short_name": "Identity Theft",
+    },
+    "26G": {
+        "name": "Hacking/Computer Invasion",
+        "category": "Crimes Against Property",
+        "short_name": "Hacking",
+    },
+    "26H": {
+        "name": "Money Laundering",
+        "category": "Crimes Against Society",
+        "short_name": "Money Laundering",
+    },
+    "270": {
+        "name": "Embezzlement",
+        "category": "Crimes Against Property",
+        "short_name": "Embezzlement",
+    },
+    "280": {
+        "name": "Stolen Property Offenses",
+        "category": "Crimes Against Property",
+        "short_name": "Stolen Property",
+    },
+    "290": {
+        "name": "Destruction/Damage/Vandalism of Property",
+        "category": "Crimes Against Property",
+        "short_name": "Vandalism",
+    },
+    "30A": {
+        "name": "Illegal Entry into the United States",
+        "category": "Crimes Against Society",
+        "short_name": "Illegal Entry",
+    },
+    "30B": {
+        "name": "False Citizenship",
+        "category": "Crimes Against Society",
+        "short_name": "False Citizenship",
+    },
+    "30C": {
+        "name": "Smuggling Aliens",
+        "category": "Crimes Against Society",
+        "short_name": "Smuggling Aliens",
+    },
+    "30D": {
+        "name": "Re-entry after Deportation",
+        "category": "Crimes Against Society",
+        "short_name": "Illegal Re-entry",
+    },
+    "35A": {
+        "name": "Drug/Narcotic Violations",
+        "category": "Crimes Against Society",
+        "short_name": "Drug Violations",
+    },
+    "35B": {
+        "name": "Drug Equipment Violations",
+        "category": "Crimes Against Society",
+        "short_name": "Drug Equipment",
+    },
+    "36A": {
+        "name": "Incest",
+        "category": "Crimes Against Persons",
+        "short_name": "Incest",
+    },
+    "36B": {
+        "name": "Statutory Rape",
+        "category": "Crimes Against Persons",
+        "short_name": "Statutory Rape",
+    },
+    "360": {
+        "name": "Failure to Register as a Sex Offender",
+        "category": "Crimes Against Society",
+        "short_name": "Sex Offender Registration",
+    },
+    "370": {
+        "name": "Pornography/Obscene Material",
+        "category": "Crimes Against Society",
+        "short_name": "Pornography",
+    },
+    "39A": {
+        "name": "Betting/Wagering",
+        "category": "Crimes Against Society",
+        "short_name": "Wagering",
+    },
+    "39B": {
+        "name": "Operating/Promoting/Assisting Gambling",
+        "category": "Crimes Against Society",
+        "short_name": "Promoting Gambling",
+    },
+    "39C": {
+        "name": "Gambling Equipment Violations",
+        "category": "Crimes Against Society",
+        "short_name": "Gambling Equipment",
+    },
+    "39D": {
+        "name": "Sports Tampering",
+        "category": "Crimes Against Society",
+        "short_name": "Sports Tampering",
+    },
+    "40A": {
+        "name": "Prostitution",
+        "category": "Crimes Against Society",
+        "short_name": "Prostitution",
+    },
+    "40B": {
+        "name": "Assisting or Promoting Prostitution",
+        "category": "Crimes Against Society",
+        "short_name": "Assisting Prostitution",
+    },
+    "40C": {
+        "name": "Purchasing Prostitution",
+        "category": "Crimes Against Society",
+        "short_name": "Purchasing Prostitution",
+    },
+    "49A": {
+        "name": "Harboring Escapee/Concealing from Arrest",
+        "category": "Crimes Against Society",
+        "short_name": "Harboring Fugitive",
+    },
+    "49B": {
+        "name": "Flight to Avoid Prosecution",
+        "category": "Crimes Against Society",
+        "short_name": "Flight (Prosecution)",
+    },
+    "49C": {
+        "name": "Flight to Avoid Deportation",
+        "category": "Crimes Against Society",
+        "short_name": "Flight (Deportation)",
+    },
+    "510": {
+        "name": "Bribery",
+        "category": "Crimes Against Property",
+        "short_name": "Bribery",
+    },
+    "520": {
+        "name": "Weapon Law Violations",
+        "category": "Crimes Against Society",
+        "short_name": "Weapon Laws",
+    },
+    "521": {
+        "name": "Violation of National Firearm Act of 1934",
+        "category": "Crimes Against Society",
+        "short_name": "Firearm Act Violation",
+    },
+    "522": {
+        "name": "Weapons of Mass Destruction",
+        "category": "Crimes Against Society",
+        "short_name": "WMD",
+    },
+    "526": {
+        "name": "Explosives",
+        "category": "Crimes Against Society",
+        "short_name": "Explosives",
+    },
+    "58A": {
+        "name": "Import Violations",
+        "category": "Crimes Against Society",
+        "short_name": "Import Violation",
+    },
+    "58B": {
+        "name": "Export Violations",
+        "category": "Crimes Against Society",
+        "short_name": "Export Violation",
+    },
+    "61A": {
+        "name": "Federal Liquor Offenses",
+        "category": "Crimes Against Society",
+        "short_name": "Federal Liquor",
+    },
+    "61B": {
+        "name": "Federal Tobacco Offenses",
+        "category": "Crimes Against Society",
+        "short_name": "Federal Tobacco",
+    },
+    "620": {
+        "name": "Wildlife Trafficking",
+        "category": "Crimes Against Society",
+        "short_name": "Wildlife Trafficking",
+    },
+    "64A": {
+        "name": "Human Trafficking, Commercial Sex Acts",
+        "category": "Crimes Against Persons",
+        "short_name": "HT (Sex Acts)",
+    },
+    "64B": {
+        "name": "Human Trafficking, Involuntary Servitude",
+        "category": "Crimes Against Persons",
+        "short_name": "HT (Servitude)",
+    },
+    "720": {
+        "name": "Animal Cruelty",
+        "category": "Crimes Against Society",
+        "short_name": "Animal Cruelty",
+    },
+    "90B": {
+        "name": "Curfew/Loitering/Vagrancy Violations",
+        "category": "Crimes Against Society",
+        "short_name": "Curfew",
+    },
+    "90C": {
+        "name": "Disorderly Conduct",
+        "category": "Crimes Against Society",
+        "short_name": "Disorderly Conduct",
+    },
+    "90D": {
+        "name": "Driving Under the Influence",
+        "category": "Crimes Against Society",
+        "short_name": "DUI",
+    },
+    "90F": {
+        "name": "Family Offenses, Nonviolent",
+        "category": "Crimes Against Persons",
+        "short_name": "Family Offenses",
+    },
+    "90G": {
+        "name": "Liquor Law Violations",
+        "category": "Crimes Against Society",
+        "short_name": "Liquor Laws",
+    },
+    "90J": {
+        "name": "Trespass of Real Property",
+        "category": "Crimes Against Property",
+        "short_name": "Trespass",
+    },
+    "90K": {
+        "name": "Failure to Appear",
+        "category": "Crimes Against Society",
+        "short_name": "Failure to Appear",
+    },
+    "90L": {
+        "name": "Federal Resource Violations",
+        "category": "Crimes Against Society",
+        "short_name": "Resource Violations",
+    },
+    "90M": {
+        "name": "Perjury",
+        "category": "Crimes Against Society",
+        "short_name": "Perjury",
+    },
+    "90Z": {
+        "name": "All Other Offenses",
+        "category": "Crimes Against Society",
+        "short_name": "Other",
+    },
+}
+
+# Stamp supported=True/False on every entry in both NIBRS mappings
+for _code, _info in nibrs_offense_mapping_v1.items():
+    _info["supported"] = _code in _SUPPORTED_NIBRS_CODES
+
+for _code, _info in nibrs_offense_mapping_v2.items():
+    _info["supported"] = _code in _SUPPORTED_NIBRS_CODES
+
+
 legacy_offense_codes = [
     FBIOffense(code=code, **info) for code, info in us_offense_mapping.items()
 ]
 
 nibrs_offense_codes = [
-    NIBRSOffense(code=code, **info) for code, info in nibrs_offense_mapping.items()
+    NIBRSOffense(code=code, **info) for code, info in nibrs_offense_mapping_v2.items()
 ]
 
 
@@ -578,6 +1061,87 @@ us_territory_mapping: dict[str, dict[str, str]] = {
     "PR": {"name": "Puerto Rico"},
     "VI": {"name": "U.S. Virgin Islands"},
 }
+
+us_territories = [
+    USTerritory(name=info["name"], abbreviation=abbr)
+    for abbr, info in us_territory_mapping.items()
+]
+
+
+class FBIData(BaseModel):
+    nibrs_codes: list[NIBRSOffense] = nibrs_offense_codes
+    legacy_codes: list[FBIOffense] = legacy_offense_codes
+    us_territories: list[USTerritory] = us_territories
+
+    def get_territory_by_name(self, name: str) -> USTerritory | None:
+        for territory in self.us_territories:
+            if territory.name.lower() == name.lower():
+                return territory
+        return None
+
+    def get_territory_by_abbr(self, abbr: str) -> USTerritory | None:
+        for territory in self.us_territories:
+            if territory.abbreviation.lower() == abbr.lower():
+                return territory
+        return None
+
+    def get_nibrs_offense_by_code(self, code: str) -> NIBRSOffense | None:
+        for offense in self.nibrs_codes:
+            if offense.code == code:
+                return offense
+        return None
+
+    def get_nibrs_offense_by_name(self, name: str) -> NIBRSOffense | None:
+        for offense in self.nibrs_codes:
+            if offense.name.lower() == name.lower():
+                return offense
+        return None
+
+    def get_nibrs_offenses_by_category(self, category: str) -> list[NIBRSOffense]:
+        return [
+            offense
+            for offense in self.nibrs_codes
+            if offense.category.lower() == category.lower()
+        ]
+
+    def search_nibrs_offenses_by_regex(
+        self, key: str, pattern: str
+    ) -> list[NIBRSOffense]:
+        regex = re.compile(pattern, re.IGNORECASE)
+        return [
+            offense
+            for offense in self.nibrs_codes
+            if regex.search(getattr(offense, key, ""))
+        ]
+
+    def get_legacy_offense_by_code(self, code: str) -> FBIOffense | None:
+        for offense in self.legacy_codes:
+            if offense.code == code:
+                return offense
+        return None
+
+    def get_legacy_offense_by_name(self, name: str) -> FBIOffense | None:
+        for offense in self.legacy_codes:
+            if offense.name.lower() == name.lower():
+                return offense
+        return None
+
+    def get_legacy_offenses_by_category(self, category: str) -> list[FBIOffense]:
+        return [
+            offense
+            for offense in self.legacy_codes
+            if offense.category.lower() == category.lower()
+        ]
+
+    def search_legacy_offenses_by_regex(
+        self, key: str, pattern: str
+    ) -> list[FBIOffense]:
+        regex = re.compile(pattern, re.IGNORECASE)
+        return [
+            offense
+            for offense in self.legacy_codes
+            if regex.search(getattr(offense, key, ""))
+        ]
 
 
 def get_state_from_abbr(abbr):
