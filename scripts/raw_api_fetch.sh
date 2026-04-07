@@ -13,14 +13,14 @@ Modules:
   fbi
 
 FBI operations (mapped from pkg/data/sources/fbi/main.py get_* functions):
-  reporting-agencies           -> get_cde_reporting_agencies
-  arrest-totals-state          -> get_cde_arrest_totals_by_state
-  arrest-counts-state          -> get_cde_arrest_counts_by_state
-  arrest-totals-origin         -> get_cde_arrest_totals_by_origin
-  arrest-counts-origin         -> get_cde_arrest_counts_by_origin
-  nibrs-totals-state           -> get_cde_nibrs_totals_by_state
-  summarized-state             -> get_cde_summarized_by_state
-  expanded-homicide-state      -> get_cde_expanded_homicide_counts_by_state
+  get-reporting-agencies           -> get_reporting_agencies
+  get-arrest-totals-by-state          -> get_arrest_totals_by_state
+  get-arrest-counts-by-state          -> get_arrest_counts_by_state
+  get-arrest-totals-by-origin         -> get_arrest_totals_by_origin
+  get-arrest-counts-by-origin         -> get_arrest_counts_by_origin
+  get-nibrs-totals-by-state           -> get_nibrs_totals_by_state
+  get-summarized-by-state             -> get_summarized_by_state
+  expanded-homicide-state      -> get_expanded_homicide_counts_by_state
 
 Auth (required):
   Uses GOV_API_BASE_URL and GOV_API_KEY from environment by default.
@@ -40,10 +40,10 @@ Options:
   -h, --help             Show this help
 
 Examples:
-  scripts/raw_api_fetch.sh fbi reporting-agencies --state NY
-  scripts/raw_api_fetch.sh fbi arrest-totals-state --state CA --offense 11 --start-date 01-2024 --end-date 12-2024
-  scripts/raw_api_fetch.sh fbi nibrs-totals-state --state NY --nibrs-code 13A --output examples/nibrs_13a_ny.json
-  scripts/raw_api_fetch.sh fbi summarized-state --state TX --offense V --dry-run
+  scripts/raw_api_fetch.sh fbi get-reporting-agencies --state NY
+  scripts/raw_api_fetch.sh fbi get-arrest-totals-by-state --state CA --offense 11 --start-date 01-2024 --end-date 12-2024
+  scripts/raw_api_fetch.sh fbi get-nibrs-totals-by-state --state NY --nibrs-code 13A --output examples/nibrs_13a_ny.json
+  scripts/raw_api_fetch.sh fbi get-summarized-by-state --state TX --offense V --dry-run
 EOF
 }
 
@@ -158,25 +158,25 @@ BASE_URL="${BASE_URL%/}"
 
 build_fbi_url() {
   case "$OPERATION" in
-    reporting-agencies)
+    get-reporting-agencies)
       echo "$BASE_URL/crime/fbi/cde/agency/byStateAbbr/$STATE?API_KEY=$API_KEY"
       ;;
-    arrest-totals-state)
+    get-arrest-totals-by-state)
       echo "$BASE_URL/crime/fbi/cde/arrest/state/$STATE/$OFFENSE?type=totals&from=$START_DATE&to=$END_DATE&API_KEY=$API_KEY"
       ;;
-    arrest-counts-state)
+    get-arrest-counts-by-state)
       echo "$BASE_URL/crime/fbi/cde/arrest/state/$STATE/$OFFENSE?type=counts&from=$START_DATE&to=$END_DATE&API_KEY=$API_KEY"
       ;;
-    arrest-totals-origin)
+    get-arrest-totals-by-origin)
       echo "$BASE_URL/crime/fbi/cde/arrest/agency/$ORIGIN_CODE/$OFFENSE?type=totals&from=$START_DATE&to=$END_DATE&API_KEY=$API_KEY"
       ;;
-    arrest-counts-origin)
+    get-arrest-counts-by-origin)
       echo "$BASE_URL/crime/fbi/cde/arrest/agency/$ORIGIN_CODE/$OFFENSE?type=counts&from=$START_DATE&to=$END_DATE&API_KEY=$API_KEY"
       ;;
-    nibrs-totals-state)
+    get-nibrs-totals-by-state)
       echo "$BASE_URL/crime/fbi/cde/nibrs/state/$STATE/$NIBRS_CODE?from=$START_DATE&to=$END_DATE&type=totals&API_KEY=$API_KEY"
       ;;
-    summarized-state)
+    get-summarized-by-state)
       echo "$BASE_URL/crime/fbi/cde/summarized/state/$STATE/$OFFENSE?from=$START_DATE&to=$END_DATE&API_KEY=$API_KEY"
       ;;
     expanded-homicide-state)
