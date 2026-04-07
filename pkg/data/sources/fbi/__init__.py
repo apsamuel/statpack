@@ -1,14 +1,14 @@
 import os
 
-FBI_API_BASE_URL = os.getenv("GOV_API_BASE_URL")
-FBI_API_KEY = os.getenv("GOV_API_KEY")
+GOV_API_BASE_URL = os.getenv("GOV_API_BASE_URL")
+GOV_API_KEY = os.getenv("GOV_API_KEY")
 
 name = "fbi"
 description = "FBI Crime Data Explorer"
 
 license = "Public Domain"
 provider = "FBI"
-maintainer = "Aaron Samuel"
+maintainer = "aaron.psamuel@spicydev.it"
 api = "https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/docApi"
 about = "https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/about"
 supported = [
@@ -20,7 +20,7 @@ supported = [
 ]
 docs = ["https://ucr.fbi.gov/nibrs/2011/resources/nibrs-offense-codes"]
 
-if FBI_API_BASE_URL is None or FBI_API_KEY is None:
+if GOV_API_BASE_URL is None or GOV_API_KEY is None:
     raise EnvironmentError(
         "GOV_API_BASE_URL and GOV_API_KEY (https://api.data.gov/signup/) must be set in environment variables."
     )

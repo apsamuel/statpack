@@ -5,7 +5,7 @@ import os
 import pandas as pd
 import time
 
-from . import FBI_API_BASE_URL, FBI_API_KEY
+from . import GOV_API_BASE_URL, GOV_API_KEY
 from .data import (
     us_territory_mapping,
     get_abbr_from_state,
@@ -18,7 +18,7 @@ from .data import (
 )
 
 headers: dict = {
-    "X-API-KEY": FBI_API_KEY,
+    "X-API-KEY": GOV_API_KEY,
     "User-Agent": "StatPack/1.0",
     "Accept": "application/json",
 }
@@ -127,7 +127,7 @@ def get_expanded_homicide_counts_by_state(
     )
 
     for abbr in states_to_query:
-        url = f"{FBI_API_BASE_URL}/crime/fbi/cde/shr/state/{abbr}?type=totals&from={start_date}&to={end_date}"
+        url = f"{GOV_API_BASE_URL}/crime/fbi/cde/shr/state/{abbr}?type=totals&from={start_date}&to={end_date}"
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
             data = response.json()
@@ -288,8 +288,8 @@ def get_summarized_by_state(
     for abbr in states_to_query:
         for code in offenses_to_query:
             url = (
-                f"{FBI_API_BASE_URL}/crime/fbi/cde/summarized/state/{abbr}/{code}"
-                f"?from={start_date}&to={end_date}&API_KEY={FBI_API_KEY}"
+                f"{GOV_API_BASE_URL}/crime/fbi/cde/summarized/state/{abbr}/{code}"
+                f"?from={start_date}&to={end_date}&API_KEY={GOV_API_KEY}"
             )
             response = requests.get(url, headers=headers)
             if response.status_code == 200:
@@ -325,10 +325,10 @@ def get_reporting_agencies(raw: bool = False) -> pd.DataFrame | list[dict]:
     Returns:
         pd.DataFrame | list[dict]: Flattened DataFrame (default) or raw records.
     """
-    headers = {"X-API-KEY": FBI_API_KEY, "User-Agent": "StatPack/1.0"}
+    headers = {"X-API-KEY": GOV_API_KEY, "User-Agent": "StatPack/1.0"}
     results = []
     for state_abbr in us_territory_mapping.keys():
-        url = f"{FBI_API_BASE_URL}/crime/fbi/cde/agency/byStateAbbr/{state_abbr}?API_KEY={FBI_API_KEY}"
+        url = f"{GOV_API_BASE_URL}/crime/fbi/cde/agency/byStateAbbr/{state_abbr}?API_KEY={GOV_API_KEY}"
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
             data = response.json()
@@ -376,7 +376,7 @@ def get_arrest_counts_by_state(
 
     if state_abbr is None:
         for state_abbr, state in us_territory_mapping.items():
-            url = f"{FBI_API_BASE_URL}/crime/fbi/cde/arrest/state/{state_abbr}/{offense_code}?type=counts&from={start_date}&to={end_date}&API_KEY={FBI_API_KEY}"
+            url = f"{GOV_API_BASE_URL}/crime/fbi/cde/arrest/state/{state_abbr}/{offense_code}?type=counts&from={start_date}&to={end_date}&API_KEY={GOV_API_KEY}"
             response = requests.get(url, headers=headers)
             if response.status_code == 200:
                 print(f"Data fetched successfully for {state_abbr}")
@@ -430,28 +430,28 @@ def get_arrest_totals_by_state(
     if end_date is None:
         end_date = "12-2020"
 
-    url = f"{FBI_API_BASE_URL}/crime/fbi/cde/arrest/state/{state_abbr}/{offense_code}?type=totals&from={start_date}&to={end_date}&API_KEY={FBI_API_KEY}"
+    url = f"{GOV_API_BASE_URL}/crime/fbi/cde/arrest/state/{state_abbr}/{offense_code}?type=totals&from={start_date}&to={end_date}&API_KEY={GOV_API_KEY}"
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
         print(f"Data fetched successfully for {state_abbr}")
         data = response.json()
         results.append(data)
-        available_keys = list(
-            k.lower() for k in list(data.keys()) if k not in ["cde_properties"]
-        )
-        if table not in available_keys:
-            raise ValueError(
-                f"Table '{table}' not found in response. Available tables: {available_keys}"
-            )
+    #     available_keys = list(
+    #         k.lower() for k in list(data.keys()) if k not in ["cde_properties"]
+    #     )
+    #     if table not in available_keys:
+    #         raise ValueError(
+    #             f"Table '{table}' not found in response. Available tables: {available_keys}"
+    #         )
 
-        for table_name, table_data in data.items():
-            print(f"Checking table: {table_name}")
-            if table_name.lower() == table.lower():
-                for entry, value in table_data.items():
-                    results.append({table_name: entry, "Value": value})
+    #     for table_name, table_data in data.items():
+    #         print(f"Checking table: {table_name}")
+    #         if table_name.lower() == table.lower():
+    #             for entry, value in table_data.items():
+    #                 results.append({table_name: entry, "Value": value})
 
-    return _finalize_records(records=results, raw=raw)
-    # return results
+    # return _finalize_records(records=results, raw=raw)
+    return results
 
 
 def get_arrest_counts_by_state(
@@ -486,7 +486,7 @@ def get_arrest_counts_by_state(
 
     if state_abbr is None:
         for state_abbr, state in us_territory_mapping.items():
-            url = f"{FBI_API_BASE_URL}/crime/fbi/cde/arrest/state/{state_abbr}/{offense_code}?type=counts&from={start_date}&to={end_date}&API_KEY={FBI_API_KEY}"
+            url = f"{GOV_API_BASE_URL}/crime/fbi/cde/arrest/state/{state_abbr}/{offense_code}?type=counts&from={start_date}&to={end_date}&API_KEY={GOV_API_KEY}"
             response = requests.get(url, headers=headers)
             if response.status_code == 200:
                 print(f"Data fetched successfully for {state_abbr}")
@@ -521,7 +521,7 @@ def get_arrest_counts_by_state(
                         }
                     )
     else:
-        url = f"{FBI_API_BASE_URL}/crime/fbi/cde/arrest/state/{state_abbr}/{offense_code}?type=counts&from={start_date}&to={end_date}&API_KEY={FBI_API_KEY}"
+        url = f"{GOV_API_BASE_URL}/crime/fbi/cde/arrest/state/{state_abbr}/{offense_code}?type=counts&from={start_date}&to={end_date}&API_KEY={GOV_API_KEY}"
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
             print(f"Data fetched successfully for {state_abbr}")
@@ -585,7 +585,7 @@ def get_arrest_totals_by_origin(
     if end_date is None:
         end_date = "12-2020"
 
-    url = f"{FBI_API_BASE_URL}/crime/fbi/cde/arrest/agency/{origin_code}/{offense_code}?type=totals&from={start_date}&to={end_date}&API_KEY={FBI_API_KEY}"
+    url = f"{GOV_API_BASE_URL}/crime/fbi/cde/arrest/agency/{origin_code}/{offense_code}?type=totals&from={start_date}&to={end_date}&API_KEY={GOV_API_KEY}"
     response = requests.get(url, headers=headers)
     # response.raise_for_status()
 
@@ -636,7 +636,7 @@ def get_arrest_counts_by_origin(
     if end_date is None:
         end_date = "12-2020"
 
-    url = f"{FBI_API_BASE_URL}/crime/fbi/cde/arrest/agency/{origin_code}/{offense_code}?type=counts&from={start_date}&to={end_date}&API_KEY={FBI_API_KEY}"
+    url = f"{GOV_API_BASE_URL}/crime/fbi/cde/arrest/agency/{origin_code}/{offense_code}?type=counts&from={start_date}&to={end_date}&API_KEY={GOV_API_KEY}"
     response = requests.get(url, headers=headers)
     response.raise_for_status()
 
@@ -696,7 +696,7 @@ def get_nibrs_totals_by_state(
         for code in nibrs_codes_to_query:
             code_key = int(code) if str(code).isdigit() else code
             crime_name = nibrs_offense_mapping.get(code_key, {}).get("name")
-            url = f"{FBI_API_BASE_URL}/crime/fbi/cde/nibrs/state/{abbr}/{code}?from={start_date}&to={end_date}&type=totals&API_KEY={FBI_API_KEY}"
+            url = f"{GOV_API_BASE_URL}/crime/fbi/cde/nibrs/state/{abbr}/{code}?from={start_date}&to={end_date}&type=totals&API_KEY={GOV_API_KEY}"
             response = requests.get(url, headers=headers)
             if response.status_code == 200:
                 data = response.json()
@@ -729,3 +729,22 @@ def get_nibrs_totals_by_state(
         sort_by=["state_abbr", "nibrs_code"],
         normalize_columns=True,
     )
+
+
+def get_nibrs_counts_by_state(
+    start_date: str = None,
+    end_date: str = None,
+    state_abbr: str = None,
+    nibrs_code: int = None,
+    raw: bool = False,
+) -> pd.DataFrame | list[dict]:
+    """gather a state wide NIBRS
+
+    Args:
+        start_date (str, optional): _description_. Defaults to None.
+        end_date (str, optional): _description_. Defaults to None.
+        state_abbr (str, optional): _description_. Defaults to None.
+        nibrs_code (int, optional): _description_. Defaults to None.
+        raw (bool, optional): When True, return raw list[dict] records; otherwise return DataFrame.
+    """
+    None
