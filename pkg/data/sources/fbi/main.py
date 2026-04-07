@@ -303,6 +303,65 @@ def get_cde_reporting_agencies(
                         results.append(item)
     return _finalize_records(records=results, raw=raw)
 
+def get_cde_arrest_counts_by_state(
+    start_date: str = None,
+    end_date: str = None,
+    state_abbr: str = None,
+    offense_code: int = None,
+    table: str = "arrestee race",
+    raw: bool = False
+) -> pd.DataFrame | list[dict]:
+
+    """
+    Fetches FBI arrest rates by state and breakdown table.
+
+    Args:
+        start_date (str, optional): Start date (MM-YYYY). Defaults to "01-2020".
+        end_date (str, optional): End date (MM-YYYY). Defaults to "12-2020".
+        state_abbr (str, optional): Two-letter state abbreviation. Defaults to "NY".
+        offense_code (int, optional): FBI offense code. Defaults to "all".
+        table (str, optional): Breakdown table name to extract. Defaults to "arrestee race".
+        raw (bool, optional): When True, return raw list[dict] records; otherwise return DataFrame.
+    Returns:
+        pd.DataFrame | list[dict]: Flattened DataFrame (default) or raw records.
+    """
+
+    results = []
+
+    # if state_abbr is None:
+    #     state_abbr = "NY"
+
+    if start_date is None:
+        start_date = "01-2020"
+
+    if end_date is None:
+        end_date = "12-2020"
+
+
+
+    if state_abbr is None:
+        for state_abbr, state in us_territory_mapping.items():
+            url = f"{FBI_API_BASE_URL}/crime/fbi/cde/arrest/state/{state_abbr}/{offense_code}?type=counts&from={start_date}&to={end_date}&API_KEY={FBI_API_KEY}"
+            response = requests.get(url, headers=headers)
+            if response.status_code == 200:
+                print(f"Data fetched successfully for {state_abbr}")
+                data = response.json()
+                available_keys = list(
+                    k.lower() for k in list(data.keys()) if k not in ["cde_properties"]
+                )
+                if table not in available_keys:
+                    raise ValueError(
+                        f"Table '{table}' not found in response. Available tables: {available_keys}"
+                    )
+
+                for table_name, table_data in data.items():
+                        print(f"Checking table: {table_name}")
+                        if table_name.lower() == table.lower():
+                            for entry, value in table_data.items():
+                                results.append({table_name: entry, "Value": value})
+
+    return _finalize_records(records=results, raw=raw)
+
 def get_cde_arrest_totals_by_state(
     start_date: str = None,
     end_date: str = None,
@@ -340,6 +399,7 @@ def get_cde_arrest_totals_by_state(
     if response.status_code == 200:
         print(f"Data fetched successfully for {state_abbr}")
         data = response.json()
+        results.append(data)
         available_keys = list(
             k.lower() for k in list(data.keys()) if k not in ["cde_properties"]
         )
@@ -349,11 +409,13 @@ def get_cde_arrest_totals_by_state(
             )
 
         for table_name, table_data in data.items():
+                print(f"Checking table: {table_name}")
                 if table_name.lower() == table.lower():
                     for entry, value in table_data.items():
                         results.append({table_name: entry, "Value": value})
 
     return _finalize_records(records=results, raw=raw)
+    # return results
 
 
 def get_cde_arrest_counts_by_state(
