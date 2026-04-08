@@ -97,7 +97,9 @@ export GOV_API_KEY="your_key_here"   # https://api.data.gov/signup/
 
 ## 🔗 Resources
 
-- [API Docs](https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/docApi)
-- [Data Explorer](https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/explorer/crime/crime-trend)
+- [CDE API](https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/docApi)
+- [CDE Data Explorer](https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/explorer/crime/crime-trend)
+- [Download Datasets](https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/downloads)
+- [API Docs](https://api.data.gov/docs/developer-manual/)
+- [API Metrics](https://api.data.gov/metrics/#/)
 - [NIBRS Offense Codes](https://ucr.fbi.gov/nibrs/2011/resources/nibrs-offense-codes)
-- [Downloads](https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/downloads)
