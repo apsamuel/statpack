@@ -14,7 +14,8 @@ from .data import (
     get_offense_from_code,
     get_code_from_offense,
     nibrs_offense_codes,
-    nibrs_offense_mapping,
+    nibrs_offense_mapping_v1,
+    nibrs_offense_mapping_v2,
 )
 
 headers: dict = {
@@ -24,20 +25,29 @@ headers: dict = {
 }
 
 
-def _normalize_wide_key(value: str) -> str:
+def _normalize_wide_key(value: str, debug: bool = False) -> str:
     normalized = str(value).strip().lower()
     normalized = re.sub(r"[\s/\-]+", "_", normalized)
     normalized = normalized.replace("%", "percent")
     normalized = re.sub(r"[^a-z0-9_\.]+", "", normalized)
     normalized = re.sub(r"_+", "_", normalized).strip("_")
+    if debug:
+        print(f"Normalized '{value}' to '{normalized}'")
     return normalized
 
 
-def _normalize_dataframe_columns_wide(df: pd.DataFrame) -> pd.DataFrame:
+def _normalize_dataframe_columns_wide(
+    df: pd.DataFrame, debug: bool = False
+) -> pd.DataFrame:
     rename_map = {}
+    if debug:
+        print(f"Normalizing dataframe columns: {len(df.columns)} columns to normalize.")
+
     for column in df.columns:
         parts = str(column).split(".")
-        rename_map[column] = ".".join(_normalize_wide_key(part) for part in parts)
+        rename_map[column] = ".".join(
+            _normalize_wide_key(part, debug=debug) for part in parts
+        )
     return df.rename(columns=rename_map)
 
 
@@ -47,14 +57,16 @@ def _records_to_wide_dataframe(
     sort_by: list[str] = None,
     index_cols: list[str] = None,
     normalize_columns: bool = False,
+    debug: bool = False,
 ) -> pd.DataFrame:
     if not records:
         return pd.DataFrame()
 
     result = pd.json_normalize(records, sep=".")
+    result = result.convert_dtypes()
 
     if normalize_columns:
-        result = _normalize_dataframe_columns_wide(result)
+        result = _normalize_dataframe_columns_wide(result, debug=debug)
 
     if ordered_columns:
         present_ordered = [
@@ -87,6 +99,7 @@ def _finalize_records(
     sort_by: list[str] = None,
     index_cols: list[str] = None,
     normalize_columns: bool = False,
+    debug: bool = False,
 ) -> pd.DataFrame | list[dict]:
     if raw:
         return records
@@ -96,6 +109,7 @@ def _finalize_records(
         sort_by=sort_by,
         index_cols=index_cols,
         normalize_columns=normalize_columns,
+        debug=debug,
     )
 
 
@@ -104,6 +118,7 @@ def get_expanded_homicide_counts_by_state(
     end_date: str = None,
     state_abbr: str = None,
     raw: bool = False,
+    debug: bool = False,
 ) -> pd.DataFrame | list[dict]:
     """Fetch expanded homicide SHR () totals and return a super-wide DataFrame.
 
@@ -126,6 +141,10 @@ def get_expanded_homicide_counts_by_state(
         list(us_territory_mapping.keys()) if state_abbr is None else [state_abbr]
     )
 
+    if debug:
+        print(
+            f"Fetching SHR totals for states: {len(states_to_query)} from {start_date} to {end_date}"
+        )
     for abbr in states_to_query:
         url = f"{GOV_API_BASE_URL}/crime/fbi/cde/shr/state/{abbr}?type=totals&from={start_date}&to={end_date}"
         response = requests.get(url, headers=headers)
@@ -139,6 +158,8 @@ def get_expanded_homicide_counts_by_state(
                 "end_date": end_date,
             }
             records.append({"requested": requested, **requested, **data})
+            if debug:
+                print(f"Fetched SHR totals for state: {abbr}")
         elif state_abbr is not None:
             response.raise_for_status()
 
@@ -156,6 +177,7 @@ def get_expanded_homicide_counts_by_state(
         ],
         sort_by=["requested.state_abbr"],
         normalize_columns=True,
+        debug=debug,
     )
 
 
@@ -164,6 +186,7 @@ def _flatten_get_summarized_by_state_payload_wide(
     payload: dict,
     requested_state_abbr: str,
     requested_offense_code: str,
+    debug: bool = False,
 ) -> pd.DataFrame:
     """Flatten one summarized API payload into a super-wide monthly DataFrame.
 
@@ -217,6 +240,11 @@ def _flatten_get_summarized_by_state_payload_wide(
         if isinstance(series_values, dict):
             all_dates.update(series_values.keys())
 
+    if debug:
+        print(
+            f"Extracted {len(all_dates)} unique dates from offense rates, actuals, coverage, and population series."
+        )
+
     left_headers = payload.get("tooltips", {}).get("leftYAxisHeaders", {})
     max_data_date = (
         payload.get("cde_properties", {}).get("max_data_date", {}).get("UCR")
@@ -245,6 +273,9 @@ def _flatten_get_summarized_by_state_payload_wide(
             )
         rows.append(row)
 
+    if debug:
+        print(f"Created DataFrame with {len(rows)} rows.")
+
     return pd.DataFrame(rows)
 
 
@@ -254,6 +285,7 @@ def get_summarized_by_state(
     state_abbr: str = None,
     offense_code: str = None,
     raw: bool = False,
+    debug: bool = False,
 ) -> pd.DataFrame:
     """Fetch FBI CDE summarized offense data by state and return a wide DataFrame.
 
@@ -303,6 +335,13 @@ def get_summarized_by_state(
                         requested_offense_code=code,
                     )
                 )
+            else:
+                if debug:
+                    print(
+                        f"Request failed for state {abbr} and offense {code}. "
+                        f"Status code: {response.status_code} ({response.reason})"
+                        f"Response header: {response.headers}"
+                    )
 
     if raw:
         return records
@@ -310,18 +349,23 @@ def get_summarized_by_state(
     if not frames:
         return pd.DataFrame()
 
+    if debug:
+        print(f"returned {len(frames)} frames.")
+
     return pd.concat(frames, ignore_index=True).sort_values(
         by=["date", "requested.state_abbr", "requested.offense_code"], ignore_index=True
     )
 
 
-def get_reporting_agencies(raw: bool = False) -> pd.DataFrame | list[dict]:
+def get_reporting_agencies(
+    raw: bool = False, debug: bool = False
+) -> pd.DataFrame | list[dict]:
     """
     Fetches FBI agency crosswalk data.
 
     Args:
         raw (bool, optional): When True, return raw list[dict] records; otherwise return DataFrame.
-
+        debug (bool, optional): When True, print debug information. Defaults to False.
     Returns:
         pd.DataFrame | list[dict]: Flattened DataFrame (default) or raw records.
     """
@@ -338,6 +382,12 @@ def get_reporting_agencies(raw: bool = False) -> pd.DataFrame | list[dict]:
                         if not isinstance(item, dict):
                             continue
                         results.append(item)
+
+    if debug:
+        print(
+            f"Fetched {len(results)} total reporting agencies for {len(us_territory_mapping.keys())} states."
+        )
+
     return _finalize_records(records=results, raw=raw)
 
 
@@ -348,6 +398,7 @@ def get_arrest_counts_by_state(
     offense_code: int = None,
     table: str = "arrestee race",
     raw: bool = False,
+    debug: bool = False,
 ) -> pd.DataFrame | list[dict]:
     """
     Fetches FBI arrest rates by state and breakdown table.
@@ -364,9 +415,6 @@ def get_arrest_counts_by_state(
     """
 
     results = []
-
-    # if state_abbr is None:
-    #     state_abbr = "NY"
 
     if start_date is None:
         start_date = "01-2020"
@@ -395,6 +443,10 @@ def get_arrest_counts_by_state(
                         for entry, value in table_data.items():
                             results.append({table_name: entry, "Value": value})
 
+    if debug:
+        print(
+            f"Fetched arrest counts by state with {len(results)} total records for table '{table}'."
+        )
     return _finalize_records(records=results, raw=raw)
 
 
@@ -405,6 +457,7 @@ def get_arrest_totals_by_state(
     offense_code: int = None,
     table: str = "arrestee race",
     raw: bool = False,
+    debug: bool = False,
 ) -> pd.DataFrame | list[dict]:
     """
     Fetches FBI arrest totals by state and breakdown table.
@@ -416,6 +469,7 @@ def get_arrest_totals_by_state(
         offense_code (int, optional): FBI offense code. Defaults to "all".
         table (str, optional): Breakdown table name to extract. Defaults to "arrestee race".
         raw (bool, optional): When True, return raw list[dict] records; otherwise return DataFrame.
+        debug (bool, optional): When True, print debug information. Defaults to False.
 
     Returns:
         pd.DataFrame | list[dict]: Flattened DataFrame (default) or raw records.
@@ -451,6 +505,9 @@ def get_arrest_totals_by_state(
     #                 results.append({table_name: entry, "Value": value})
 
     # return _finalize_records(records=results, raw=raw)
+    if debug:
+        print(f"Returned {len(results)} records.")
+
     return results
 
 
@@ -460,6 +517,7 @@ def get_arrest_counts_by_state(
     state_abbr: str = None,
     offense_code: int = None,
     raw: bool = False,
+    debug: bool = False,
 ) -> pd.DataFrame | list[dict]:
     """
     Fetches FBI arrest counts by state with demographic breakdown.
@@ -470,7 +528,7 @@ def get_arrest_counts_by_state(
         state_abbr (str, optional): Two-letter state abbreviation. If None, all states are queried.
         offense_code (int, optional): FBI offense code. Defaults to "all".
         raw (bool, optional): When True, return raw list[dict] records; otherwise return DataFrame.
-
+        debug (bool, optional): When True, print debug information. Defaults to False.
     Returns:
         pd.DataFrame | list[dict]: Flattened DataFrame (default) or raw records.
     """
@@ -553,6 +611,9 @@ def get_arrest_counts_by_state(
                     }
                 )
 
+    if debug:
+        print(f"Returned {len(results)} records.")
+
     return _finalize_records(records=results, raw=raw, index_cols=["Date", "State"])
 
 
@@ -562,6 +623,7 @@ def get_arrest_totals_by_origin(
     origin_code: str = None,
     offense_code: int = None,
     raw: bool = False,
+    debug: bool = False,
 ) -> pd.DataFrame | list[dict]:
     """
     Fetches FBI arrest totals by agency ORI code.
@@ -572,6 +634,8 @@ def get_arrest_totals_by_origin(
         origin_code (str, optional): Agency ORI code. Defaults to "AL0430200".
         offense_code (int, optional): FBI offense code. Defaults to "all".
         raw (bool, optional): When True, return raw list[dict] records; otherwise return DataFrame.
+        debug (bool, optional): When True, print debug information. Defaults to False.
+
 
     Returns:
         pd.DataFrame | list[dict]: Flattened DataFrame (default) or raw records.
@@ -604,6 +668,10 @@ def get_arrest_totals_by_origin(
                 "arrest_total": actuals.get(date),
             }
         )
+
+    if debug:
+        print(f"Returned {len(results)} records.")
+
     return _finalize_records(records=results, raw=raw, sort_by=["date"])
 
 
@@ -613,6 +681,7 @@ def get_arrest_counts_by_origin(
     origin_code: str = None,
     offense_code: int = None,
     raw: bool = False,
+    debug: bool = False,
 ) -> pd.DataFrame | list[dict]:
     """
     Fetches FBI arrest counts by agency ORI code.
@@ -623,6 +692,7 @@ def get_arrest_counts_by_origin(
         origin_code (str, optional): Agency ORI code. Defaults to "AL0430200".
         offense_code (int, optional): FBI offense code. Defaults to "all".
         raw (bool, optional): When True, return raw list[dict] records; otherwise return DataFrame.
+        debug (bool, optional): When True, print debug information. Defaults to False.
 
     Returns:
         pd.DataFrame | list[dict]: Flattened DataFrame (default) or raw records.
@@ -657,6 +727,9 @@ def get_arrest_counts_by_origin(
                 "population": populations.get(date),
             }
         )
+
+    if debug:
+        print(f"Returned {len(results)} records.")
     return _finalize_records(records=results, raw=raw, sort_by=["date"])
 
 
@@ -666,6 +739,7 @@ def get_nibrs_totals_by_state(
     state_abbr: str = None,
     nibrs_code: int = None,
     raw: bool = False,
+    debug: bool = False,
 ) -> pd.DataFrame | list[dict]:
     """gather a state wide NIBRS
 
@@ -675,6 +749,7 @@ def get_nibrs_totals_by_state(
         state_abbr (str, optional): _description_. Defaults to None.
         nibrs_code (int, optional): _description_. Defaults to None.
         raw (bool, optional): When True, return raw list[dict] records; otherwise return DataFrame.
+        debug (bool, optional): When True, print debug information. Defaults to False.
     """
     records = []
     if start_date is None:
@@ -694,8 +769,10 @@ def get_nibrs_totals_by_state(
 
     for abbr in states_to_query:
         for code in nibrs_codes_to_query:
-            code_key = int(code) if str(code).isdigit() else code
-            crime_name = nibrs_offense_mapping.get(code_key, {}).get("name")
+            print(f"Fetching NIBRS totals for state={abbr}, code={code}...")
+            # code_key = int(code) if str(code).isdigit() else code
+            code_key = str(code)
+            crime_name = nibrs_offense_mapping_v2.get(code_key, {}).get("name")
             url = f"{GOV_API_BASE_URL}/crime/fbi/cde/nibrs/state/{abbr}/{code}?from={start_date}&to={end_date}&type=totals&API_KEY={GOV_API_KEY}"
             response = requests.get(url, headers=headers)
             if response.status_code == 200:
@@ -714,6 +791,9 @@ def get_nibrs_totals_by_state(
 
             if state_abbr is None:
                 time.sleep(1)
+
+    if debug:
+        print(f"Returned {len(records)} records.")
 
     return _finalize_records(
         records=records,
@@ -737,6 +817,7 @@ def get_nibrs_counts_by_state(
     state_abbr: str = None,
     nibrs_code: int = None,
     raw: bool = False,
+    debug: bool = False,
 ) -> pd.DataFrame | list[dict]:
     """gather a state wide NIBRS
 
@@ -746,5 +827,6 @@ def get_nibrs_counts_by_state(
         state_abbr (str, optional): _description_. Defaults to None.
         nibrs_code (int, optional): _description_. Defaults to None.
         raw (bool, optional): When True, return raw list[dict] records; otherwise return DataFrame.
+        debug (bool, optional): When True, print debug information. Defaults to False.
     """
     None
