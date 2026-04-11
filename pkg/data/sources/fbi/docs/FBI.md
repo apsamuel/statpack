@@ -1,9 +1,12 @@
 # 🔍 FBI Crime Data Explorer (CDE)
 
-**Source:** [FBI Crime Data API](https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/docApi)
-**Base URL:** `https://api.usa.gov/crime/fbi/cde/`
-**Auth:** `API_KEY` query param — [get a key](https://api.data.gov/signup/)
-**Format:** JSON (default) or CSV — read-only
+>**Source:** [FBI Crime Data API](https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/docApi)
+>
+>**Base URL:** `https://api.usa.gov/crime/fbi/cde/`
+>
+>**Auth:** `API_KEY` required param — [get your key](https://api.data.gov/signup/)
+>
+>**Format:** JSON (default) or CSV — read-only
 
 ---
 
@@ -97,6 +100,8 @@ export GOV_API_KEY="your_key_here"   # https://api.data.gov/signup/
 
 ## 🔗 Resources
 
+- [Developer Manual](https://api.data.gov/docs/developer-manual/)
+- [CDE Help Center](https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/help-center)
 - [CDE API](https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/docApi)
 - [CDE Data Explorer](https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/explorer/crime/crime-trend)
 - [Download Datasets](https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/downloads)
