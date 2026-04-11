@@ -1,4 +1,11 @@
-us_state_mapping: dict = {
+from click.utils import R
+from pydantic import BaseModel, Field
+import time
+import pandas as pd
+import re
+import requests
+
+us_state_mapping: dict[int, str] = {
     1: "Alabama",
     2: "Alaska",
     4: "Arizona",
@@ -53,12 +60,102 @@ us_state_mapping: dict = {
     72: "Puerto Rico",
 }
 
-us_race_mapping: dict = {
+us_race_mapping: dict[int, str] = {
     1000: "White",
     2790: "Hispanic or Latino",
     3000: "Black or African American",
     4790: "Asian",
     5000: "American Indian or Alaska Native",
     7805: "Native Hawaiian or Other Pacific Islander",
-    8000: "Some Other Race"
+    8000: "Some Other Race",
 }
+
+
+class State(BaseModel):
+    code: int
+    name: str
+
+
+class County(BaseModel):
+    code: int
+    name: str
+    state: State
+
+
+class Race(BaseModel):
+    code: int
+    name: str
+
+
+class Request(BaseModel):
+    url: str
+    params: dict | None = None
+    request_headers: dict | None = None
+    response_headers: dict | None = None
+
+
+class FailedRequest(BaseModel):
+    url: str
+    status_code: int
+    reason: str
+    timestamp: float = Field(default_factory=time.time)
+
+
+def _get_county_codes() -> list[County]:
+    counties = []
+    data = requests.get("https://api.census.gov/data/2024/acs/acs1/cprofile?get=NAME&for=county:*")
+    if data.status_code == 200:
+        for item in data.json()[1:]:
+            name, state_code, county_code = item
+            county_name, state_name = name.split(",")
+            state = State(code=int(state_code), name=state_name.strip())
+            county = County(code=int(county_code), name=county_name.strip(), state=state)
+            counties.append(county)
+    return counties
+
+
+def _get_state_codes() -> list[State]:
+    states = []
+    date = requests.get("https://api.census.gov/data/2024/acs/acs1/cprofile?get=NAME&for=state:*")
+    if date.status_code == 200:
+        for item in date.json()[1:]:
+            name, state_code = item
+            state = State(code=int(state_code), name=name.strip())
+            states.append(state)
+    return states
+
+
+# def _get_region
+state_codes = _get_state_codes()
+county_codes = _get_county_codes()
+
+
+class CensusData(BaseModel):
+    # states: list[State] = [State(code=code, name=name) for code, name in us_state_mapping.items()]
+    # races: list[Race] = [Race(code=code, name=name) for code, name in us_race_mapping.items()]
+    states: list[State] = state_codes
+    counties: list[County] = county_codes
+
+    def get_race_by_name(self, name: str) -> Race | None:
+        for race in self.races:
+            if race.name.lower() == name.lower():
+                return race
+        return None
+
+    def get_race_by_code(self, code: int) -> Race | None:
+        for race in self.races:
+            if race.code == code:
+                return race
+        return None
+
+    def get_state_by_name(self, name: str) -> State | None:
+        for state in self.states:
+            if state.name.lower() == name.lower():
+                return state
+        return None
+
+    def get_state_by_code(self, code: int) -> State | None:
+        for state in self.states:
+            if state.code == code:
+                return state
+        return None

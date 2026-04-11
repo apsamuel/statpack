@@ -27,12 +27,12 @@ if GOV_API_BASE_URL is None or GOV_API_KEY is None:
 
 
 from .client import Client
+from .cli import fbi
 
 from .main import (
     get_reporting_agencies,
     get_arrest_counts_by_state,
     get_arrest_totals_by_state,
-    get_arrest_counts_by_state,
     get_arrest_counts_by_origin,
     get_arrest_totals_by_origin,
     get_nibrs_totals_by_state,

@@ -1,5 +1,6 @@
 # from os import nice
 from pydantic import BaseModel, Field
+import time
 import pandas as pd
 import re
 
@@ -132,6 +133,20 @@ _SUPPORTED_NIBRS_CODES: frozenset[str] = frozenset(
         "720",
     }
 )
+
+
+class Request(BaseModel):
+    url: str
+    params: dict | None = None
+    request_headers: dict | None = None
+    response_headers: dict | None = None
+
+
+class FailedRequest(BaseModel):
+    url: str
+    status_code: int
+    reason: str
+    timestamp: float = Field(default_factory=time.time)
 
 
 class USTerritory(BaseModel):
@@ -618,17 +633,6 @@ fbi_offense_codes = [FBIOffense(code=code, **info) for code, info in fbi_offense
 nibrs_offense_codes = [NIBRSOffense(code=code, **info) for code, info in nibrs_offense_mapping_v2.items()]
 
 
-def get_offense_from_code(code: int) -> str:
-    return fbi_offense_mapping.get(code, {}).get("name", None)
-
-
-def get_code_from_offense(name: str) -> int:
-    for code, info in fbi_offense_mapping.items():
-        if info.get("name", "").lower() == name.lower():
-            return code
-    return None
-
-
 us_territory_mapping: dict[str, dict[str, str]] = {
     "AL": {"name": "Alabama"},
     "AK": {"name": "Alaska"},
@@ -745,6 +749,17 @@ class FBIData(BaseModel):
     def search_fbi_offenses_by_regex(self, key: str, pattern: str) -> list[FBIOffense]:
         regex = re.compile(pattern, re.IGNORECASE)
         return [offense for offense in self.fbi_codes if regex.search(getattr(offense, key, ""))]
+
+
+def get_offense_from_code(code: int) -> str:
+    return fbi_offense_mapping.get(code, {}).get("name", None)
+
+
+def get_code_from_offense(name: str) -> int:
+    for code, info in fbi_offense_mapping.items():
+        if info.get("name", "").lower() == name.lower():
+            return code
+    return None
 
 
 def get_state_from_abbr(abbr):

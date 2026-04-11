@@ -1,5 +1,7 @@
 import os
 
+from sympy import im
+
 CENSUS_API_KEY = os.getenv("CENSUS_API_KEY")
 CENSUS_API_BASE_URL = os.getenv("CENSUS_API_BASE_URL")
 
@@ -18,9 +20,7 @@ supported = [
 ]
 
 if CENSUS_API_BASE_URL is None or CENSUS_API_KEY is None:
-    raise EnvironmentError(
-        "CENSUS_API_BASE_URL and CENSUS_API_KEY must be set in environment variables."
-    )
+    raise EnvironmentError("CENSUS_API_BASE_URL and CENSUS_API_KEY must be set in environment variables.")
 
 from .main import (
     get_census_acs_variables,
@@ -28,3 +28,5 @@ from .main import (
     get_census_acs_detailed_by_state,
     get_census_acs_detailed_by_state_county,
 )
+
+from .client import Client

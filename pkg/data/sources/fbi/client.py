@@ -4,44 +4,24 @@ from unittest import result
 
 import requests
 from . import GOV_API_BASE_URL, GOV_API_KEY
+from ..model import Request, FailedRequest
 from .data import FBIData, USTerritory
-from pydantic import BaseModel, Field
+
 from urllib.parse import urlparse
 import pandas as pd
 
 import time
 
-##
-# state (state abbreviation)
-# from (start date MM-YYYY)
-# to (end date MM-YYYY)
-# offense (offense type)
-# type (totals, counts)
-
-
-class Request(BaseModel):
-    url: str
-    params: dict | None = None
-    request_headers: dict | None = None
-    response_headers: dict | None = None
-
-
-class FailedRequest(BaseModel):
-    url: str
-    status_code: int
-    reason: str
-    timestamp: float = Field(default_factory=time.time)
-
 
 class Client:
     routes: dict[str, dict[str, str]] = {}
 
-    def _clean_column_prefix(self, prefix: str) -> str:
+    def _sanitize_column_prefix(self, prefix: str) -> str:
         prefix = prefix.lower()
         prefix = prefix.replace(" ", "_")
         return prefix
 
-    def _clean_column_name(self, name: str) -> str:
+    def _sanitize_column_name(self, name: str) -> str:
         name = name.lower()
         # name = name.replace(" ", "")
         name = name.replace(" ", "_")
@@ -65,7 +45,7 @@ class Client:
         self.limit_reset = None
         self.data = FBIData()
 
-    def get(
+    def _get(
         self, url_path: str = None, default_return=None, success_codes: list = None, debug: bool = False
     ) -> dict | list:
         if url_path is None:
@@ -175,7 +155,7 @@ class Client:
         results = []
         if territory:
             territory = self.data.get_territory_by_abbr(territory) or self.data.get_territory_by_name(territory)
-            data = self.get(
+            data = self._get(
                 url_path=url_path(territory.abbreviation),
                 default_return=default_return,
                 success_codes=success_codes,
@@ -197,7 +177,7 @@ class Client:
             return pd.DataFrame(results)
 
         for territory in self.data.us_territories:
-            data = self.get(
+            data = self._get(
                 url_path=url_path(territory.abbreviation),
                 default_return=default_return,
                 success_codes=success_codes,
@@ -237,7 +217,7 @@ class Client:
         results = []
         if territory:
             territory = self.data.get_territory_by_abbr(territory) or self.data.get_territory_by_name(territory)
-            data = self.get(
+            data = self._get(
                 url_path=url_path(territory.abbreviation, offense_code, start_date, end_date),
                 default_return=default_return,
                 success_codes=success_codes,
@@ -308,7 +288,7 @@ class Client:
         results = []
         if territory:
             territory = self.data.get_territory_by_abbr(territory) or self.data.get_territory_by_name(territory)
-            data = self.get(
+            data = self._get(
                 url_path=url_path(territory.abbreviation, offense_code, start_date, end_date),
                 default_return=default_return,
                 success_codes=success_codes,
@@ -325,8 +305,8 @@ class Client:
                 }
                 for data_prefix in data_prefixes:
                     for data_title, total in data[data_prefix].items():
-                        column_prefix = self._clean_column_prefix(data_prefix)
-                        column_title = self._clean_column_name(data_title)
+                        column_prefix = self._sanitize_column_prefix(data_prefix)
+                        column_title = self._sanitize_column_name(data_title)
                         column_name = f"{column_prefix}.{column_title}"
                         row[column_name] = total
                 results.append(row)
@@ -350,7 +330,7 @@ class Client:
 
         if territory:
             territory = self.data.get_territory_by_abbr(territory) or self.data.get_territory_name(territory)
-            data = self.get(
+            data = self._get(
                 url_path=url_path(territory.abbreviation, start_date, end_date),
                 default_return=default_return,
                 success_codes=success_codes,
@@ -390,7 +370,7 @@ class Client:
 
         if territory:
             territory = self.data.get_territory_by_abbr(territory) or self.data.get_territory_by_name(territory)
-            data = self.get(
+            data = self._get(
                 url_path=url_path(territory.abbreviation, start_date, end_date),
                 default_return=default_return,
                 success_codes=success_codes,
@@ -402,12 +382,12 @@ class Client:
             for data_prefix in data_prefixes:
                 for data_category, totals in data[data_prefix].items():
                     # victim - dict_keys(['age', 'sex', 'race', 'ethnicity'])
-                    column_prefix = self._clean_column_prefix(data_prefix)
-                    column_category = self._clean_column_name(data_category)
+                    column_prefix = self._sanitize_column_prefix(data_prefix)
+                    column_category = self._sanitize_column_name(data_category)
                     column_name = f"{column_prefix}.{column_category}"
                     # dict_keys(['0-9', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80-89', 'Unknown', '90-Older'])
                     for key, value in data[data_prefix][data_category].items():
-                        column_target = self._clean_column_name(key)
+                        column_target = self._sanitize_column_name(key)
                         row[f"{column_name}.{column_target}"] = value
             results.append(row)
         return pd.DataFrame(results) if not raw else data
@@ -433,7 +413,7 @@ class Client:
         )
 
         results = []
-        data = self.get(
+        data = self._get(
             url_path=url_path(territory.abbreviation, offense_code, start_date, end_date),
             default_return=default_return,
             success_codes=success_codes,
