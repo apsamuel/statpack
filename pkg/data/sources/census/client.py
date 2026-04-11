@@ -2,8 +2,8 @@ import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 from datetime import date
-from ..model import Request, FailedRequest
-from .data import CensusData, State, Race
+from ..models import Request, FailedRequest
+from .models import CensusData, State, Race
 from . import CENSUS_API_BASE_URL, CENSUS_API_KEY
 
 

@@ -6,7 +6,7 @@ import pandas as pd
 import time
 
 from . import GOV_API_BASE_URL, GOV_API_KEY
-from .data import (
+from .models import (
     us_territory_mapping,
     get_abbr_from_state,
     get_state_from_abbr,

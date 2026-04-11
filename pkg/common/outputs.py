@@ -1,3 +1,5 @@
+"""Output handling functions for DataFrames."""
+
 import pandas as pd
 
 
@@ -11,18 +13,6 @@ def write_csv(df: pd.DataFrame, filename: str) -> None:
     df.to_csv(filename, index=False)
 
 
-def read_csv(filename: str) -> pd.DataFrame:
-    """Reads a CSV file into a DataFrame.
-
-    Args:
-        filename (str): The name of the file to read from.
-
-    Returns:
-        pd.DataFrame: The DataFrame containing the CSV data.
-    """
-    return pd.read_csv(filename)
-
-
 def write_json(df: pd.DataFrame, filename: str) -> None:
     """Writes a DataFrame to a JSON file.
 
@@ -33,19 +23,7 @@ def write_json(df: pd.DataFrame, filename: str) -> None:
     df.to_json(filename, orient="records", lines=True)
 
 
-def read_json(filename: str) -> pd.DataFrame:
-    """Reads a JSON file into a DataFrame.
-
-    Args:
-        filename (str): The name of the file to read from.
-
-    Returns:
-        pd.DataFrame: The DataFrame containing the JSON data.
-    """
-    return pd.read_json(filename, orient="records", lines=True)
-
-
-def describe(df: pd.DataFrame) -> dict:
+def describe_frame(df: pd.DataFrame) -> dict:
     """Gathers descriptive statistics about a DataFrame.
 
     Args:
@@ -68,7 +46,7 @@ def describe(df: pd.DataFrame) -> dict:
     return description
 
 
-def display(df: pd.DataFrame, max_rows: int = 10) -> None:
+def display_frame(df: pd.DataFrame, max_rows: int = 10) -> None:
     """Displays a DataFrame in a readable format.
 
     Args:

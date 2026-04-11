@@ -4,8 +4,8 @@ from unittest import result
 
 import requests
 from . import GOV_API_BASE_URL, GOV_API_KEY
-from ..model import Request, FailedRequest
-from .data import FBIData, USTerritory
+from ..models import Request, FailedRequest
+from .models import FBIData, USTerritory
 
 from urllib.parse import urlparse
 import pandas as pd

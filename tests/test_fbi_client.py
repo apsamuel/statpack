@@ -25,7 +25,7 @@ from unittest.mock import MagicMock
 import pandas as pd
 
 from pkg.data.sources.fbi.client import Client, Request, FailedRequest
-from pkg.data.sources.fbi.data import USTerritory
+from pkg.data.sources.fbi.models import USTerritory
 
 
 # ---------------------------------------------------------------------------
@@ -133,7 +133,7 @@ class TestClientInit:
         assert client.failed_requests == []
 
     def test_data_attribute_is_fbi_data(self, client):
-        from pkg.data.sources.fbi.data import FBIData
+        from pkg.data.sources.fbi.models import FBIData
 
         assert isinstance(client.data, FBIData)
 

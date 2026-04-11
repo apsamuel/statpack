@@ -1,6 +1,6 @@
 import requests
 from . import FRED_API_BASE_URL, FRED_API_KEY
-from .data import FREDData
+from .models import FREDData
 
 
 class Client:

@@ -1,3 +1,3 @@
-from .main import write_csv, read_csv, write_json, read_json, describe
+"""Common utilities for the statpack package, including input/output handling and DataFrame descriptions."""
 
-# PROGRAM_NAME = "statpack"
+from .outputs import write_csv, read_csv, write_json, read_json, describe_frame
