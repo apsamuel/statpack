@@ -13,7 +13,7 @@ from .models import (
     fbi_offense_mapping,
     get_offense_from_code,
     get_code_from_offense,
-    nibrs_offense_codes,
+    nibrs_offense_codes_v2,
     nibrs_offense_mapping_v1,
     nibrs_offense_mapping_v2,
 )
@@ -656,7 +656,7 @@ def get_nibrs_totals_by_state(
         end_date = "12-2020"
 
     states_to_query = list(us_territory_mapping.keys()) if state_abbr is None else [state_abbr]
-    nibrs_codes_to_query = [info.code for info in nibrs_offense_codes] if nibrs_code is None else [nibrs_code]
+    nibrs_codes_to_query = [info.code for info in nibrs_offense_codes_v2] if nibrs_code is None else [nibrs_code]
 
     for abbr in states_to_query:
         for code in nibrs_codes_to_query:

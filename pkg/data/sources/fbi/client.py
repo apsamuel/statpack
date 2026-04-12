@@ -5,7 +5,7 @@ from unittest import result
 import requests
 from . import GOV_API_BASE_URL, GOV_API_KEY
 from ..models import Request, FailedRequest
-from .models import FBIData, USTerritory
+from .models import Data, USTerritory
 
 from urllib.parse import urlparse
 import pandas as pd
@@ -43,7 +43,7 @@ class Client:
         self.limited = False
         self.limit_remaining = None
         self.limit_reset = None
-        self.data = FBIData()
+        self.data = Data()
 
     def _get(
         self, url_path: str = None, default_return=None, success_codes: list = None, debug: bool = False

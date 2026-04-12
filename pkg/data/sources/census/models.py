@@ -125,12 +125,12 @@ def _get_state_codes() -> list[State]:
     return states
 
 
-# def _get_region
-state_codes = _get_state_codes()
-county_codes = _get_county_codes()
+# # def _get_region
+# state_codes = _get_state_codes()
+# county_codes = _get_county_codes()
 
 
-class CensusData(BaseModel):
+class Data(BaseModel):
     # states: list[State] = [State(code=code, name=name) for code, name in us_state_mapping.items()]
     # races: list[Race] = [Race(code=code, name=name) for code, name in us_race_mapping.items()]
     states: list[State] = state_codes
@@ -159,3 +159,10 @@ class CensusData(BaseModel):
             if state.code == code:
                 return state
         return None
+
+
+def get_data_model() -> Data:
+    # def _get_region
+    state_codes = _get_state_codes()
+    county_codes = _get_county_codes()
+    return Data(states=state_codes, counties=county_codes)

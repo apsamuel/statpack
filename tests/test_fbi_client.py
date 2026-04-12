@@ -133,9 +133,9 @@ class TestClientInit:
         assert client.failed_requests == []
 
     def test_data_attribute_is_fbi_data(self, client):
-        from pkg.data.sources.fbi.models import FBIData
+        from pkg.data.sources.fbi.models import Data
 
-        assert isinstance(client.data, FBIData)
+        assert isinstance(client.data, Data)
 
 
 # ---------------------------------------------------------------------------

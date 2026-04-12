@@ -1,0 +1,7062 @@
+{
+  "states": [
+    {
+      "code": 1,
+      "name": "Alabama"
+    },
+    {
+      "code": 2,
+      "name": "Alaska"
+    },
+    {
+      "code": 4,
+      "name": "Arizona"
+    },
+    {
+      "code": 5,
+      "name": "Arkansas"
+    },
+    {
+      "code": 6,
+      "name": "California"
+    },
+    {
+      "code": 8,
+      "name": "Colorado"
+    },
+    {
+      "code": 9,
+      "name": "Connecticut"
+    },
+    {
+      "code": 10,
+      "name": "Delaware"
+    },
+    {
+      "code": 11,
+      "name": "District of Columbia"
+    },
+    {
+      "code": 12,
+      "name": "Florida"
+    },
+    {
+      "code": 13,
+      "name": "Georgia"
+    },
+    {
+      "code": 15,
+      "name": "Hawaii"
+    },
+    {
+      "code": 16,
+      "name": "Idaho"
+    },
+    {
+      "code": 17,
+      "name": "Illinois"
+    },
+    {
+      "code": 18,
+      "name": "Indiana"
+    },
+    {
+      "code": 19,
+      "name": "Iowa"
+    },
+    {
+      "code": 20,
+      "name": "Kansas"
+    },
+    {
+      "code": 21,
+      "name": "Kentucky"
+    },
+    {
+      "code": 22,
+      "name": "Louisiana"
+    },
+    {
+      "code": 23,
+      "name": "Maine"
+    },
+    {
+      "code": 24,
+      "name": "Maryland"
+    },
+    {
+      "code": 25,
+      "name": "Massachusetts"
+    },
+    {
+      "code": 26,
+      "name": "Michigan"
+    },
+    {
+      "code": 27,
+      "name": "Minnesota"
+    },
+    {
+      "code": 28,
+      "name": "Mississippi"
+    },
+    {
+      "code": 29,
+      "name": "Missouri"
+    },
+    {
+      "code": 30,
+      "name": "Montana"
+    },
+    {
+      "code": 31,
+      "name": "Nebraska"
+    },
+    {
+      "code": 32,
+      "name": "Nevada"
+    },
+    {
+      "code": 33,
+      "name": "New Hampshire"
+    },
+    {
+      "code": 34,
+      "name": "New Jersey"
+    },
+    {
+      "code": 35,
+      "name": "New Mexico"
+    },
+    {
+      "code": 36,
+      "name": "New York"
+    },
+    {
+      "code": 37,
+      "name": "North Carolina"
+    },
+    {
+      "code": 38,
+      "name": "North Dakota"
+    },
+    {
+      "code": 39,
+      "name": "Ohio"
+    },
+    {
+      "code": 40,
+      "name": "Oklahoma"
+    },
+    {
+      "code": 41,
+      "name": "Oregon"
+    },
+    {
+      "code": 42,
+      "name": "Pennsylvania"
+    },
+    {
+      "code": 44,
+      "name": "Rhode Island"
+    },
+    {
+      "code": 45,
+      "name": "South Carolina"
+    },
+    {
+      "code": 46,
+      "name": "South Dakota"
+    },
+    {
+      "code": 47,
+      "name": "Tennessee"
+    },
+    {
+      "code": 48,
+      "name": "Texas"
+    },
+    {
+      "code": 49,
+      "name": "Utah"
+    },
+    {
+      "code": 50,
+      "name": "Vermont"
+    },
+    {
+      "code": 51,
+      "name": "Virginia"
+    },
+    {
+      "code": 53,
+      "name": "Washington"
+    },
+    {
+      "code": 54,
+      "name": "West Virginia"
+    },
+    {
+      "code": 55,
+      "name": "Wisconsin"
+    },
+    {
+      "code": 56,
+      "name": "Wyoming"
+    },
+    {
+      "code": 72,
+      "name": "Puerto Rico"
+    }
+  ],
+  "counties": [
+    {
+      "code": 3,
+      "name": "Baldwin County",
+      "state": {
+        "code": 1,
+        "name": "Alabama"
+      }
+    },
+    {
+      "code": 15,
+      "name": "Calhoun County",
+      "state": {
+        "code": 1,
+        "name": "Alabama"
+      }
+    },
+    {
+      "code": 43,
+      "name": "Cullman County",
+      "state": {
+        "code": 1,
+        "name": "Alabama"
+      }
+    },
+    {
+      "code": 49,
+      "name": "DeKalb County",
+      "state": {
+        "code": 1,
+        "name": "Alabama"
+      }
+    },
+    {
+      "code": 51,
+      "name": "Elmore County",
+      "state": {
+        "code": 1,
+        "name": "Alabama"
+      }
+    },
+    {
+      "code": 55,
+      "name": "Etowah County",
+      "state": {
+        "code": 1,
+        "name": "Alabama"
+      }
+    },
+    {
+      "code": 69,
+      "name": "Houston County",
+      "state": {
+        "code": 1,
+        "name": "Alabama"
+      }
+    },
+    {
+      "code": 73,
+      "name": "Jefferson County",
+      "state": {
+        "code": 1,
+        "name": "Alabama"
+      }
+    },
+    {
+      "code": 77,
+      "name": "Lauderdale County",
+      "state": {
+        "code": 1,
+        "name": "Alabama"
+      }
+    },
+    {
+      "code": 81,
+      "name": "Lee County",
+      "state": {
+        "code": 1,
+        "name": "Alabama"
+      }
+    },
+    {
+      "code": 83,
+      "name": "Limestone County",
+      "state": {
+        "code": 1,
+        "name": "Alabama"
+      }
+    },
+    {
+      "code": 89,
+      "name": "Madison County",
+      "state": {
+        "code": 1,
+        "name": "Alabama"
+      }
+    },
+    {
+      "code": 95,
+      "name": "Marshall County",
+      "state": {
+        "code": 1,
+        "name": "Alabama"
+      }
+    },
+    {
+      "code": 97,
+      "name": "Mobile County",
+      "state": {
+        "code": 1,
+        "name": "Alabama"
+      }
+    },
+    {
+      "code": 101,
+      "name": "Montgomery County",
+      "state": {
+        "code": 1,
+        "name": "Alabama"
+      }
+    },
+    {
+      "code": 103,
+      "name": "Morgan County",
+      "state": {
+        "code": 1,
+        "name": "Alabama"
+      }
+    },
+    {
+      "code": 115,
+      "name": "St. Clair County",
+      "state": {
+        "code": 1,
+        "name": "Alabama"
+      }
+    },
+    {
+      "code": 117,
+      "name": "Shelby County",
+      "state": {
+        "code": 1,
+        "name": "Alabama"
+      }
+    },
+    {
+      "code": 121,
+      "name": "Talladega County",
+      "state": {
+        "code": 1,
+        "name": "Alabama"
+      }
+    },
+    {
+      "code": 125,
+      "name": "Tuscaloosa County",
+      "state": {
+        "code": 1,
+        "name": "Alabama"
+      }
+    },
+    {
+      "code": 127,
+      "name": "Walker County",
+      "state": {
+        "code": 1,
+        "name": "Alabama"
+      }
+    },
+    {
+      "code": 20,
+      "name": "Anchorage Municipality",
+      "state": {
+        "code": 2,
+        "name": "Alaska"
+      }
+    },
+    {
+      "code": 90,
+      "name": "Fairbanks North Star Borough",
+      "state": {
+        "code": 2,
+        "name": "Alaska"
+      }
+    },
+    {
+      "code": 170,
+      "name": "Matanuska-Susitna Borough",
+      "state": {
+        "code": 2,
+        "name": "Alaska"
+      }
+    },
+    {
+      "code": 1,
+      "name": "Apache County",
+      "state": {
+        "code": 4,
+        "name": "Arizona"
+      }
+    },
+    {
+      "code": 3,
+      "name": "Cochise County",
+      "state": {
+        "code": 4,
+        "name": "Arizona"
+      }
+    },
+    {
+      "code": 5,
+      "name": "Coconino County",
+      "state": {
+        "code": 4,
+        "name": "Arizona"
+      }
+    },
+    {
+      "code": 13,
+      "name": "Maricopa County",
+      "state": {
+        "code": 4,
+        "name": "Arizona"
+      }
+    },
+    {
+      "code": 15,
+      "name": "Mohave County",
+      "state": {
+        "code": 4,
+        "name": "Arizona"
+      }
+    },
+    {
+      "code": 17,
+      "name": "Navajo County",
+      "state": {
+        "code": 4,
+        "name": "Arizona"
+      }
+    },
+    {
+      "code": 19,
+      "name": "Pima County",
+      "state": {
+        "code": 4,
+        "name": "Arizona"
+      }
+    },
+    {
+      "code": 21,
+      "name": "Pinal County",
+      "state": {
+        "code": 4,
+        "name": "Arizona"
+      }
+    },
+    {
+      "code": 25,
+      "name": "Yavapai County",
+      "state": {
+        "code": 4,
+        "name": "Arizona"
+      }
+    },
+    {
+      "code": 27,
+      "name": "Yuma County",
+      "state": {
+        "code": 4,
+        "name": "Arizona"
+      }
+    },
+    {
+      "code": 7,
+      "name": "Benton County",
+      "state": {
+        "code": 5,
+        "name": "Arkansas"
+      }
+    },
+    {
+      "code": 69,
+      "name": "Jefferson County",
+      "state": {
+        "code": 5,
+        "name": "Arkansas"
+      }
+    },
+    {
+      "code": 31,
+      "name": "Craighead County",
+      "state": {
+        "code": 5,
+        "name": "Arkansas"
+      }
+    },
+    {
+      "code": 45,
+      "name": "Faulkner County",
+      "state": {
+        "code": 5,
+        "name": "Arkansas"
+      }
+    },
+    {
+      "code": 51,
+      "name": "Garland County",
+      "state": {
+        "code": 5,
+        "name": "Arkansas"
+      }
+    },
+    {
+      "code": 85,
+      "name": "Lonoke County",
+      "state": {
+        "code": 5,
+        "name": "Arkansas"
+      }
+    },
+    {
+      "code": 119,
+      "name": "Pulaski County",
+      "state": {
+        "code": 5,
+        "name": "Arkansas"
+      }
+    },
+    {
+      "code": 125,
+      "name": "Saline County",
+      "state": {
+        "code": 5,
+        "name": "Arkansas"
+      }
+    },
+    {
+      "code": 131,
+      "name": "Sebastian County",
+      "state": {
+        "code": 5,
+        "name": "Arkansas"
+      }
+    },
+    {
+      "code": 143,
+      "name": "Washington County",
+      "state": {
+        "code": 5,
+        "name": "Arkansas"
+      }
+    },
+    {
+      "code": 145,
+      "name": "White County",
+      "state": {
+        "code": 5,
+        "name": "Arkansas"
+      }
+    },
+    {
+      "code": 1,
+      "name": "Alameda County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 7,
+      "name": "Butte County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 13,
+      "name": "Contra Costa County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 17,
+      "name": "El Dorado County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 19,
+      "name": "Fresno County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 23,
+      "name": "Humboldt County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 25,
+      "name": "Imperial County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 29,
+      "name": "Kern County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 31,
+      "name": "Kings County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 33,
+      "name": "Lake County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 37,
+      "name": "Los Angeles County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 39,
+      "name": "Madera County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 41,
+      "name": "Marin County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 45,
+      "name": "Mendocino County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 47,
+      "name": "Merced County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 53,
+      "name": "Monterey County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 55,
+      "name": "Napa County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 57,
+      "name": "Nevada County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 59,
+      "name": "Orange County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 61,
+      "name": "Placer County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 65,
+      "name": "Riverside County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 67,
+      "name": "Sacramento County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 69,
+      "name": "San Benito County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 71,
+      "name": "San Bernardino County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 73,
+      "name": "San Diego County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 75,
+      "name": "San Francisco County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 77,
+      "name": "San Joaquin County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 79,
+      "name": "San Luis Obispo County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 81,
+      "name": "San Mateo County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 83,
+      "name": "Santa Barbara County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 85,
+      "name": "Santa Clara County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 87,
+      "name": "Santa Cruz County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 89,
+      "name": "Shasta County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 95,
+      "name": "Solano County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 97,
+      "name": "Sonoma County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 99,
+      "name": "Stanislaus County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 101,
+      "name": "Sutter County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 103,
+      "name": "Tehama County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 107,
+      "name": "Tulare County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 111,
+      "name": "Ventura County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 113,
+      "name": "Yolo County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 115,
+      "name": "Yuba County",
+      "state": {
+        "code": 6,
+        "name": "California"
+      }
+    },
+    {
+      "code": 1,
+      "name": "Adams County",
+      "state": {
+        "code": 8,
+        "name": "Colorado"
+      }
+    },
+    {
+      "code": 5,
+      "name": "Arapahoe County",
+      "state": {
+        "code": 8,
+        "name": "Colorado"
+      }
+    },
+    {
+      "code": 13,
+      "name": "Boulder County",
+      "state": {
+        "code": 8,
+        "name": "Colorado"
+      }
+    },
+    {
+      "code": 14,
+      "name": "Broomfield County",
+      "state": {
+        "code": 8,
+        "name": "Colorado"
+      }
+    },
+    {
+      "code": 31,
+      "name": "Denver County",
+      "state": {
+        "code": 8,
+        "name": "Colorado"
+      }
+    },
+    {
+      "code": 35,
+      "name": "Douglas County",
+      "state": {
+        "code": 8,
+        "name": "Colorado"
+      }
+    },
+    {
+      "code": 41,
+      "name": "El Paso County",
+      "state": {
+        "code": 8,
+        "name": "Colorado"
+      }
+    },
+    {
+      "code": 59,
+      "name": "Jefferson County",
+      "state": {
+        "code": 8,
+        "name": "Colorado"
+      }
+    },
+    {
+      "code": 69,
+      "name": "Larimer County",
+      "state": {
+        "code": 8,
+        "name": "Colorado"
+      }
+    },
+    {
+      "code": 77,
+      "name": "Mesa County",
+      "state": {
+        "code": 8,
+        "name": "Colorado"
+      }
+    },
+    {
+      "code": 101,
+      "name": "Pueblo County",
+      "state": {
+        "code": 8,
+        "name": "Colorado"
+      }
+    },
+    {
+      "code": 123,
+      "name": "Weld County",
+      "state": {
+        "code": 8,
+        "name": "Colorado"
+      }
+    },
+    {
+      "code": 110,
+      "name": "Capitol Planning Region",
+      "state": {
+        "code": 9,
+        "name": "Connecticut"
+      }
+    },
+    {
+      "code": 120,
+      "name": "Greater Bridgeport Planning Region",
+      "state": {
+        "code": 9,
+        "name": "Connecticut"
+      }
+    },
+    {
+      "code": 130,
+      "name": "Lower Connecticut River Valley Planning Region",
+      "state": {
+        "code": 9,
+        "name": "Connecticut"
+      }
+    },
+    {
+      "code": 140,
+      "name": "Naugatuck Valley Planning Region",
+      "state": {
+        "code": 9,
+        "name": "Connecticut"
+      }
+    },
+    {
+      "code": 150,
+      "name": "Northeastern Connecticut Planning Region",
+      "state": {
+        "code": 9,
+        "name": "Connecticut"
+      }
+    },
+    {
+      "code": 160,
+      "name": "Northwest Hills Planning Region",
+      "state": {
+        "code": 9,
+        "name": "Connecticut"
+      }
+    },
+    {
+      "code": 170,
+      "name": "South Central Connecticut Planning Region",
+      "state": {
+        "code": 9,
+        "name": "Connecticut"
+      }
+    },
+    {
+      "code": 180,
+      "name": "Southeastern Connecticut Planning Region",
+      "state": {
+        "code": 9,
+        "name": "Connecticut"
+      }
+    },
+    {
+      "code": 190,
+      "name": "Western Connecticut Planning Region",
+      "state": {
+        "code": 9,
+        "name": "Connecticut"
+      }
+    },
+    {
+      "code": 1,
+      "name": "Kent County",
+      "state": {
+        "code": 10,
+        "name": "Delaware"
+      }
+    },
+    {
+      "code": 3,
+      "name": "New Castle County",
+      "state": {
+        "code": 10,
+        "name": "Delaware"
+      }
+    },
+    {
+      "code": 5,
+      "name": "Sussex County",
+      "state": {
+        "code": 10,
+        "name": "Delaware"
+      }
+    },
+    {
+      "code": 1,
+      "name": "District of Columbia",
+      "state": {
+        "code": 11,
+        "name": "District of Columbia"
+      }
+    },
+    {
+      "code": 1,
+      "name": "Alachua County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 5,
+      "name": "Bay County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 9,
+      "name": "Brevard County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 11,
+      "name": "Broward County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 15,
+      "name": "Charlotte County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 17,
+      "name": "Citrus County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 19,
+      "name": "Clay County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 21,
+      "name": "Collier County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 23,
+      "name": "Columbia County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 31,
+      "name": "Duval County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 33,
+      "name": "Escambia County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 35,
+      "name": "Flagler County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 53,
+      "name": "Hernando County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 55,
+      "name": "Highlands County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 57,
+      "name": "Hillsborough County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 61,
+      "name": "Indian River County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 69,
+      "name": "Lake County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 71,
+      "name": "Lee County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 73,
+      "name": "Leon County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 81,
+      "name": "Manatee County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 83,
+      "name": "Marion County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 85,
+      "name": "Martin County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 86,
+      "name": "Miami-Dade County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 87,
+      "name": "Monroe County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 89,
+      "name": "Nassau County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 91,
+      "name": "Okaloosa County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 95,
+      "name": "Orange County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 97,
+      "name": "Osceola County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 99,
+      "name": "Palm Beach County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 101,
+      "name": "Pasco County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 103,
+      "name": "Pinellas County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 105,
+      "name": "Polk County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 107,
+      "name": "Putnam County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 109,
+      "name": "St. Johns County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 111,
+      "name": "St. Lucie County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 113,
+      "name": "Santa Rosa County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 115,
+      "name": "Sarasota County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 117,
+      "name": "Seminole County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 119,
+      "name": "Sumter County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 127,
+      "name": "Volusia County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 131,
+      "name": "Walton County",
+      "state": {
+        "code": 12,
+        "name": "Florida"
+      }
+    },
+    {
+      "code": 13,
+      "name": "Barrow County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 15,
+      "name": "Bartow County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 21,
+      "name": "Bibb County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 31,
+      "name": "Bulloch County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 45,
+      "name": "Carroll County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 47,
+      "name": "Catoosa County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 51,
+      "name": "Chatham County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 57,
+      "name": "Cherokee County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 59,
+      "name": "Clarke County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 63,
+      "name": "Clayton County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 67,
+      "name": "Cobb County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 73,
+      "name": "Columbia County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 77,
+      "name": "Coweta County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 89,
+      "name": "DeKalb County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 95,
+      "name": "Dougherty County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 97,
+      "name": "Douglas County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 117,
+      "name": "Forsyth County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 103,
+      "name": "Effingham County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 113,
+      "name": "Fayette County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 115,
+      "name": "Floyd County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 121,
+      "name": "Fulton County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 127,
+      "name": "Glynn County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 135,
+      "name": "Gwinnett County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 139,
+      "name": "Hall County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 151,
+      "name": "Henry County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 153,
+      "name": "Houston County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 157,
+      "name": "Jackson County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 179,
+      "name": "Liberty County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 185,
+      "name": "Lowndes County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 215,
+      "name": "Muscogee County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 217,
+      "name": "Newton County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 223,
+      "name": "Paulding County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 245,
+      "name": "Richmond County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 247,
+      "name": "Rockdale County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 255,
+      "name": "Spalding County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 285,
+      "name": "Troup County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 295,
+      "name": "Walker County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 297,
+      "name": "Walton County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 313,
+      "name": "Whitfield County",
+      "state": {
+        "code": 13,
+        "name": "Georgia"
+      }
+    },
+    {
+      "code": 1,
+      "name": "Hawaii County",
+      "state": {
+        "code": 15,
+        "name": "Hawaii"
+      }
+    },
+    {
+      "code": 3,
+      "name": "Honolulu County",
+      "state": {
+        "code": 15,
+        "name": "Hawaii"
+      }
+    },
+    {
+      "code": 7,
+      "name": "Kauai County",
+      "state": {
+        "code": 15,
+        "name": "Hawaii"
+      }
+    },
+    {
+      "code": 9,
+      "name": "Maui County",
+      "state": {
+        "code": 15,
+        "name": "Hawaii"
+      }
+    },
+    {
+      "code": 1,
+      "name": "Ada County",
+      "state": {
+        "code": 16,
+        "name": "Idaho"
+      }
+    },
+    {
+      "code": 5,
+      "name": "Bannock County",
+      "state": {
+        "code": 16,
+        "name": "Idaho"
+      }
+    },
+    {
+      "code": 19,
+      "name": "Bonneville County",
+      "state": {
+        "code": 16,
+        "name": "Idaho"
+      }
+    },
+    {
+      "code": 27,
+      "name": "Canyon County",
+      "state": {
+        "code": 16,
+        "name": "Idaho"
+      }
+    },
+    {
+      "code": 55,
+      "name": "Kootenai County",
+      "state": {
+        "code": 16,
+        "name": "Idaho"
+      }
+    },
+    {
+      "code": 83,
+      "name": "Twin Falls County",
+      "state": {
+        "code": 16,
+        "name": "Idaho"
+      }
+    },
+    {
+      "code": 19,
+      "name": "Champaign County",
+      "state": {
+        "code": 17,
+        "name": "Illinois"
+      }
+    },
+    {
+      "code": 31,
+      "name": "Cook County",
+      "state": {
+        "code": 17,
+        "name": "Illinois"
+      }
+    },
+    {
+      "code": 37,
+      "name": "DeKalb County",
+      "state": {
+        "code": 17,
+        "name": "Illinois"
+      }
+    },
+    {
+      "code": 43,
+      "name": "DuPage County",
+      "state": {
+        "code": 17,
+        "name": "Illinois"
+      }
+    },
+    {
+      "code": 89,
+      "name": "Kane County",
+      "state": {
+        "code": 17,
+        "name": "Illinois"
+      }
+    },
+    {
+      "code": 91,
+      "name": "Kankakee County",
+      "state": {
+        "code": 17,
+        "name": "Illinois"
+      }
+    },
+    {
+      "code": 93,
+      "name": "Kendall County",
+      "state": {
+        "code": 17,
+        "name": "Illinois"
+      }
+    },
+    {
+      "code": 97,
+      "name": "Lake County",
+      "state": {
+        "code": 17,
+        "name": "Illinois"
+      }
+    },
+    {
+      "code": 99,
+      "name": "LaSalle County",
+      "state": {
+        "code": 17,
+        "name": "Illinois"
+      }
+    },
+    {
+      "code": 111,
+      "name": "McHenry County",
+      "state": {
+        "code": 17,
+        "name": "Illinois"
+      }
+    },
+    {
+      "code": 113,
+      "name": "McLean County",
+      "state": {
+        "code": 17,
+        "name": "Illinois"
+      }
+    },
+    {
+      "code": 115,
+      "name": "Macon County",
+      "state": {
+        "code": 17,
+        "name": "Illinois"
+      }
+    },
+    {
+      "code": 119,
+      "name": "Madison County",
+      "state": {
+        "code": 17,
+        "name": "Illinois"
+      }
+    },
+    {
+      "code": 167,
+      "name": "Sangamon County",
+      "state": {
+        "code": 17,
+        "name": "Illinois"
+      }
+    },
+    {
+      "code": 143,
+      "name": "Peoria County",
+      "state": {
+        "code": 17,
+        "name": "Illinois"
+      }
+    },
+    {
+      "code": 161,
+      "name": "Rock Island County",
+      "state": {
+        "code": 17,
+        "name": "Illinois"
+      }
+    },
+    {
+      "code": 163,
+      "name": "St. Clair County",
+      "state": {
+        "code": 17,
+        "name": "Illinois"
+      }
+    },
+    {
+      "code": 179,
+      "name": "Tazewell County",
+      "state": {
+        "code": 17,
+        "name": "Illinois"
+      }
+    },
+    {
+      "code": 183,
+      "name": "Vermilion County",
+      "state": {
+        "code": 17,
+        "name": "Illinois"
+      }
+    },
+    {
+      "code": 197,
+      "name": "Will County",
+      "state": {
+        "code": 17,
+        "name": "Illinois"
+      }
+    },
+    {
+      "code": 199,
+      "name": "Williamson County",
+      "state": {
+        "code": 17,
+        "name": "Illinois"
+      }
+    },
+    {
+      "code": 201,
+      "name": "Winnebago County",
+      "state": {
+        "code": 17,
+        "name": "Illinois"
+      }
+    },
+    {
+      "code": 3,
+      "name": "Allen County",
+      "state": {
+        "code": 18,
+        "name": "Indiana"
+      }
+    },
+    {
+      "code": 5,
+      "name": "Bartholomew County",
+      "state": {
+        "code": 18,
+        "name": "Indiana"
+      }
+    },
+    {
+      "code": 11,
+      "name": "Boone County",
+      "state": {
+        "code": 18,
+        "name": "Indiana"
+      }
+    },
+    {
+      "code": 19,
+      "name": "Clark County",
+      "state": {
+        "code": 18,
+        "name": "Indiana"
+      }
+    },
+    {
+      "code": 35,
+      "name": "Delaware County",
+      "state": {
+        "code": 18,
+        "name": "Indiana"
+      }
+    },
+    {
+      "code": 39,
+      "name": "Elkhart County",
+      "state": {
+        "code": 18,
+        "name": "Indiana"
+      }
+    },
+    {
+      "code": 43,
+      "name": "Floyd County",
+      "state": {
+        "code": 18,
+        "name": "Indiana"
+      }
+    },
+    {
+      "code": 53,
+      "name": "Grant County",
+      "state": {
+        "code": 18,
+        "name": "Indiana"
+      }
+    },
+    {
+      "code": 57,
+      "name": "Hamilton County",
+      "state": {
+        "code": 18,
+        "name": "Indiana"
+      }
+    },
+    {
+      "code": 59,
+      "name": "Hancock County",
+      "state": {
+        "code": 18,
+        "name": "Indiana"
+      }
+    },
+    {
+      "code": 63,
+      "name": "Hendricks County",
+      "state": {
+        "code": 18,
+        "name": "Indiana"
+      }
+    },
+    {
+      "code": 67,
+      "name": "Howard County",
+      "state": {
+        "code": 18,
+        "name": "Indiana"
+      }
+    },
+    {
+      "code": 81,
+      "name": "Johnson County",
+      "state": {
+        "code": 18,
+        "name": "Indiana"
+      }
+    },
+    {
+      "code": 85,
+      "name": "Kosciusko County",
+      "state": {
+        "code": 18,
+        "name": "Indiana"
+      }
+    },
+    {
+      "code": 89,
+      "name": "Lake County",
+      "state": {
+        "code": 18,
+        "name": "Indiana"
+      }
+    },
+    {
+      "code": 91,
+      "name": "LaPorte County",
+      "state": {
+        "code": 18,
+        "name": "Indiana"
+      }
+    },
+    {
+      "code": 95,
+      "name": "Madison County",
+      "state": {
+        "code": 18,
+        "name": "Indiana"
+      }
+    },
+    {
+      "code": 97,
+      "name": "Marion County",
+      "state": {
+        "code": 18,
+        "name": "Indiana"
+      }
+    },
+    {
+      "code": 105,
+      "name": "Monroe County",
+      "state": {
+        "code": 18,
+        "name": "Indiana"
+      }
+    },
+    {
+      "code": 109,
+      "name": "Morgan County",
+      "state": {
+        "code": 18,
+        "name": "Indiana"
+      }
+    },
+    {
+      "code": 127,
+      "name": "Porter County",
+      "state": {
+        "code": 18,
+        "name": "Indiana"
+      }
+    },
+    {
+      "code": 141,
+      "name": "St. Joseph County",
+      "state": {
+        "code": 18,
+        "name": "Indiana"
+      }
+    },
+    {
+      "code": 157,
+      "name": "Tippecanoe County",
+      "state": {
+        "code": 18,
+        "name": "Indiana"
+      }
+    },
+    {
+      "code": 163,
+      "name": "Vanderburgh County",
+      "state": {
+        "code": 18,
+        "name": "Indiana"
+      }
+    },
+    {
+      "code": 167,
+      "name": "Vigo County",
+      "state": {
+        "code": 18,
+        "name": "Indiana"
+      }
+    },
+    {
+      "code": 173,
+      "name": "Warrick County",
+      "state": {
+        "code": 18,
+        "name": "Indiana"
+      }
+    },
+    {
+      "code": 177,
+      "name": "Wayne County",
+      "state": {
+        "code": 18,
+        "name": "Indiana"
+      }
+    },
+    {
+      "code": 13,
+      "name": "Black Hawk County",
+      "state": {
+        "code": 19,
+        "name": "Iowa"
+      }
+    },
+    {
+      "code": 49,
+      "name": "Dallas County",
+      "state": {
+        "code": 19,
+        "name": "Iowa"
+      }
+    },
+    {
+      "code": 61,
+      "name": "Dubuque County",
+      "state": {
+        "code": 19,
+        "name": "Iowa"
+      }
+    },
+    {
+      "code": 155,
+      "name": "Pottawattamie County",
+      "state": {
+        "code": 19,
+        "name": "Iowa"
+      }
+    },
+    {
+      "code": 103,
+      "name": "Johnson County",
+      "state": {
+        "code": 19,
+        "name": "Iowa"
+      }
+    },
+    {
+      "code": 113,
+      "name": "Linn County",
+      "state": {
+        "code": 19,
+        "name": "Iowa"
+      }
+    },
+    {
+      "code": 153,
+      "name": "Polk County",
+      "state": {
+        "code": 19,
+        "name": "Iowa"
+      }
+    },
+    {
+      "code": 163,
+      "name": "Scott County",
+      "state": {
+        "code": 19,
+        "name": "Iowa"
+      }
+    },
+    {
+      "code": 169,
+      "name": "Story County",
+      "state": {
+        "code": 19,
+        "name": "Iowa"
+      }
+    },
+    {
+      "code": 193,
+      "name": "Woodbury County",
+      "state": {
+        "code": 19,
+        "name": "Iowa"
+      }
+    },
+    {
+      "code": 15,
+      "name": "Butler County",
+      "state": {
+        "code": 20,
+        "name": "Kansas"
+      }
+    },
+    {
+      "code": 45,
+      "name": "Douglas County",
+      "state": {
+        "code": 20,
+        "name": "Kansas"
+      }
+    },
+    {
+      "code": 91,
+      "name": "Johnson County",
+      "state": {
+        "code": 20,
+        "name": "Kansas"
+      }
+    },
+    {
+      "code": 103,
+      "name": "Leavenworth County",
+      "state": {
+        "code": 20,
+        "name": "Kansas"
+      }
+    },
+    {
+      "code": 161,
+      "name": "Riley County",
+      "state": {
+        "code": 20,
+        "name": "Kansas"
+      }
+    },
+    {
+      "code": 173,
+      "name": "Sedgwick County",
+      "state": {
+        "code": 20,
+        "name": "Kansas"
+      }
+    },
+    {
+      "code": 177,
+      "name": "Shawnee County",
+      "state": {
+        "code": 20,
+        "name": "Kansas"
+      }
+    },
+    {
+      "code": 209,
+      "name": "Wyandotte County",
+      "state": {
+        "code": 20,
+        "name": "Kansas"
+      }
+    },
+    {
+      "code": 15,
+      "name": "Boone County",
+      "state": {
+        "code": 21,
+        "name": "Kentucky"
+      }
+    },
+    {
+      "code": 29,
+      "name": "Bullitt County",
+      "state": {
+        "code": 21,
+        "name": "Kentucky"
+      }
+    },
+    {
+      "code": 37,
+      "name": "Campbell County",
+      "state": {
+        "code": 21,
+        "name": "Kentucky"
+      }
+    },
+    {
+      "code": 47,
+      "name": "Christian County",
+      "state": {
+        "code": 21,
+        "name": "Kentucky"
+      }
+    },
+    {
+      "code": 59,
+      "name": "Daviess County",
+      "state": {
+        "code": 21,
+        "name": "Kentucky"
+      }
+    },
+    {
+      "code": 67,
+      "name": "Fayette County",
+      "state": {
+        "code": 21,
+        "name": "Kentucky"
+      }
+    },
+    {
+      "code": 93,
+      "name": "Hardin County",
+      "state": {
+        "code": 21,
+        "name": "Kentucky"
+      }
+    },
+    {
+      "code": 151,
+      "name": "Madison County",
+      "state": {
+        "code": 21,
+        "name": "Kentucky"
+      }
+    },
+    {
+      "code": 111,
+      "name": "Jefferson County",
+      "state": {
+        "code": 21,
+        "name": "Kentucky"
+      }
+    },
+    {
+      "code": 117,
+      "name": "Kenton County",
+      "state": {
+        "code": 21,
+        "name": "Kentucky"
+      }
+    },
+    {
+      "code": 145,
+      "name": "McCracken County",
+      "state": {
+        "code": 21,
+        "name": "Kentucky"
+      }
+    },
+    {
+      "code": 185,
+      "name": "Oldham County",
+      "state": {
+        "code": 21,
+        "name": "Kentucky"
+      }
+    },
+    {
+      "code": 199,
+      "name": "Pulaski County",
+      "state": {
+        "code": 21,
+        "name": "Kentucky"
+      }
+    },
+    {
+      "code": 227,
+      "name": "Warren County",
+      "state": {
+        "code": 21,
+        "name": "Kentucky"
+      }
+    },
+    {
+      "code": 5,
+      "name": "Ascension Parish",
+      "state": {
+        "code": 22,
+        "name": "Louisiana"
+      }
+    },
+    {
+      "code": 15,
+      "name": "Bossier Parish",
+      "state": {
+        "code": 22,
+        "name": "Louisiana"
+      }
+    },
+    {
+      "code": 17,
+      "name": "Caddo Parish",
+      "state": {
+        "code": 22,
+        "name": "Louisiana"
+      }
+    },
+    {
+      "code": 19,
+      "name": "Calcasieu Parish",
+      "state": {
+        "code": 22,
+        "name": "Louisiana"
+      }
+    },
+    {
+      "code": 33,
+      "name": "East Baton Rouge Parish",
+      "state": {
+        "code": 22,
+        "name": "Louisiana"
+      }
+    },
+    {
+      "code": 45,
+      "name": "Iberia Parish",
+      "state": {
+        "code": 22,
+        "name": "Louisiana"
+      }
+    },
+    {
+      "code": 51,
+      "name": "Jefferson Parish",
+      "state": {
+        "code": 22,
+        "name": "Louisiana"
+      }
+    },
+    {
+      "code": 55,
+      "name": "Lafayette Parish",
+      "state": {
+        "code": 22,
+        "name": "Louisiana"
+      }
+    },
+    {
+      "code": 57,
+      "name": "Lafourche Parish",
+      "state": {
+        "code": 22,
+        "name": "Louisiana"
+      }
+    },
+    {
+      "code": 63,
+      "name": "Livingston Parish",
+      "state": {
+        "code": 22,
+        "name": "Louisiana"
+      }
+    },
+    {
+      "code": 71,
+      "name": "Orleans Parish",
+      "state": {
+        "code": 22,
+        "name": "Louisiana"
+      }
+    },
+    {
+      "code": 73,
+      "name": "Ouachita Parish",
+      "state": {
+        "code": 22,
+        "name": "Louisiana"
+      }
+    },
+    {
+      "code": 79,
+      "name": "Rapides Parish",
+      "state": {
+        "code": 22,
+        "name": "Louisiana"
+      }
+    },
+    {
+      "code": 97,
+      "name": "St. Landry Parish",
+      "state": {
+        "code": 22,
+        "name": "Louisiana"
+      }
+    },
+    {
+      "code": 103,
+      "name": "St. Tammany Parish",
+      "state": {
+        "code": 22,
+        "name": "Louisiana"
+      }
+    },
+    {
+      "code": 105,
+      "name": "Tangipahoa Parish",
+      "state": {
+        "code": 22,
+        "name": "Louisiana"
+      }
+    },
+    {
+      "code": 109,
+      "name": "Terrebonne Parish",
+      "state": {
+        "code": 22,
+        "name": "Louisiana"
+      }
+    },
+    {
+      "code": 1,
+      "name": "Androscoggin County",
+      "state": {
+        "code": 23,
+        "name": "Maine"
+      }
+    },
+    {
+      "code": 3,
+      "name": "Aroostook County",
+      "state": {
+        "code": 23,
+        "name": "Maine"
+      }
+    },
+    {
+      "code": 5,
+      "name": "Cumberland County",
+      "state": {
+        "code": 23,
+        "name": "Maine"
+      }
+    },
+    {
+      "code": 11,
+      "name": "Kennebec County",
+      "state": {
+        "code": 23,
+        "name": "Maine"
+      }
+    },
+    {
+      "code": 19,
+      "name": "Penobscot County",
+      "state": {
+        "code": 23,
+        "name": "Maine"
+      }
+    },
+    {
+      "code": 31,
+      "name": "York County",
+      "state": {
+        "code": 23,
+        "name": "Maine"
+      }
+    },
+    {
+      "code": 1,
+      "name": "Allegany County",
+      "state": {
+        "code": 24,
+        "name": "Maryland"
+      }
+    },
+    {
+      "code": 3,
+      "name": "Anne Arundel County",
+      "state": {
+        "code": 24,
+        "name": "Maryland"
+      }
+    },
+    {
+      "code": 5,
+      "name": "Baltimore County",
+      "state": {
+        "code": 24,
+        "name": "Maryland"
+      }
+    },
+    {
+      "code": 9,
+      "name": "Calvert County",
+      "state": {
+        "code": 24,
+        "name": "Maryland"
+      }
+    },
+    {
+      "code": 13,
+      "name": "Carroll County",
+      "state": {
+        "code": 24,
+        "name": "Maryland"
+      }
+    },
+    {
+      "code": 15,
+      "name": "Cecil County",
+      "state": {
+        "code": 24,
+        "name": "Maryland"
+      }
+    },
+    {
+      "code": 17,
+      "name": "Charles County",
+      "state": {
+        "code": 24,
+        "name": "Maryland"
+      }
+    },
+    {
+      "code": 21,
+      "name": "Frederick County",
+      "state": {
+        "code": 24,
+        "name": "Maryland"
+      }
+    },
+    {
+      "code": 25,
+      "name": "Harford County",
+      "state": {
+        "code": 24,
+        "name": "Maryland"
+      }
+    },
+    {
+      "code": 27,
+      "name": "Howard County",
+      "state": {
+        "code": 24,
+        "name": "Maryland"
+      }
+    },
+    {
+      "code": 31,
+      "name": "Montgomery County",
+      "state": {
+        "code": 24,
+        "name": "Maryland"
+      }
+    },
+    {
+      "code": 33,
+      "name": "Prince George's County",
+      "state": {
+        "code": 24,
+        "name": "Maryland"
+      }
+    },
+    {
+      "code": 37,
+      "name": "St. Mary's County",
+      "state": {
+        "code": 24,
+        "name": "Maryland"
+      }
+    },
+    {
+      "code": 43,
+      "name": "Washington County",
+      "state": {
+        "code": 24,
+        "name": "Maryland"
+      }
+    },
+    {
+      "code": 45,
+      "name": "Wicomico County",
+      "state": {
+        "code": 24,
+        "name": "Maryland"
+      }
+    },
+    {
+      "code": 510,
+      "name": "Baltimore city",
+      "state": {
+        "code": 24,
+        "name": "Maryland"
+      }
+    },
+    {
+      "code": 1,
+      "name": "Barnstable County",
+      "state": {
+        "code": 25,
+        "name": "Massachusetts"
+      }
+    },
+    {
+      "code": 3,
+      "name": "Berkshire County",
+      "state": {
+        "code": 25,
+        "name": "Massachusetts"
+      }
+    },
+    {
+      "code": 5,
+      "name": "Bristol County",
+      "state": {
+        "code": 25,
+        "name": "Massachusetts"
+      }
+    },
+    {
+      "code": 9,
+      "name": "Essex County",
+      "state": {
+        "code": 25,
+        "name": "Massachusetts"
+      }
+    },
+    {
+      "code": 11,
+      "name": "Franklin County",
+      "state": {
+        "code": 25,
+        "name": "Massachusetts"
+      }
+    },
+    {
+      "code": 13,
+      "name": "Hampden County",
+      "state": {
+        "code": 25,
+        "name": "Massachusetts"
+      }
+    },
+    {
+      "code": 15,
+      "name": "Hampshire County",
+      "state": {
+        "code": 25,
+        "name": "Massachusetts"
+      }
+    },
+    {
+      "code": 17,
+      "name": "Middlesex County",
+      "state": {
+        "code": 25,
+        "name": "Massachusetts"
+      }
+    },
+    {
+      "code": 21,
+      "name": "Norfolk County",
+      "state": {
+        "code": 25,
+        "name": "Massachusetts"
+      }
+    },
+    {
+      "code": 23,
+      "name": "Plymouth County",
+      "state": {
+        "code": 25,
+        "name": "Massachusetts"
+      }
+    },
+    {
+      "code": 25,
+      "name": "Suffolk County",
+      "state": {
+        "code": 25,
+        "name": "Massachusetts"
+      }
+    },
+    {
+      "code": 27,
+      "name": "Worcester County",
+      "state": {
+        "code": 25,
+        "name": "Massachusetts"
+      }
+    },
+    {
+      "code": 5,
+      "name": "Allegan County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 17,
+      "name": "Bay County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 21,
+      "name": "Berrien County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 25,
+      "name": "Calhoun County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 37,
+      "name": "Clinton County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 45,
+      "name": "Eaton County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 49,
+      "name": "Genesee County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 55,
+      "name": "Grand Traverse County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 65,
+      "name": "Ingham County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 67,
+      "name": "Ionia County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 73,
+      "name": "Isabella County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 75,
+      "name": "Jackson County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 77,
+      "name": "Kalamazoo County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 81,
+      "name": "Kent County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 87,
+      "name": "Lapeer County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 91,
+      "name": "Lenawee County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 93,
+      "name": "Livingston County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 99,
+      "name": "Macomb County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 117,
+      "name": "Montcalm County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 103,
+      "name": "Marquette County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 111,
+      "name": "Midland County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 115,
+      "name": "Monroe County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 121,
+      "name": "Muskegon County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 125,
+      "name": "Oakland County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 139,
+      "name": "Ottawa County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 145,
+      "name": "Saginaw County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 147,
+      "name": "St. Clair County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 155,
+      "name": "Shiawassee County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 159,
+      "name": "Van Buren County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 161,
+      "name": "Washtenaw County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 163,
+      "name": "Wayne County",
+      "state": {
+        "code": 26,
+        "name": "Michigan"
+      }
+    },
+    {
+      "code": 3,
+      "name": "Anoka County",
+      "state": {
+        "code": 27,
+        "name": "Minnesota"
+      }
+    },
+    {
+      "code": 13,
+      "name": "Blue Earth County",
+      "state": {
+        "code": 27,
+        "name": "Minnesota"
+      }
+    },
+    {
+      "code": 19,
+      "name": "Carver County",
+      "state": {
+        "code": 27,
+        "name": "Minnesota"
+      }
+    },
+    {
+      "code": 27,
+      "name": "Clay County",
+      "state": {
+        "code": 27,
+        "name": "Minnesota"
+      }
+    },
+    {
+      "code": 35,
+      "name": "Crow Wing County",
+      "state": {
+        "code": 27,
+        "name": "Minnesota"
+      }
+    },
+    {
+      "code": 37,
+      "name": "Dakota County",
+      "state": {
+        "code": 27,
+        "name": "Minnesota"
+      }
+    },
+    {
+      "code": 53,
+      "name": "Hennepin County",
+      "state": {
+        "code": 27,
+        "name": "Minnesota"
+      }
+    },
+    {
+      "code": 109,
+      "name": "Olmsted County",
+      "state": {
+        "code": 27,
+        "name": "Minnesota"
+      }
+    },
+    {
+      "code": 123,
+      "name": "Ramsey County",
+      "state": {
+        "code": 27,
+        "name": "Minnesota"
+      }
+    },
+    {
+      "code": 131,
+      "name": "Rice County",
+      "state": {
+        "code": 27,
+        "name": "Minnesota"
+      }
+    },
+    {
+      "code": 137,
+      "name": "St. Louis County",
+      "state": {
+        "code": 27,
+        "name": "Minnesota"
+      }
+    },
+    {
+      "code": 139,
+      "name": "Scott County",
+      "state": {
+        "code": 27,
+        "name": "Minnesota"
+      }
+    },
+    {
+      "code": 141,
+      "name": "Sherburne County",
+      "state": {
+        "code": 27,
+        "name": "Minnesota"
+      }
+    },
+    {
+      "code": 145,
+      "name": "Stearns County",
+      "state": {
+        "code": 27,
+        "name": "Minnesota"
+      }
+    },
+    {
+      "code": 163,
+      "name": "Washington County",
+      "state": {
+        "code": 27,
+        "name": "Minnesota"
+      }
+    },
+    {
+      "code": 171,
+      "name": "Wright County",
+      "state": {
+        "code": 27,
+        "name": "Minnesota"
+      }
+    },
+    {
+      "code": 33,
+      "name": "DeSoto County",
+      "state": {
+        "code": 28,
+        "name": "Mississippi"
+      }
+    },
+    {
+      "code": 35,
+      "name": "Forrest County",
+      "state": {
+        "code": 28,
+        "name": "Mississippi"
+      }
+    },
+    {
+      "code": 47,
+      "name": "Harrison County",
+      "state": {
+        "code": 28,
+        "name": "Mississippi"
+      }
+    },
+    {
+      "code": 49,
+      "name": "Hinds County",
+      "state": {
+        "code": 28,
+        "name": "Mississippi"
+      }
+    },
+    {
+      "code": 59,
+      "name": "Jackson County",
+      "state": {
+        "code": 28,
+        "name": "Mississippi"
+      }
+    },
+    {
+      "code": 67,
+      "name": "Jones County",
+      "state": {
+        "code": 28,
+        "name": "Mississippi"
+      }
+    },
+    {
+      "code": 73,
+      "name": "Lamar County",
+      "state": {
+        "code": 28,
+        "name": "Mississippi"
+      }
+    },
+    {
+      "code": 75,
+      "name": "Lauderdale County",
+      "state": {
+        "code": 28,
+        "name": "Mississippi"
+      }
+    },
+    {
+      "code": 81,
+      "name": "Lee County",
+      "state": {
+        "code": 28,
+        "name": "Mississippi"
+      }
+    },
+    {
+      "code": 89,
+      "name": "Madison County",
+      "state": {
+        "code": 28,
+        "name": "Mississippi"
+      }
+    },
+    {
+      "code": 121,
+      "name": "Rankin County",
+      "state": {
+        "code": 28,
+        "name": "Mississippi"
+      }
+    },
+    {
+      "code": 19,
+      "name": "Boone County",
+      "state": {
+        "code": 29,
+        "name": "Missouri"
+      }
+    },
+    {
+      "code": 21,
+      "name": "Buchanan County",
+      "state": {
+        "code": 29,
+        "name": "Missouri"
+      }
+    },
+    {
+      "code": 47,
+      "name": "Clay County",
+      "state": {
+        "code": 29,
+        "name": "Missouri"
+      }
+    },
+    {
+      "code": 31,
+      "name": "Cape Girardeau County",
+      "state": {
+        "code": 29,
+        "name": "Missouri"
+      }
+    },
+    {
+      "code": 37,
+      "name": "Cass County",
+      "state": {
+        "code": 29,
+        "name": "Missouri"
+      }
+    },
+    {
+      "code": 43,
+      "name": "Christian County",
+      "state": {
+        "code": 29,
+        "name": "Missouri"
+      }
+    },
+    {
+      "code": 51,
+      "name": "Cole County",
+      "state": {
+        "code": 29,
+        "name": "Missouri"
+      }
+    },
+    {
+      "code": 71,
+      "name": "Franklin County",
+      "state": {
+        "code": 29,
+        "name": "Missouri"
+      }
+    },
+    {
+      "code": 77,
+      "name": "Greene County",
+      "state": {
+        "code": 29,
+        "name": "Missouri"
+      }
+    },
+    {
+      "code": 95,
+      "name": "Jackson County",
+      "state": {
+        "code": 29,
+        "name": "Missouri"
+      }
+    },
+    {
+      "code": 97,
+      "name": "Jasper County",
+      "state": {
+        "code": 29,
+        "name": "Missouri"
+      }
+    },
+    {
+      "code": 99,
+      "name": "Jefferson County",
+      "state": {
+        "code": 29,
+        "name": "Missouri"
+      }
+    },
+    {
+      "code": 165,
+      "name": "Platte County",
+      "state": {
+        "code": 29,
+        "name": "Missouri"
+      }
+    },
+    {
+      "code": 183,
+      "name": "St. Charles County",
+      "state": {
+        "code": 29,
+        "name": "Missouri"
+      }
+    },
+    {
+      "code": 187,
+      "name": "St. Francois County",
+      "state": {
+        "code": 29,
+        "name": "Missouri"
+      }
+    },
+    {
+      "code": 189,
+      "name": "St. Louis County",
+      "state": {
+        "code": 29,
+        "name": "Missouri"
+      }
+    },
+    {
+      "code": 510,
+      "name": "St. Louis city",
+      "state": {
+        "code": 29,
+        "name": "Missouri"
+      }
+    },
+    {
+      "code": 13,
+      "name": "Cascade County",
+      "state": {
+        "code": 30,
+        "name": "Montana"
+      }
+    },
+    {
+      "code": 29,
+      "name": "Flathead County",
+      "state": {
+        "code": 30,
+        "name": "Montana"
+      }
+    },
+    {
+      "code": 31,
+      "name": "Gallatin County",
+      "state": {
+        "code": 30,
+        "name": "Montana"
+      }
+    },
+    {
+      "code": 49,
+      "name": "Lewis and Clark County",
+      "state": {
+        "code": 30,
+        "name": "Montana"
+      }
+    },
+    {
+      "code": 63,
+      "name": "Missoula County",
+      "state": {
+        "code": 30,
+        "name": "Montana"
+      }
+    },
+    {
+      "code": 111,
+      "name": "Yellowstone County",
+      "state": {
+        "code": 30,
+        "name": "Montana"
+      }
+    },
+    {
+      "code": 55,
+      "name": "Douglas County",
+      "state": {
+        "code": 31,
+        "name": "Nebraska"
+      }
+    },
+    {
+      "code": 109,
+      "name": "Lancaster County",
+      "state": {
+        "code": 31,
+        "name": "Nebraska"
+      }
+    },
+    {
+      "code": 153,
+      "name": "Sarpy County",
+      "state": {
+        "code": 31,
+        "name": "Nebraska"
+      }
+    },
+    {
+      "code": 5,
+      "name": "Cheshire County",
+      "state": {
+        "code": 33,
+        "name": "New Hampshire"
+      }
+    },
+    {
+      "code": 3,
+      "name": "Clark County",
+      "state": {
+        "code": 32,
+        "name": "Nevada"
+      }
+    },
+    {
+      "code": 31,
+      "name": "Washoe County",
+      "state": {
+        "code": 32,
+        "name": "Nevada"
+      }
+    },
+    {
+      "code": 1,
+      "name": "Belknap County",
+      "state": {
+        "code": 33,
+        "name": "New Hampshire"
+      }
+    },
+    {
+      "code": 9,
+      "name": "Grafton County",
+      "state": {
+        "code": 33,
+        "name": "New Hampshire"
+      }
+    },
+    {
+      "code": 11,
+      "name": "Hillsborough County",
+      "state": {
+        "code": 33,
+        "name": "New Hampshire"
+      }
+    },
+    {
+      "code": 13,
+      "name": "Merrimack County",
+      "state": {
+        "code": 33,
+        "name": "New Hampshire"
+      }
+    },
+    {
+      "code": 15,
+      "name": "Rockingham County",
+      "state": {
+        "code": 33,
+        "name": "New Hampshire"
+      }
+    },
+    {
+      "code": 17,
+      "name": "Strafford County",
+      "state": {
+        "code": 33,
+        "name": "New Hampshire"
+      }
+    },
+    {
+      "code": 1,
+      "name": "Atlantic County",
+      "state": {
+        "code": 34,
+        "name": "New Jersey"
+      }
+    },
+    {
+      "code": 3,
+      "name": "Bergen County",
+      "state": {
+        "code": 34,
+        "name": "New Jersey"
+      }
+    },
+    {
+      "code": 5,
+      "name": "Burlington County",
+      "state": {
+        "code": 34,
+        "name": "New Jersey"
+      }
+    },
+    {
+      "code": 7,
+      "name": "Camden County",
+      "state": {
+        "code": 34,
+        "name": "New Jersey"
+      }
+    },
+    {
+      "code": 9,
+      "name": "Cape May County",
+      "state": {
+        "code": 34,
+        "name": "New Jersey"
+      }
+    },
+    {
+      "code": 11,
+      "name": "Cumberland County",
+      "state": {
+        "code": 34,
+        "name": "New Jersey"
+      }
+    },
+    {
+      "code": 13,
+      "name": "Essex County",
+      "state": {
+        "code": 34,
+        "name": "New Jersey"
+      }
+    },
+    {
+      "code": 15,
+      "name": "Gloucester County",
+      "state": {
+        "code": 34,
+        "name": "New Jersey"
+      }
+    },
+    {
+      "code": 17,
+      "name": "Hudson County",
+      "state": {
+        "code": 34,
+        "name": "New Jersey"
+      }
+    },
+    {
+      "code": 19,
+      "name": "Hunterdon County",
+      "state": {
+        "code": 34,
+        "name": "New Jersey"
+      }
+    },
+    {
+      "code": 21,
+      "name": "Mercer County",
+      "state": {
+        "code": 34,
+        "name": "New Jersey"
+      }
+    },
+    {
+      "code": 23,
+      "name": "Middlesex County",
+      "state": {
+        "code": 34,
+        "name": "New Jersey"
+      }
+    },
+    {
+      "code": 25,
+      "name": "Monmouth County",
+      "state": {
+        "code": 34,
+        "name": "New Jersey"
+      }
+    },
+    {
+      "code": 27,
+      "name": "Morris County",
+      "state": {
+        "code": 34,
+        "name": "New Jersey"
+      }
+    },
+    {
+      "code": 29,
+      "name": "Ocean County",
+      "state": {
+        "code": 34,
+        "name": "New Jersey"
+      }
+    },
+    {
+      "code": 31,
+      "name": "Passaic County",
+      "state": {
+        "code": 34,
+        "name": "New Jersey"
+      }
+    },
+    {
+      "code": 33,
+      "name": "Salem County",
+      "state": {
+        "code": 34,
+        "name": "New Jersey"
+      }
+    },
+    {
+      "code": 35,
+      "name": "Somerset County",
+      "state": {
+        "code": 34,
+        "name": "New Jersey"
+      }
+    },
+    {
+      "code": 37,
+      "name": "Sussex County",
+      "state": {
+        "code": 34,
+        "name": "New Jersey"
+      }
+    },
+    {
+      "code": 39,
+      "name": "Union County",
+      "state": {
+        "code": 34,
+        "name": "New Jersey"
+      }
+    },
+    {
+      "code": 41,
+      "name": "Warren County",
+      "state": {
+        "code": 34,
+        "name": "New Jersey"
+      }
+    },
+    {
+      "code": 1,
+      "name": "Bernalillo County",
+      "state": {
+        "code": 35,
+        "name": "New Mexico"
+      }
+    },
+    {
+      "code": 13,
+      "name": "Do\u00f1a Ana County",
+      "state": {
+        "code": 35,
+        "name": "New Mexico"
+      }
+    },
+    {
+      "code": 25,
+      "name": "Lea County",
+      "state": {
+        "code": 35,
+        "name": "New Mexico"
+      }
+    },
+    {
+      "code": 31,
+      "name": "McKinley County",
+      "state": {
+        "code": 35,
+        "name": "New Mexico"
+      }
+    },
+    {
+      "code": 35,
+      "name": "Otero County",
+      "state": {
+        "code": 35,
+        "name": "New Mexico"
+      }
+    },
+    {
+      "code": 43,
+      "name": "Sandoval County",
+      "state": {
+        "code": 35,
+        "name": "New Mexico"
+      }
+    },
+    {
+      "code": 45,
+      "name": "San Juan County",
+      "state": {
+        "code": 35,
+        "name": "New Mexico"
+      }
+    },
+    {
+      "code": 49,
+      "name": "Santa Fe County",
+      "state": {
+        "code": 35,
+        "name": "New Mexico"
+      }
+    },
+    {
+      "code": 61,
+      "name": "Valencia County",
+      "state": {
+        "code": 35,
+        "name": "New Mexico"
+      }
+    },
+    {
+      "code": 1,
+      "name": "Albany County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 5,
+      "name": "Bronx County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 7,
+      "name": "Broome County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 9,
+      "name": "Cattaraugus County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 11,
+      "name": "Cayuga County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 13,
+      "name": "Chautauqua County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 15,
+      "name": "Chemung County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 19,
+      "name": "Clinton County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 27,
+      "name": "Dutchess County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 29,
+      "name": "Erie County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 45,
+      "name": "Jefferson County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 47,
+      "name": "Kings County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 53,
+      "name": "Madison County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 55,
+      "name": "Monroe County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 59,
+      "name": "Nassau County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 61,
+      "name": "New York County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 63,
+      "name": "Niagara County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 65,
+      "name": "Oneida County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 67,
+      "name": "Onondaga County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 69,
+      "name": "Ontario County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 71,
+      "name": "Orange County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 75,
+      "name": "Oswego County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 79,
+      "name": "Putnam County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 81,
+      "name": "Queens County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 83,
+      "name": "Rensselaer County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 85,
+      "name": "Richmond County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 87,
+      "name": "Rockland County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 89,
+      "name": "St. Lawrence County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 91,
+      "name": "Saratoga County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 93,
+      "name": "Schenectady County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 101,
+      "name": "Steuben County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 103,
+      "name": "Suffolk County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 105,
+      "name": "Sullivan County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 109,
+      "name": "Tompkins County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 111,
+      "name": "Ulster County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 113,
+      "name": "Warren County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 117,
+      "name": "Wayne County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 119,
+      "name": "Westchester County",
+      "state": {
+        "code": 36,
+        "name": "New York"
+      }
+    },
+    {
+      "code": 1,
+      "name": "Alamance County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 19,
+      "name": "Brunswick County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 21,
+      "name": "Buncombe County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 23,
+      "name": "Burke County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 25,
+      "name": "Cabarrus County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 27,
+      "name": "Caldwell County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 31,
+      "name": "Carteret County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 35,
+      "name": "Catawba County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 37,
+      "name": "Chatham County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 45,
+      "name": "Cleveland County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 49,
+      "name": "Craven County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 67,
+      "name": "Forsyth County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 51,
+      "name": "Cumberland County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 57,
+      "name": "Davidson County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 63,
+      "name": "Durham County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 69,
+      "name": "Franklin County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 71,
+      "name": "Gaston County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 81,
+      "name": "Guilford County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 85,
+      "name": "Harnett County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 89,
+      "name": "Henderson County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 97,
+      "name": "Iredell County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 101,
+      "name": "Johnston County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 105,
+      "name": "Lee County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 109,
+      "name": "Lincoln County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 119,
+      "name": "Mecklenburg County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 125,
+      "name": "Moore County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 127,
+      "name": "Nash County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 129,
+      "name": "New Hanover County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 133,
+      "name": "Onslow County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 135,
+      "name": "Orange County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 141,
+      "name": "Pender County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 147,
+      "name": "Pitt County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 151,
+      "name": "Randolph County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 155,
+      "name": "Robeson County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 157,
+      "name": "Rockingham County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 159,
+      "name": "Rowan County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 161,
+      "name": "Rutherford County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 167,
+      "name": "Stanly County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 171,
+      "name": "Surry County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 179,
+      "name": "Union County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 183,
+      "name": "Wake County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 191,
+      "name": "Wayne County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 193,
+      "name": "Wilkes County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 195,
+      "name": "Wilson County",
+      "state": {
+        "code": 37,
+        "name": "North Carolina"
+      }
+    },
+    {
+      "code": 15,
+      "name": "Burleigh County",
+      "state": {
+        "code": 38,
+        "name": "North Dakota"
+      }
+    },
+    {
+      "code": 17,
+      "name": "Cass County",
+      "state": {
+        "code": 38,
+        "name": "North Dakota"
+      }
+    },
+    {
+      "code": 35,
+      "name": "Grand Forks County",
+      "state": {
+        "code": 38,
+        "name": "North Dakota"
+      }
+    },
+    {
+      "code": 101,
+      "name": "Ward County",
+      "state": {
+        "code": 38,
+        "name": "North Dakota"
+      }
+    },
+    {
+      "code": 3,
+      "name": "Allen County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 7,
+      "name": "Ashtabula County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 13,
+      "name": "Belmont County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 17,
+      "name": "Butler County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 23,
+      "name": "Clark County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 25,
+      "name": "Clermont County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 29,
+      "name": "Columbiana County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 35,
+      "name": "Cuyahoga County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 41,
+      "name": "Delaware County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 43,
+      "name": "Erie County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 45,
+      "name": "Fairfield County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 49,
+      "name": "Franklin County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 55,
+      "name": "Geauga County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 57,
+      "name": "Greene County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 61,
+      "name": "Hamilton County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 63,
+      "name": "Hancock County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 95,
+      "name": "Lucas County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 85,
+      "name": "Lake County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 89,
+      "name": "Licking County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 93,
+      "name": "Lorain County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 99,
+      "name": "Mahoning County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 101,
+      "name": "Marion County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 103,
+      "name": "Medina County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 109,
+      "name": "Miami County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 113,
+      "name": "Montgomery County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 119,
+      "name": "Muskingum County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 133,
+      "name": "Portage County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 139,
+      "name": "Richland County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 141,
+      "name": "Ross County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 145,
+      "name": "Scioto County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 151,
+      "name": "Stark County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 153,
+      "name": "Summit County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 155,
+      "name": "Trumbull County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 157,
+      "name": "Tuscarawas County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 159,
+      "name": "Union County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 165,
+      "name": "Warren County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 169,
+      "name": "Wayne County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 173,
+      "name": "Wood County",
+      "state": {
+        "code": 39,
+        "name": "Ohio"
+      }
+    },
+    {
+      "code": 17,
+      "name": "Canadian County",
+      "state": {
+        "code": 40,
+        "name": "Oklahoma"
+      }
+    },
+    {
+      "code": 27,
+      "name": "Cleveland County",
+      "state": {
+        "code": 40,
+        "name": "Oklahoma"
+      }
+    },
+    {
+      "code": 31,
+      "name": "Comanche County",
+      "state": {
+        "code": 40,
+        "name": "Oklahoma"
+      }
+    },
+    {
+      "code": 37,
+      "name": "Creek County",
+      "state": {
+        "code": 40,
+        "name": "Oklahoma"
+      }
+    },
+    {
+      "code": 101,
+      "name": "Muskogee County",
+      "state": {
+        "code": 40,
+        "name": "Oklahoma"
+      }
+    },
+    {
+      "code": 109,
+      "name": "Oklahoma County",
+      "state": {
+        "code": 40,
+        "name": "Oklahoma"
+      }
+    },
+    {
+      "code": 119,
+      "name": "Payne County",
+      "state": {
+        "code": 40,
+        "name": "Oklahoma"
+      }
+    },
+    {
+      "code": 125,
+      "name": "Pottawatomie County",
+      "state": {
+        "code": 40,
+        "name": "Oklahoma"
+      }
+    },
+    {
+      "code": 131,
+      "name": "Rogers County",
+      "state": {
+        "code": 40,
+        "name": "Oklahoma"
+      }
+    },
+    {
+      "code": 143,
+      "name": "Tulsa County",
+      "state": {
+        "code": 40,
+        "name": "Oklahoma"
+      }
+    },
+    {
+      "code": 145,
+      "name": "Wagoner County",
+      "state": {
+        "code": 40,
+        "name": "Oklahoma"
+      }
+    },
+    {
+      "code": 3,
+      "name": "Benton County",
+      "state": {
+        "code": 41,
+        "name": "Oregon"
+      }
+    },
+    {
+      "code": 5,
+      "name": "Clackamas County",
+      "state": {
+        "code": 41,
+        "name": "Oregon"
+      }
+    },
+    {
+      "code": 17,
+      "name": "Deschutes County",
+      "state": {
+        "code": 41,
+        "name": "Oregon"
+      }
+    },
+    {
+      "code": 19,
+      "name": "Douglas County",
+      "state": {
+        "code": 41,
+        "name": "Oregon"
+      }
+    },
+    {
+      "code": 29,
+      "name": "Jackson County",
+      "state": {
+        "code": 41,
+        "name": "Oregon"
+      }
+    },
+    {
+      "code": 33,
+      "name": "Josephine County",
+      "state": {
+        "code": 41,
+        "name": "Oregon"
+      }
+    },
+    {
+      "code": 35,
+      "name": "Klamath County",
+      "state": {
+        "code": 41,
+        "name": "Oregon"
+      }
+    },
+    {
+      "code": 39,
+      "name": "Lane County",
+      "state": {
+        "code": 41,
+        "name": "Oregon"
+      }
+    },
+    {
+      "code": 43,
+      "name": "Linn County",
+      "state": {
+        "code": 41,
+        "name": "Oregon"
+      }
+    },
+    {
+      "code": 47,
+      "name": "Marion County",
+      "state": {
+        "code": 41,
+        "name": "Oregon"
+      }
+    },
+    {
+      "code": 51,
+      "name": "Multnomah County",
+      "state": {
+        "code": 41,
+        "name": "Oregon"
+      }
+    },
+    {
+      "code": 53,
+      "name": "Polk County",
+      "state": {
+        "code": 41,
+        "name": "Oregon"
+      }
+    },
+    {
+      "code": 59,
+      "name": "Umatilla County",
+      "state": {
+        "code": 41,
+        "name": "Oregon"
+      }
+    },
+    {
+      "code": 67,
+      "name": "Washington County",
+      "state": {
+        "code": 41,
+        "name": "Oregon"
+      }
+    },
+    {
+      "code": 71,
+      "name": "Yamhill County",
+      "state": {
+        "code": 41,
+        "name": "Oregon"
+      }
+    },
+    {
+      "code": 7,
+      "name": "Beaver County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 1,
+      "name": "Adams County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 3,
+      "name": "Allegheny County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 5,
+      "name": "Armstrong County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 11,
+      "name": "Berks County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 13,
+      "name": "Blair County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 17,
+      "name": "Bucks County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 19,
+      "name": "Butler County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 21,
+      "name": "Cambria County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 25,
+      "name": "Carbon County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 27,
+      "name": "Centre County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 29,
+      "name": "Chester County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 33,
+      "name": "Clearfield County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 37,
+      "name": "Columbia County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 39,
+      "name": "Crawford County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 41,
+      "name": "Cumberland County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 43,
+      "name": "Dauphin County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 45,
+      "name": "Delaware County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 49,
+      "name": "Erie County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 51,
+      "name": "Fayette County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 55,
+      "name": "Franklin County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 63,
+      "name": "Indiana County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 69,
+      "name": "Lackawanna County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 71,
+      "name": "Lancaster County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 73,
+      "name": "Lawrence County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 75,
+      "name": "Lebanon County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 77,
+      "name": "Lehigh County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 79,
+      "name": "Luzerne County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 81,
+      "name": "Lycoming County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 85,
+      "name": "Mercer County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 89,
+      "name": "Monroe County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 91,
+      "name": "Montgomery County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 95,
+      "name": "Northampton County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 97,
+      "name": "Northumberland County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 101,
+      "name": "Philadelphia County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 107,
+      "name": "Schuylkill County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 111,
+      "name": "Somerset County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 125,
+      "name": "Washington County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 129,
+      "name": "Westmoreland County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 133,
+      "name": "York County",
+      "state": {
+        "code": 42,
+        "name": "Pennsylvania"
+      }
+    },
+    {
+      "code": 3,
+      "name": "Kent County",
+      "state": {
+        "code": 44,
+        "name": "Rhode Island"
+      }
+    },
+    {
+      "code": 5,
+      "name": "Newport County",
+      "state": {
+        "code": 44,
+        "name": "Rhode Island"
+      }
+    },
+    {
+      "code": 7,
+      "name": "Providence County",
+      "state": {
+        "code": 44,
+        "name": "Rhode Island"
+      }
+    },
+    {
+      "code": 9,
+      "name": "Washington County",
+      "state": {
+        "code": 44,
+        "name": "Rhode Island"
+      }
+    },
+    {
+      "code": 3,
+      "name": "Aiken County",
+      "state": {
+        "code": 45,
+        "name": "South Carolina"
+      }
+    },
+    {
+      "code": 7,
+      "name": "Anderson County",
+      "state": {
+        "code": 45,
+        "name": "South Carolina"
+      }
+    },
+    {
+      "code": 13,
+      "name": "Beaufort County",
+      "state": {
+        "code": 45,
+        "name": "South Carolina"
+      }
+    },
+    {
+      "code": 15,
+      "name": "Berkeley County",
+      "state": {
+        "code": 45,
+        "name": "South Carolina"
+      }
+    },
+    {
+      "code": 19,
+      "name": "Charleston County",
+      "state": {
+        "code": 45,
+        "name": "South Carolina"
+      }
+    },
+    {
+      "code": 35,
+      "name": "Dorchester County",
+      "state": {
+        "code": 45,
+        "name": "South Carolina"
+      }
+    },
+    {
+      "code": 41,
+      "name": "Florence County",
+      "state": {
+        "code": 45,
+        "name": "South Carolina"
+      }
+    },
+    {
+      "code": 43,
+      "name": "Georgetown County",
+      "state": {
+        "code": 45,
+        "name": "South Carolina"
+      }
+    },
+    {
+      "code": 45,
+      "name": "Greenville County",
+      "state": {
+        "code": 45,
+        "name": "South Carolina"
+      }
+    },
+    {
+      "code": 47,
+      "name": "Greenwood County",
+      "state": {
+        "code": 45,
+        "name": "South Carolina"
+      }
+    },
+    {
+      "code": 51,
+      "name": "Horry County",
+      "state": {
+        "code": 45,
+        "name": "South Carolina"
+      }
+    },
+    {
+      "code": 55,
+      "name": "Kershaw County",
+      "state": {
+        "code": 45,
+        "name": "South Carolina"
+      }
+    },
+    {
+      "code": 57,
+      "name": "Lancaster County",
+      "state": {
+        "code": 45,
+        "name": "South Carolina"
+      }
+    },
+    {
+      "code": 59,
+      "name": "Laurens County",
+      "state": {
+        "code": 45,
+        "name": "South Carolina"
+      }
+    },
+    {
+      "code": 63,
+      "name": "Lexington County",
+      "state": {
+        "code": 45,
+        "name": "South Carolina"
+      }
+    },
+    {
+      "code": 73,
+      "name": "Oconee County",
+      "state": {
+        "code": 45,
+        "name": "South Carolina"
+      }
+    },
+    {
+      "code": 75,
+      "name": "Orangeburg County",
+      "state": {
+        "code": 45,
+        "name": "South Carolina"
+      }
+    },
+    {
+      "code": 77,
+      "name": "Pickens County",
+      "state": {
+        "code": 45,
+        "name": "South Carolina"
+      }
+    },
+    {
+      "code": 79,
+      "name": "Richland County",
+      "state": {
+        "code": 45,
+        "name": "South Carolina"
+      }
+    },
+    {
+      "code": 83,
+      "name": "Spartanburg County",
+      "state": {
+        "code": 45,
+        "name": "South Carolina"
+      }
+    },
+    {
+      "code": 85,
+      "name": "Sumter County",
+      "state": {
+        "code": 45,
+        "name": "South Carolina"
+      }
+    },
+    {
+      "code": 91,
+      "name": "York County",
+      "state": {
+        "code": 45,
+        "name": "South Carolina"
+      }
+    },
+    {
+      "code": 83,
+      "name": "Lincoln County",
+      "state": {
+        "code": 46,
+        "name": "South Dakota"
+      }
+    },
+    {
+      "code": 99,
+      "name": "Minnehaha County",
+      "state": {
+        "code": 46,
+        "name": "South Dakota"
+      }
+    },
+    {
+      "code": 103,
+      "name": "Pennington County",
+      "state": {
+        "code": 46,
+        "name": "South Dakota"
+      }
+    },
+    {
+      "code": 1,
+      "name": "Anderson County",
+      "state": {
+        "code": 47,
+        "name": "Tennessee"
+      }
+    },
+    {
+      "code": 9,
+      "name": "Blount County",
+      "state": {
+        "code": 47,
+        "name": "Tennessee"
+      }
+    },
+    {
+      "code": 11,
+      "name": "Bradley County",
+      "state": {
+        "code": 47,
+        "name": "Tennessee"
+      }
+    },
+    {
+      "code": 37,
+      "name": "Davidson County",
+      "state": {
+        "code": 47,
+        "name": "Tennessee"
+      }
+    },
+    {
+      "code": 59,
+      "name": "Greene County",
+      "state": {
+        "code": 47,
+        "name": "Tennessee"
+      }
+    },
+    {
+      "code": 63,
+      "name": "Hamblen County",
+      "state": {
+        "code": 47,
+        "name": "Tennessee"
+      }
+    },
+    {
+      "code": 65,
+      "name": "Hamilton County",
+      "state": {
+        "code": 47,
+        "name": "Tennessee"
+      }
+    },
+    {
+      "code": 93,
+      "name": "Knox County",
+      "state": {
+        "code": 47,
+        "name": "Tennessee"
+      }
+    },
+    {
+      "code": 113,
+      "name": "Madison County",
+      "state": {
+        "code": 47,
+        "name": "Tennessee"
+      }
+    },
+    {
+      "code": 119,
+      "name": "Maury County",
+      "state": {
+        "code": 47,
+        "name": "Tennessee"
+      }
+    },
+    {
+      "code": 125,
+      "name": "Montgomery County",
+      "state": {
+        "code": 47,
+        "name": "Tennessee"
+      }
+    },
+    {
+      "code": 141,
+      "name": "Putnam County",
+      "state": {
+        "code": 47,
+        "name": "Tennessee"
+      }
+    },
+    {
+      "code": 147,
+      "name": "Robertson County",
+      "state": {
+        "code": 47,
+        "name": "Tennessee"
+      }
+    },
+    {
+      "code": 149,
+      "name": "Rutherford County",
+      "state": {
+        "code": 47,
+        "name": "Tennessee"
+      }
+    },
+    {
+      "code": 155,
+      "name": "Sevier County",
+      "state": {
+        "code": 47,
+        "name": "Tennessee"
+      }
+    },
+    {
+      "code": 157,
+      "name": "Shelby County",
+      "state": {
+        "code": 47,
+        "name": "Tennessee"
+      }
+    },
+    {
+      "code": 163,
+      "name": "Sullivan County",
+      "state": {
+        "code": 47,
+        "name": "Tennessee"
+      }
+    },
+    {
+      "code": 165,
+      "name": "Sumner County",
+      "state": {
+        "code": 47,
+        "name": "Tennessee"
+      }
+    },
+    {
+      "code": 179,
+      "name": "Washington County",
+      "state": {
+        "code": 47,
+        "name": "Tennessee"
+      }
+    },
+    {
+      "code": 187,
+      "name": "Williamson County",
+      "state": {
+        "code": 47,
+        "name": "Tennessee"
+      }
+    },
+    {
+      "code": 189,
+      "name": "Wilson County",
+      "state": {
+        "code": 47,
+        "name": "Tennessee"
+      }
+    },
+    {
+      "code": 5,
+      "name": "Angelina County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 37,
+      "name": "Bowie County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 21,
+      "name": "Bastrop County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 27,
+      "name": "Bell County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 29,
+      "name": "Bexar County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 39,
+      "name": "Brazoria County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 41,
+      "name": "Brazos County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 61,
+      "name": "Cameron County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 85,
+      "name": "Collin County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 91,
+      "name": "Comal County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 99,
+      "name": "Coryell County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 113,
+      "name": "Dallas County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 121,
+      "name": "Denton County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 135,
+      "name": "Ector County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 139,
+      "name": "Ellis County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 141,
+      "name": "El Paso County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 157,
+      "name": "Fort Bend County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 167,
+      "name": "Galveston County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 181,
+      "name": "Grayson County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 183,
+      "name": "Gregg County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 187,
+      "name": "Guadalupe County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 201,
+      "name": "Harris County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 203,
+      "name": "Harrison County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 209,
+      "name": "Hays County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 213,
+      "name": "Henderson County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 215,
+      "name": "Hidalgo County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 221,
+      "name": "Hood County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 231,
+      "name": "Hunt County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 245,
+      "name": "Jefferson County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 251,
+      "name": "Johnson County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 257,
+      "name": "Kaufman County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 291,
+      "name": "Liberty County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 303,
+      "name": "Lubbock County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 309,
+      "name": "McLennan County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 329,
+      "name": "Midland County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 361,
+      "name": "Orange County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 339,
+      "name": "Montgomery County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 347,
+      "name": "Nacogdoches County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 355,
+      "name": "Nueces County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 367,
+      "name": "Parker County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 375,
+      "name": "Potter County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 381,
+      "name": "Randall County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 397,
+      "name": "Rockwall County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 409,
+      "name": "San Patricio County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 423,
+      "name": "Smith County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 427,
+      "name": "Starr County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 439,
+      "name": "Tarrant County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 441,
+      "name": "Taylor County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 451,
+      "name": "Tom Green County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 453,
+      "name": "Travis County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 469,
+      "name": "Victoria County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 471,
+      "name": "Walker County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 479,
+      "name": "Webb County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 485,
+      "name": "Wichita County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 491,
+      "name": "Williamson County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 497,
+      "name": "Wise County",
+      "state": {
+        "code": 48,
+        "name": "Texas"
+      }
+    },
+    {
+      "code": 5,
+      "name": "Cache County",
+      "state": {
+        "code": 49,
+        "name": "Utah"
+      }
+    },
+    {
+      "code": 11,
+      "name": "Davis County",
+      "state": {
+        "code": 49,
+        "name": "Utah"
+      }
+    },
+    {
+      "code": 35,
+      "name": "Salt Lake County",
+      "state": {
+        "code": 49,
+        "name": "Utah"
+      }
+    },
+    {
+      "code": 45,
+      "name": "Tooele County",
+      "state": {
+        "code": 49,
+        "name": "Utah"
+      }
+    },
+    {
+      "code": 49,
+      "name": "Utah County",
+      "state": {
+        "code": 49,
+        "name": "Utah"
+      }
+    },
+    {
+      "code": 53,
+      "name": "Washington County",
+      "state": {
+        "code": 49,
+        "name": "Utah"
+      }
+    },
+    {
+      "code": 57,
+      "name": "Weber County",
+      "state": {
+        "code": 49,
+        "name": "Utah"
+      }
+    },
+    {
+      "code": 7,
+      "name": "Chittenden County",
+      "state": {
+        "code": 50,
+        "name": "Vermont"
+      }
+    },
+    {
+      "code": 3,
+      "name": "Albemarle County",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 13,
+      "name": "Arlington County",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 15,
+      "name": "Augusta County",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 19,
+      "name": "Bedford County",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 41,
+      "name": "Chesterfield County",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 59,
+      "name": "Fairfax County",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 61,
+      "name": "Fauquier County",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 69,
+      "name": "Frederick County",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 85,
+      "name": "Hanover County",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 87,
+      "name": "Henrico County",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 95,
+      "name": "James City County",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 161,
+      "name": "Roanoke County",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 107,
+      "name": "Loudoun County",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 121,
+      "name": "Montgomery County",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 153,
+      "name": "Prince William County",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 165,
+      "name": "Rockingham County",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 177,
+      "name": "Spotsylvania County",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 179,
+      "name": "Stafford County",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 199,
+      "name": "York County",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 510,
+      "name": "Alexandria city",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 550,
+      "name": "Chesapeake city",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 650,
+      "name": "Hampton city",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 680,
+      "name": "Lynchburg city",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 700,
+      "name": "Newport News city",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 710,
+      "name": "Norfolk city",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 740,
+      "name": "Portsmouth city",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 760,
+      "name": "Richmond city",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 770,
+      "name": "Roanoke city",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 800,
+      "name": "Suffolk city",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 810,
+      "name": "Virginia Beach city",
+      "state": {
+        "code": 51,
+        "name": "Virginia"
+      }
+    },
+    {
+      "code": 5,
+      "name": "Benton County",
+      "state": {
+        "code": 53,
+        "name": "Washington"
+      }
+    },
+    {
+      "code": 7,
+      "name": "Chelan County",
+      "state": {
+        "code": 53,
+        "name": "Washington"
+      }
+    },
+    {
+      "code": 9,
+      "name": "Clallam County",
+      "state": {
+        "code": 53,
+        "name": "Washington"
+      }
+    },
+    {
+      "code": 11,
+      "name": "Clark County",
+      "state": {
+        "code": 53,
+        "name": "Washington"
+      }
+    },
+    {
+      "code": 15,
+      "name": "Cowlitz County",
+      "state": {
+        "code": 53,
+        "name": "Washington"
+      }
+    },
+    {
+      "code": 21,
+      "name": "Franklin County",
+      "state": {
+        "code": 53,
+        "name": "Washington"
+      }
+    },
+    {
+      "code": 25,
+      "name": "Grant County",
+      "state": {
+        "code": 53,
+        "name": "Washington"
+      }
+    },
+    {
+      "code": 27,
+      "name": "Grays Harbor County",
+      "state": {
+        "code": 53,
+        "name": "Washington"
+      }
+    },
+    {
+      "code": 29,
+      "name": "Island County",
+      "state": {
+        "code": 53,
+        "name": "Washington"
+      }
+    },
+    {
+      "code": 33,
+      "name": "King County",
+      "state": {
+        "code": 53,
+        "name": "Washington"
+      }
+    },
+    {
+      "code": 35,
+      "name": "Kitsap County",
+      "state": {
+        "code": 53,
+        "name": "Washington"
+      }
+    },
+    {
+      "code": 41,
+      "name": "Lewis County",
+      "state": {
+        "code": 53,
+        "name": "Washington"
+      }
+    },
+    {
+      "code": 45,
+      "name": "Mason County",
+      "state": {
+        "code": 53,
+        "name": "Washington"
+      }
+    },
+    {
+      "code": 53,
+      "name": "Pierce County",
+      "state": {
+        "code": 53,
+        "name": "Washington"
+      }
+    },
+    {
+      "code": 57,
+      "name": "Skagit County",
+      "state": {
+        "code": 53,
+        "name": "Washington"
+      }
+    },
+    {
+      "code": 61,
+      "name": "Snohomish County",
+      "state": {
+        "code": 53,
+        "name": "Washington"
+      }
+    },
+    {
+      "code": 63,
+      "name": "Spokane County",
+      "state": {
+        "code": 53,
+        "name": "Washington"
+      }
+    },
+    {
+      "code": 67,
+      "name": "Thurston County",
+      "state": {
+        "code": 53,
+        "name": "Washington"
+      }
+    },
+    {
+      "code": 73,
+      "name": "Whatcom County",
+      "state": {
+        "code": 53,
+        "name": "Washington"
+      }
+    },
+    {
+      "code": 77,
+      "name": "Yakima County",
+      "state": {
+        "code": 53,
+        "name": "Washington"
+      }
+    },
+    {
+      "code": 3,
+      "name": "Berkeley County",
+      "state": {
+        "code": 54,
+        "name": "West Virginia"
+      }
+    },
+    {
+      "code": 11,
+      "name": "Cabell County",
+      "state": {
+        "code": 54,
+        "name": "West Virginia"
+      }
+    },
+    {
+      "code": 33,
+      "name": "Harrison County",
+      "state": {
+        "code": 54,
+        "name": "West Virginia"
+      }
+    },
+    {
+      "code": 39,
+      "name": "Kanawha County",
+      "state": {
+        "code": 54,
+        "name": "West Virginia"
+      }
+    },
+    {
+      "code": 61,
+      "name": "Monongalia County",
+      "state": {
+        "code": 54,
+        "name": "West Virginia"
+      }
+    },
+    {
+      "code": 81,
+      "name": "Raleigh County",
+      "state": {
+        "code": 54,
+        "name": "West Virginia"
+      }
+    },
+    {
+      "code": 107,
+      "name": "Wood County",
+      "state": {
+        "code": 54,
+        "name": "West Virginia"
+      }
+    },
+    {
+      "code": 9,
+      "name": "Brown County",
+      "state": {
+        "code": 55,
+        "name": "Wisconsin"
+      }
+    },
+    {
+      "code": 17,
+      "name": "Chippewa County",
+      "state": {
+        "code": 55,
+        "name": "Wisconsin"
+      }
+    },
+    {
+      "code": 25,
+      "name": "Dane County",
+      "state": {
+        "code": 55,
+        "name": "Wisconsin"
+      }
+    },
+    {
+      "code": 27,
+      "name": "Dodge County",
+      "state": {
+        "code": 55,
+        "name": "Wisconsin"
+      }
+    },
+    {
+      "code": 35,
+      "name": "Eau Claire County",
+      "state": {
+        "code": 55,
+        "name": "Wisconsin"
+      }
+    },
+    {
+      "code": 39,
+      "name": "Fond du Lac County",
+      "state": {
+        "code": 55,
+        "name": "Wisconsin"
+      }
+    },
+    {
+      "code": 55,
+      "name": "Jefferson County",
+      "state": {
+        "code": 55,
+        "name": "Wisconsin"
+      }
+    },
+    {
+      "code": 59,
+      "name": "Kenosha County",
+      "state": {
+        "code": 55,
+        "name": "Wisconsin"
+      }
+    },
+    {
+      "code": 63,
+      "name": "La Crosse County",
+      "state": {
+        "code": 55,
+        "name": "Wisconsin"
+      }
+    },
+    {
+      "code": 71,
+      "name": "Manitowoc County",
+      "state": {
+        "code": 55,
+        "name": "Wisconsin"
+      }
+    },
+    {
+      "code": 73,
+      "name": "Marathon County",
+      "state": {
+        "code": 55,
+        "name": "Wisconsin"
+      }
+    },
+    {
+      "code": 79,
+      "name": "Milwaukee County",
+      "state": {
+        "code": 55,
+        "name": "Wisconsin"
+      }
+    },
+    {
+      "code": 87,
+      "name": "Outagamie County",
+      "state": {
+        "code": 55,
+        "name": "Wisconsin"
+      }
+    },
+    {
+      "code": 89,
+      "name": "Ozaukee County",
+      "state": {
+        "code": 55,
+        "name": "Wisconsin"
+      }
+    },
+    {
+      "code": 97,
+      "name": "Portage County",
+      "state": {
+        "code": 55,
+        "name": "Wisconsin"
+      }
+    },
+    {
+      "code": 101,
+      "name": "Racine County",
+      "state": {
+        "code": 55,
+        "name": "Wisconsin"
+      }
+    },
+    {
+      "code": 105,
+      "name": "Rock County",
+      "state": {
+        "code": 55,
+        "name": "Wisconsin"
+      }
+    },
+    {
+      "code": 109,
+      "name": "St. Croix County",
+      "state": {
+        "code": 55,
+        "name": "Wisconsin"
+      }
+    },
+    {
+      "code": 111,
+      "name": "Sauk County",
+      "state": {
+        "code": 55,
+        "name": "Wisconsin"
+      }
+    },
+    {
+      "code": 117,
+      "name": "Sheboygan County",
+      "state": {
+        "code": 55,
+        "name": "Wisconsin"
+      }
+    },
+    {
+      "code": 127,
+      "name": "Walworth County",
+      "state": {
+        "code": 55,
+        "name": "Wisconsin"
+      }
+    },
+    {
+      "code": 131,
+      "name": "Washington County",
+      "state": {
+        "code": 55,
+        "name": "Wisconsin"
+      }
+    },
+    {
+      "code": 133,
+      "name": "Waukesha County",
+      "state": {
+        "code": 55,
+        "name": "Wisconsin"
+      }
+    },
+    {
+      "code": 139,
+      "name": "Winnebago County",
+      "state": {
+        "code": 55,
+        "name": "Wisconsin"
+      }
+    },
+    {
+      "code": 141,
+      "name": "Wood County",
+      "state": {
+        "code": 55,
+        "name": "Wisconsin"
+      }
+    },
+    {
+      "code": 21,
+      "name": "Laramie County",
+      "state": {
+        "code": 56,
+        "name": "Wyoming"
+      }
+    },
+    {
+      "code": 25,
+      "name": "Natrona County",
+      "state": {
+        "code": 56,
+        "name": "Wyoming"
+      }
+    },
+    {
+      "code": 31,
+      "name": "Carolina Municipio",
+      "state": {
+        "code": 72,
+        "name": "Puerto Rico"
+      }
+    },
+    {
+      "code": 13,
+      "name": "Arecibo Municipio",
+      "state": {
+        "code": 72,
+        "name": "Puerto Rico"
+      }
+    },
+    {
+      "code": 21,
+      "name": "Bayam\u00f3n Municipio",
+      "state": {
+        "code": 72,
+        "name": "Puerto Rico"
+      }
+    },
+    {
+      "code": 25,
+      "name": "Caguas Municipio",
+      "state": {
+        "code": 72,
+        "name": "Puerto Rico"
+      }
+    },
+    {
+      "code": 61,
+      "name": "Guaynabo Municipio",
+      "state": {
+        "code": 72,
+        "name": "Puerto Rico"
+      }
+    },
+    {
+      "code": 97,
+      "name": "Mayag\u00fcez Municipio",
+      "state": {
+        "code": 72,
+        "name": "Puerto Rico"
+      }
+    },
+    {
+      "code": 113,
+      "name": "Ponce Municipio",
+      "state": {
+        "code": 72,
+        "name": "Puerto Rico"
+      }
+    },
+    {
+      "code": 127,
+      "name": "San Juan Municipio",
+      "state": {
+        "code": 72,
+        "name": "Puerto Rico"
+      }
+    },
+    {
+      "code": 135,
+      "name": "Toa Alta Municipio",
+      "state": {
+        "code": 72,
+        "name": "Puerto Rico"
+      }
+    },
+    {
+      "code": 137,
+      "name": "Toa Baja Municipio",
+      "state": {
+        "code": 72,
+        "name": "Puerto Rico"
+      }
+    },
+    {
+      "code": 139,
+      "name": "Trujillo Alto Municipio",
+      "state": {
+        "code": 72,
+        "name": "Puerto Rico"
+      }
+    }
+  ]
+}

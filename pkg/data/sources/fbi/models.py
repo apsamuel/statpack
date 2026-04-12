@@ -4,7 +4,6 @@ import time
 import pandas as pd
 import re
 
-
 _SUPPORTED_FBI_CODES: frozenset[int] = frozenset(
     {
         "310",
@@ -630,7 +629,8 @@ for _code, _info in fbi_offense_mapping.items():
 
 fbi_offense_codes = [FBIOffense(code=code, **info) for code, info in fbi_offense_mapping.items()]
 
-nibrs_offense_codes = [NIBRSOffense(code=code, **info) for code, info in nibrs_offense_mapping_v2.items()]
+nibrs_offense_codes_v1 = [NIBRSOffense(code=code, **info) for code, info in nibrs_offense_mapping_v1.items()]
+nibrs_offense_codes_v2 = [NIBRSOffense(code=code, **info) for code, info in nibrs_offense_mapping_v2.items()]
 
 
 us_territory_mapping: dict[str, dict[str, str]] = {
@@ -695,8 +695,9 @@ us_territory_mapping: dict[str, dict[str, str]] = {
 us_territories = [USTerritory(name=info["name"], abbreviation=abbr) for abbr, info in us_territory_mapping.items()]
 
 
-class FBIData(BaseModel):
-    nibrs_codes: list[NIBRSOffense] = nibrs_offense_codes
+class Data(BaseModel):
+    nibrs_codes_v1: list[NIBRSOffense] = nibrs_offense_codes_v1
+    nibrs_codes_v2: list[NIBRSOffense] = nibrs_offense_codes_v2
     fbi_codes: list[FBIOffense] = fbi_offense_codes
     us_territories: list[USTerritory] = us_territories
 
@@ -713,23 +714,23 @@ class FBIData(BaseModel):
         return None
 
     def get_nibrs_offense_by_code(self, code: str) -> NIBRSOffense | None:
-        for offense in self.nibrs_codes:
+        for offense in self.nibrs_codes_v2:
             if offense.code == code:
                 return offense
         return None
 
     def get_nibrs_offense_by_name(self, name: str) -> NIBRSOffense | None:
-        for offense in self.nibrs_codes:
+        for offense in self.nibrs_codes_v2:
             if offense.name.lower() == name.lower():
                 return offense
         return None
 
     def get_nibrs_offenses_by_category(self, category: str) -> list[NIBRSOffense]:
-        return [offense for offense in self.nibrs_codes if offense.category.lower() == category.lower()]
+        return [offense for offense in self.nibrs_codes_v2 if offense.category.lower() == category.lower()]
 
     def search_nibrs_offenses_by_regex(self, key: str, pattern: str) -> list[NIBRSOffense]:
         regex = re.compile(pattern, re.IGNORECASE)
-        return [offense for offense in self.nibrs_codes if regex.search(getattr(offense, key, ""))]
+        return [offense for offense in self.nibrs_codes_v2 if regex.search(getattr(offense, key, ""))]
 
     def get_fbi_offense_by_code(self, code: str) -> FBIOffense | None:
         for offense in self.fbi_codes:
@@ -771,3 +772,16 @@ def get_abbr_from_state(name):
         if info.get("name", "").lower() == name.lower():
             return abbr
     return None
+
+
+def get_data_model() -> Data:
+    fbi_offense_codes = [FBIOffense(code=code, **info) for code, info in fbi_offense_mapping.items()]
+    nibrs_offense_codes_v1 = [NIBRSOffense(code=code, **info) for code, info in nibrs_offense_mapping_v1.items()]
+    nibrs_offense_codes_v2 = [NIBRSOffense(code=code, **info) for code, info in nibrs_offense_mapping_v2.items()]
+    us_territories = [USTerritory(name=info["name"], abbreviation=abbr) for abbr, info in us_territory_mapping.items()]
+    return Data(
+        nibrs_codes_v1=nibrs_offense_codes_v1,
+        nibrs_codes_v2=nibrs_offense_codes_v2,
+        fbi_codes=fbi_offense_codes,
+        us_territories=us_territories,
+    )

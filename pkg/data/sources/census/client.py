@@ -3,7 +3,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from datetime import date
 from ..models import Request, FailedRequest
-from .models import CensusData, State, Race
+from .models import get_data_model, State, Race
 from . import CENSUS_API_BASE_URL, CENSUS_API_KEY
 
 
@@ -17,7 +17,7 @@ class Client:
         self.limited = False
         self.limit_remaining = None
         self.limit_reset = None
-        self.data = CensusData()
+        self.data = get_data_model()
         self.latest_census_year = date.today().year - 1
 
     def _get(self, url_path: str = None, default_return=None, success_codes: list = None, debug: bool = False):

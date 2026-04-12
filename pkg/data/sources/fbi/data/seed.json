@@ -1,0 +1,1690 @@
+{
+  "nibrs_codes_v1": [
+    {
+      "code": "ASS",
+      "name": "Aggravated Assault",
+      "category": "Violent Crime",
+      "short_name": "Aggravated Assault",
+      "supported": false
+    },
+    {
+      "code": "13A",
+      "name": "Aggravated Assault",
+      "category": "Violent Crime",
+      "short_name": "Aggravated Assault",
+      "supported": true
+    },
+    {
+      "code": "HOM",
+      "name": "Homicide",
+      "category": "Violent Crime",
+      "short_name": "Homicide",
+      "supported": false
+    },
+    {
+      "code": "RPE",
+      "name": "Rape",
+      "category": "Violent Crime",
+      "short_name": "Rape",
+      "supported": false
+    },
+    {
+      "code": "ROB",
+      "name": "Robbery",
+      "category": "Violent Crime",
+      "short_name": "Robbery",
+      "supported": false
+    },
+    {
+      "code": "120",
+      "name": "Robbery",
+      "category": "Violent Crime",
+      "short_name": "Robbery",
+      "supported": true
+    },
+    {
+      "code": "ARS",
+      "name": "Arson",
+      "category": "Property Crime",
+      "short_name": "Arson",
+      "supported": false
+    },
+    {
+      "code": "200",
+      "name": "Arson",
+      "category": "Property Crime",
+      "short_name": "Arson",
+      "supported": true
+    },
+    {
+      "code": "BUR",
+      "name": "Burglary",
+      "category": "Property Crime",
+      "short_name": "Burglary",
+      "supported": false
+    },
+    {
+      "code": "220",
+      "name": "Burglary/Breaking & Entering",
+      "category": "Property Crime",
+      "short_name": "Burglary",
+      "supported": true
+    },
+    {
+      "code": "LAR",
+      "name": "Larceny-theft",
+      "category": "Property Crime",
+      "short_name": "Larceny",
+      "supported": false
+    },
+    {
+      "code": "MVT",
+      "name": "Motor Vehicle Theft",
+      "category": "Property Crime",
+      "short_name": "Motor Vehicle Theft",
+      "supported": false
+    },
+    {
+      "code": "240",
+      "name": "Motor Vehicle Theft",
+      "category": "Property Crime",
+      "short_name": "Motor Vehicle Theft",
+      "supported": true
+    },
+    {
+      "code": "23H",
+      "name": "All Other Larceny",
+      "category": "Property Crime",
+      "short_name": "Other Larceny",
+      "supported": true
+    },
+    {
+      "code": "720",
+      "name": "Animal Cruelty",
+      "category": "Public Order Crime",
+      "short_name": "Animal Cruelty",
+      "supported": true
+    },
+    {
+      "code": "40B",
+      "name": "Assisting or Promoting Prostitution",
+      "category": "Sex Crime",
+      "short_name": "Promoting Prostitution",
+      "supported": true
+    },
+    {
+      "code": "39A",
+      "name": "Betting/Wagering",
+      "category": "Public Order Crime",
+      "short_name": "Betting/Wagering",
+      "supported": true
+    },
+    {
+      "code": "510",
+      "name": "Bribery",
+      "category": "White Collar Crime",
+      "short_name": "Bribery",
+      "supported": true
+    },
+    {
+      "code": "250",
+      "name": "Counterfeiting/Forgery",
+      "category": "White Collar Crime",
+      "short_name": "Counterfeiting/Forgery",
+      "supported": true
+    },
+    {
+      "code": "26B",
+      "name": "Credit Card/Automated Teller Machine Fraud",
+      "category": "White Collar Crime",
+      "short_name": "Credit Card Fraud",
+      "supported": true
+    },
+    {
+      "code": "11A",
+      "name": "Rape",
+      "category": "Sex Crime",
+      "short_name": "Rape",
+      "supported": true
+    },
+    {
+      "code": "11B",
+      "name": "Sodomy",
+      "category": "Sex Crime",
+      "short_name": "Sodomy",
+      "supported": true
+    },
+    {
+      "code": "11C",
+      "name": "Sexual Assault With An Object",
+      "category": "Sex Crime",
+      "short_name": "Sexual Assault With Object",
+      "supported": true
+    },
+    {
+      "code": "11D",
+      "name": "Criminal Sexual Contact",
+      "category": "Sex Crime",
+      "short_name": "Criminal Sexual Contact",
+      "supported": true
+    },
+    {
+      "code": "290",
+      "name": "Destruction/Damage/Vandalism of Property",
+      "category": "Property Crime",
+      "short_name": "Vandalism",
+      "supported": true
+    },
+    {
+      "code": "35B",
+      "name": "Drug Equipment Violations",
+      "category": "Drug Crime",
+      "short_name": "Drug Equipment",
+      "supported": true
+    },
+    {
+      "code": "35A",
+      "name": "Drug/Narcotic Violations",
+      "category": "Drug Crime",
+      "short_name": "Drug Violations",
+      "supported": true
+    },
+    {
+      "code": "270",
+      "name": "Embezzlement",
+      "category": "White Collar Crime",
+      "short_name": "Embezzlement",
+      "supported": true
+    },
+    {
+      "code": "103",
+      "name": "Espionage",
+      "category": "National Security",
+      "short_name": "Espionage",
+      "supported": true
+    },
+    {
+      "code": "526",
+      "name": "Explosives Violation",
+      "category": "Public Order Crime",
+      "short_name": "Explosives Violation",
+      "supported": true
+    },
+    {
+      "code": "58B",
+      "name": "Export Violations",
+      "category": "White Collar Crime",
+      "short_name": "Export Violations",
+      "supported": true
+    },
+    {
+      "code": "210",
+      "name": "Extortion/Blackmail",
+      "category": "White Collar Crime",
+      "short_name": "Extortion/Blackmail",
+      "supported": true
+    },
+    {
+      "code": "360",
+      "name": "Failure to Register as a Sex Offender",
+      "category": "Sex Crime",
+      "short_name": "Failure to Register",
+      "supported": true
+    },
+    {
+      "code": "30B",
+      "name": "False Citizenship",
+      "category": "Public Order Crime",
+      "short_name": "False Citizenship",
+      "supported": true
+    },
+    {
+      "code": "26A",
+      "name": "False Pretenses/Swindle/Confidence Game",
+      "category": "White Collar Crime",
+      "short_name": "Fraud/Swindle",
+      "supported": true
+    },
+    {
+      "code": "61A",
+      "name": "Federal Liquor Offenses",
+      "category": "Public Order Crime",
+      "short_name": "Federal Liquor Offense",
+      "supported": true
+    },
+    {
+      "code": "61B",
+      "name": "Federal Tobacco Offenses",
+      "category": "Public Order Crime",
+      "short_name": "Federal Tobacco Offense",
+      "supported": true
+    },
+    {
+      "code": "49C",
+      "name": "Flight to Avoid Deportation",
+      "category": "Public Order Crime",
+      "short_name": "Flight to Avoid Deportation",
+      "supported": true
+    },
+    {
+      "code": "49B",
+      "name": "Flight to Avoid Prosecution",
+      "category": "Public Order Crime",
+      "short_name": "Flight to Avoid Prosecution",
+      "supported": true
+    },
+    {
+      "code": "39C",
+      "name": "Gambling Equipment Violation",
+      "category": "Public Order Crime",
+      "short_name": "Gambling Equipment",
+      "supported": true
+    },
+    {
+      "code": "26G",
+      "name": "Hacking/Computer Invasion",
+      "category": "Cybercrime",
+      "short_name": "Hacking",
+      "supported": true
+    },
+    {
+      "code": "49A",
+      "name": "Harboring Escapee/Concealing from Arrest",
+      "category": "Public Order Crime",
+      "short_name": "Harboring Escapee",
+      "supported": true
+    },
+    {
+      "code": "64A",
+      "name": "Human Trafficking, Commercial Sex Acts",
+      "category": "Sex Crime",
+      "short_name": "Human Trafficking (Sex)",
+      "supported": true
+    },
+    {
+      "code": "64B",
+      "name": "Human Trafficking, Involuntary Servitude",
+      "category": "Violent Crime",
+      "short_name": "Human Trafficking (Labor)",
+      "supported": true
+    },
+    {
+      "code": "26F",
+      "name": "Identity Theft",
+      "category": "White Collar Crime",
+      "short_name": "Identity Theft",
+      "supported": true
+    },
+    {
+      "code": "30A",
+      "name": "Illegal Entry into the United States",
+      "category": "Public Order Crime",
+      "short_name": "Illegal Entry",
+      "supported": true
+    },
+    {
+      "code": "26C",
+      "name": "Impersonation",
+      "category": "White Collar Crime",
+      "short_name": "Impersonation",
+      "supported": true
+    },
+    {
+      "code": "58A",
+      "name": "Import Violations",
+      "category": "White Collar Crime",
+      "short_name": "Import Violations",
+      "supported": true
+    },
+    {
+      "code": "36A",
+      "name": "Incest",
+      "category": "Sex Crime",
+      "short_name": "Incest",
+      "supported": true
+    },
+    {
+      "code": "13C",
+      "name": "Intimidation",
+      "category": "Violent Crime",
+      "short_name": "Intimidation",
+      "supported": true
+    },
+    {
+      "code": "09C",
+      "name": "Justifiable Homicide",
+      "category": "Other",
+      "short_name": "Justifiable Homicide",
+      "supported": true
+    },
+    {
+      "code": "100",
+      "name": "Kidnapping/Abduction",
+      "category": "Violent Crime",
+      "short_name": "Kidnapping",
+      "supported": true
+    },
+    {
+      "code": "26H",
+      "name": "Money Laundering",
+      "category": "White Collar Crime",
+      "short_name": "Money Laundering",
+      "supported": true
+    },
+    {
+      "code": "09A",
+      "name": "Murder and Nonnegligent Manslaughter",
+      "category": "Violent Crime",
+      "short_name": "Murder",
+      "supported": true
+    },
+    {
+      "code": "09B",
+      "name": "Negligent Manslaughter",
+      "category": "Violent Crime",
+      "short_name": "Manslaughter",
+      "supported": true
+    },
+    {
+      "code": "23*",
+      "name": "Not Specified",
+      "category": "Other",
+      "short_name": "Not Specified",
+      "supported": true
+    },
+    {
+      "code": "39B",
+      "name": "Operating/Promoting/Assisting Gambling",
+      "category": "Public Order Crime",
+      "short_name": "Promoting Gambling",
+      "supported": true
+    },
+    {
+      "code": "23A",
+      "name": "Pocket-picking",
+      "category": "Property Crime",
+      "short_name": "Pocket-picking",
+      "supported": true
+    },
+    {
+      "code": "370",
+      "name": "Pornography/Obscene Material",
+      "category": "Sex Crime",
+      "short_name": "Pornography",
+      "supported": true
+    },
+    {
+      "code": "40A",
+      "name": "Prostitution",
+      "category": "Sex Crime",
+      "short_name": "Prostitution",
+      "supported": true
+    },
+    {
+      "code": "40C",
+      "name": "Purchasing Prostitution",
+      "category": "Sex Crime",
+      "short_name": "Purchasing Prostitution",
+      "supported": true
+    },
+    {
+      "code": "23B",
+      "name": "Purse-snatching",
+      "category": "Property Crime",
+      "short_name": "Purse-snatching",
+      "supported": true
+    },
+    {
+      "code": "30D",
+      "name": "Re-entry after Deportation",
+      "category": "Public Order Crime",
+      "short_name": "Re-entry After Deportation",
+      "supported": true
+    },
+    {
+      "code": "23C",
+      "name": "Shoplifting",
+      "category": "Property Crime",
+      "short_name": "Shoplifting",
+      "supported": true
+    },
+    {
+      "code": "13B",
+      "name": "Simple Assault",
+      "category": "Violent Crime",
+      "short_name": "Simple Assault",
+      "supported": true
+    },
+    {
+      "code": "30C",
+      "name": "Smuggling Aliens",
+      "category": "Public Order Crime",
+      "short_name": "Smuggling Aliens",
+      "supported": true
+    },
+    {
+      "code": "39D",
+      "name": "Sports Tampering",
+      "category": "White Collar Crime",
+      "short_name": "Sports Tampering",
+      "supported": true
+    },
+    {
+      "code": "36B",
+      "name": "Statutory Rape",
+      "category": "Sex Crime",
+      "short_name": "Statutory Rape",
+      "supported": true
+    },
+    {
+      "code": "280",
+      "name": "Stolen Property Offenses",
+      "category": "Property Crime",
+      "short_name": "Stolen Property",
+      "supported": true
+    },
+    {
+      "code": "23D",
+      "name": "Theft From Building",
+      "category": "Property Crime",
+      "short_name": "Theft From Building",
+      "supported": true
+    },
+    {
+      "code": "23E",
+      "name": "Theft From Coin-Operated Machine or Device",
+      "category": "Property Crime",
+      "short_name": "Theft From Machine",
+      "supported": true
+    },
+    {
+      "code": "23F",
+      "name": "Theft From Motor Vehicle",
+      "category": "Property Crime",
+      "short_name": "Theft From Vehicle",
+      "supported": true
+    },
+    {
+      "code": "23G",
+      "name": "Theft of Motor Vehicle Parts or Accessories",
+      "category": "Property Crime",
+      "short_name": "Theft of Vehicle Parts",
+      "supported": true
+    },
+    {
+      "code": "101",
+      "name": "Treason",
+      "category": "National Security",
+      "short_name": "Treason",
+      "supported": true
+    },
+    {
+      "code": "521",
+      "name": "Violation of National Firearm Act of 1934",
+      "category": "Weapons Crime",
+      "short_name": "Firearm Act Violation",
+      "supported": true
+    },
+    {
+      "code": "520",
+      "name": "Weapon Law Violations",
+      "category": "Weapons Crime",
+      "short_name": "Weapon Law Violations",
+      "supported": true
+    },
+    {
+      "code": "522",
+      "name": "Weapons of Mass Destruction",
+      "category": "National Security",
+      "short_name": "WMD",
+      "supported": true
+    },
+    {
+      "code": "26D",
+      "name": "Welfare Fraud",
+      "category": "White Collar Crime",
+      "short_name": "Welfare Fraud",
+      "supported": true
+    },
+    {
+      "code": "620",
+      "name": "Wildlife Trafficking",
+      "category": "Public Order Crime",
+      "short_name": "Wildlife Trafficking",
+      "supported": true
+    },
+    {
+      "code": "26E",
+      "name": "Wire Fraud",
+      "category": "White Collar Crime",
+      "short_name": "Wire Fraud",
+      "supported": true
+    }
+  ],
+  "nibrs_codes_v2": [
+    {
+      "code": "09A",
+      "name": "Murder and Nonnegligent Manslaughter",
+      "category": "Crimes Against Persons",
+      "short_name": "Murder",
+      "supported": true
+    },
+    {
+      "code": "09B",
+      "name": "Negligent Manslaughter",
+      "category": "Crimes Against Persons",
+      "short_name": "Negligent Manslaughter",
+      "supported": true
+    },
+    {
+      "code": "09C",
+      "name": "Justifiable Homicide",
+      "category": "Not a Crime",
+      "short_name": "Justifiable Homicide",
+      "supported": true
+    },
+    {
+      "code": "100",
+      "name": "Kidnapping/Abduction",
+      "category": "Crimes Against Persons",
+      "short_name": "Kidnapping",
+      "supported": true
+    },
+    {
+      "code": "101",
+      "name": "Treason",
+      "category": "Crimes Against Society",
+      "short_name": "Treason",
+      "supported": true
+    },
+    {
+      "code": "103",
+      "name": "Espionage",
+      "category": "Crimes Against Society",
+      "short_name": "Espionage",
+      "supported": true
+    },
+    {
+      "code": "11A",
+      "name": "Rape",
+      "category": "Crimes Against Persons",
+      "short_name": "Rape",
+      "supported": true
+    },
+    {
+      "code": "11B",
+      "name": "Sodomy",
+      "category": "Crimes Against Persons",
+      "short_name": "Sodomy",
+      "supported": true
+    },
+    {
+      "code": "11C",
+      "name": "Sexual Assault With An Object",
+      "category": "Crimes Against Persons",
+      "short_name": "Sexual Assault (Object)",
+      "supported": true
+    },
+    {
+      "code": "11D",
+      "name": "Criminal Sexual Contact",
+      "category": "Crimes Against Persons",
+      "short_name": "Sexual Contact",
+      "supported": true
+    },
+    {
+      "code": "120",
+      "name": "Robbery",
+      "category": "Crimes Against Property",
+      "short_name": "Robbery",
+      "supported": true
+    },
+    {
+      "code": "13A",
+      "name": "Aggravated Assault",
+      "category": "Crimes Against Persons",
+      "short_name": "Aggravated Assault",
+      "supported": true
+    },
+    {
+      "code": "13B",
+      "name": "Simple Assault",
+      "category": "Crimes Against Persons",
+      "short_name": "Simple Assault",
+      "supported": true
+    },
+    {
+      "code": "13C",
+      "name": "Intimidation",
+      "category": "Crimes Against Persons",
+      "short_name": "Intimidation",
+      "supported": true
+    },
+    {
+      "code": "200",
+      "name": "Arson",
+      "category": "Crimes Against Property",
+      "short_name": "Arson",
+      "supported": true
+    },
+    {
+      "code": "210",
+      "name": "Extortion/Blackmail",
+      "category": "Crimes Against Property",
+      "short_name": "Extortion",
+      "supported": true
+    },
+    {
+      "code": "220",
+      "name": "Burglary/Breaking & Entering",
+      "category": "Crimes Against Property",
+      "short_name": "Burglary",
+      "supported": true
+    },
+    {
+      "code": "23A",
+      "name": "Pocket-picking",
+      "category": "Crimes Against Property",
+      "short_name": "Pocket-picking",
+      "supported": true
+    },
+    {
+      "code": "23B",
+      "name": "Purse-snatching",
+      "category": "Crimes Against Property",
+      "short_name": "Purse-snatching",
+      "supported": true
+    },
+    {
+      "code": "23C",
+      "name": "Shoplifting",
+      "category": "Crimes Against Property",
+      "short_name": "Shoplifting",
+      "supported": true
+    },
+    {
+      "code": "23D",
+      "name": "Theft From Building",
+      "category": "Crimes Against Property",
+      "short_name": "Theft (Building)",
+      "supported": true
+    },
+    {
+      "code": "23E",
+      "name": "Theft From Coin-Operated Machine or Device",
+      "category": "Crimes Against Property",
+      "short_name": "Theft (Coin-Op)",
+      "supported": true
+    },
+    {
+      "code": "23F",
+      "name": "Theft From Motor Vehicle",
+      "category": "Crimes Against Property",
+      "short_name": "Theft (Vehicle)",
+      "supported": true
+    },
+    {
+      "code": "23G",
+      "name": "Theft of Motor Vehicle Parts or Accessories",
+      "category": "Crimes Against Property",
+      "short_name": "Theft (Vehicle Parts)",
+      "supported": true
+    },
+    {
+      "code": "23H",
+      "name": "All Other Larceny",
+      "category": "Crimes Against Property",
+      "short_name": "Other Larceny",
+      "supported": true
+    },
+    {
+      "code": "240",
+      "name": "Motor Vehicle Theft",
+      "category": "Crimes Against Property",
+      "short_name": "Vehicle Theft",
+      "supported": true
+    },
+    {
+      "code": "250",
+      "name": "Counterfeiting/Forgery",
+      "category": "Crimes Against Property",
+      "short_name": "Forgery",
+      "supported": true
+    },
+    {
+      "code": "26A",
+      "name": "False Pretenses/Swindle/Confidence Game",
+      "category": "Crimes Against Property",
+      "short_name": "False Pretenses",
+      "supported": true
+    },
+    {
+      "code": "26B",
+      "name": "Credit Card/Automated Teller Machine Fraud",
+      "category": "Crimes Against Property",
+      "short_name": "Credit Card Fraud",
+      "supported": true
+    },
+    {
+      "code": "26C",
+      "name": "Impersonation",
+      "category": "Crimes Against Property",
+      "short_name": "Impersonation",
+      "supported": true
+    },
+    {
+      "code": "26D",
+      "name": "Welfare Fraud",
+      "category": "Crimes Against Property",
+      "short_name": "Welfare Fraud",
+      "supported": true
+    },
+    {
+      "code": "26E",
+      "name": "Wire Fraud",
+      "category": "Crimes Against Property",
+      "short_name": "Wire Fraud",
+      "supported": true
+    },
+    {
+      "code": "26F",
+      "name": "Identity Theft",
+      "category": "Crimes Against Property",
+      "short_name": "Identity Theft",
+      "supported": true
+    },
+    {
+      "code": "26G",
+      "name": "Hacking/Computer Invasion",
+      "category": "Crimes Against Property",
+      "short_name": "Hacking",
+      "supported": true
+    },
+    {
+      "code": "26H",
+      "name": "Money Laundering",
+      "category": "Crimes Against Society",
+      "short_name": "Money Laundering",
+      "supported": true
+    },
+    {
+      "code": "270",
+      "name": "Embezzlement",
+      "category": "Crimes Against Property",
+      "short_name": "Embezzlement",
+      "supported": true
+    },
+    {
+      "code": "280",
+      "name": "Stolen Property Offenses",
+      "category": "Crimes Against Property",
+      "short_name": "Stolen Property",
+      "supported": true
+    },
+    {
+      "code": "290",
+      "name": "Destruction/Damage/Vandalism of Property",
+      "category": "Crimes Against Property",
+      "short_name": "Vandalism",
+      "supported": true
+    },
+    {
+      "code": "30A",
+      "name": "Illegal Entry into the United States",
+      "category": "Crimes Against Society",
+      "short_name": "Illegal Entry",
+      "supported": true
+    },
+    {
+      "code": "30B",
+      "name": "False Citizenship",
+      "category": "Crimes Against Society",
+      "short_name": "False Citizenship",
+      "supported": true
+    },
+    {
+      "code": "30C",
+      "name": "Smuggling Aliens",
+      "category": "Crimes Against Society",
+      "short_name": "Smuggling Aliens",
+      "supported": true
+    },
+    {
+      "code": "30D",
+      "name": "Re-entry after Deportation",
+      "category": "Crimes Against Society",
+      "short_name": "Illegal Re-entry",
+      "supported": true
+    },
+    {
+      "code": "35A",
+      "name": "Drug/Narcotic Violations",
+      "category": "Crimes Against Society",
+      "short_name": "Drug Violations",
+      "supported": true
+    },
+    {
+      "code": "35B",
+      "name": "Drug Equipment Violations",
+      "category": "Crimes Against Society",
+      "short_name": "Drug Equipment",
+      "supported": true
+    },
+    {
+      "code": "36A",
+      "name": "Incest",
+      "category": "Crimes Against Persons",
+      "short_name": "Incest",
+      "supported": true
+    },
+    {
+      "code": "36B",
+      "name": "Statutory Rape",
+      "category": "Crimes Against Persons",
+      "short_name": "Statutory Rape",
+      "supported": true
+    },
+    {
+      "code": "360",
+      "name": "Failure to Register as a Sex Offender",
+      "category": "Crimes Against Society",
+      "short_name": "Sex Offender Registration",
+      "supported": true
+    },
+    {
+      "code": "370",
+      "name": "Pornography/Obscene Material",
+      "category": "Crimes Against Society",
+      "short_name": "Pornography",
+      "supported": true
+    },
+    {
+      "code": "39A",
+      "name": "Betting/Wagering",
+      "category": "Crimes Against Society",
+      "short_name": "Wagering",
+      "supported": true
+    },
+    {
+      "code": "39B",
+      "name": "Operating/Promoting/Assisting Gambling",
+      "category": "Crimes Against Society",
+      "short_name": "Promoting Gambling",
+      "supported": true
+    },
+    {
+      "code": "39C",
+      "name": "Gambling Equipment Violations",
+      "category": "Crimes Against Society",
+      "short_name": "Gambling Equipment",
+      "supported": true
+    },
+    {
+      "code": "39D",
+      "name": "Sports Tampering",
+      "category": "Crimes Against Society",
+      "short_name": "Sports Tampering",
+      "supported": true
+    },
+    {
+      "code": "40A",
+      "name": "Prostitution",
+      "category": "Crimes Against Society",
+      "short_name": "Prostitution",
+      "supported": true
+    },
+    {
+      "code": "40B",
+      "name": "Assisting or Promoting Prostitution",
+      "category": "Crimes Against Society",
+      "short_name": "Assisting Prostitution",
+      "supported": true
+    },
+    {
+      "code": "40C",
+      "name": "Purchasing Prostitution",
+      "category": "Crimes Against Society",
+      "short_name": "Purchasing Prostitution",
+      "supported": true
+    },
+    {
+      "code": "49A",
+      "name": "Harboring Escapee/Concealing from Arrest",
+      "category": "Crimes Against Society",
+      "short_name": "Harboring Fugitive",
+      "supported": true
+    },
+    {
+      "code": "49B",
+      "name": "Flight to Avoid Prosecution",
+      "category": "Crimes Against Society",
+      "short_name": "Flight (Prosecution)",
+      "supported": true
+    },
+    {
+      "code": "49C",
+      "name": "Flight to Avoid Deportation",
+      "category": "Crimes Against Society",
+      "short_name": "Flight (Deportation)",
+      "supported": true
+    },
+    {
+      "code": "510",
+      "name": "Bribery",
+      "category": "Crimes Against Property",
+      "short_name": "Bribery",
+      "supported": true
+    },
+    {
+      "code": "520",
+      "name": "Weapon Law Violations",
+      "category": "Crimes Against Society",
+      "short_name": "Weapon Laws",
+      "supported": true
+    },
+    {
+      "code": "521",
+      "name": "Violation of National Firearm Act of 1934",
+      "category": "Crimes Against Society",
+      "short_name": "Firearm Act Violation",
+      "supported": true
+    },
+    {
+      "code": "522",
+      "name": "Weapons of Mass Destruction",
+      "category": "Crimes Against Society",
+      "short_name": "WMD",
+      "supported": true
+    },
+    {
+      "code": "526",
+      "name": "Explosives",
+      "category": "Crimes Against Society",
+      "short_name": "Explosives",
+      "supported": true
+    },
+    {
+      "code": "58A",
+      "name": "Import Violations",
+      "category": "Crimes Against Society",
+      "short_name": "Import Violation",
+      "supported": true
+    },
+    {
+      "code": "58B",
+      "name": "Export Violations",
+      "category": "Crimes Against Society",
+      "short_name": "Export Violation",
+      "supported": true
+    },
+    {
+      "code": "61A",
+      "name": "Federal Liquor Offenses",
+      "category": "Crimes Against Society",
+      "short_name": "Federal Liquor",
+      "supported": true
+    },
+    {
+      "code": "61B",
+      "name": "Federal Tobacco Offenses",
+      "category": "Crimes Against Society",
+      "short_name": "Federal Tobacco",
+      "supported": true
+    },
+    {
+      "code": "620",
+      "name": "Wildlife Trafficking",
+      "category": "Crimes Against Society",
+      "short_name": "Wildlife Trafficking",
+      "supported": true
+    },
+    {
+      "code": "64A",
+      "name": "Human Trafficking, Commercial Sex Acts",
+      "category": "Crimes Against Persons",
+      "short_name": "HT (Sex Acts)",
+      "supported": true
+    },
+    {
+      "code": "64B",
+      "name": "Human Trafficking, Involuntary Servitude",
+      "category": "Crimes Against Persons",
+      "short_name": "HT (Servitude)",
+      "supported": true
+    },
+    {
+      "code": "720",
+      "name": "Animal Cruelty",
+      "category": "Crimes Against Society",
+      "short_name": "Animal Cruelty",
+      "supported": true
+    },
+    {
+      "code": "90B",
+      "name": "Curfew/Loitering/Vagrancy Violations",
+      "category": "Crimes Against Society",
+      "short_name": "Curfew",
+      "supported": false
+    },
+    {
+      "code": "90C",
+      "name": "Disorderly Conduct",
+      "category": "Crimes Against Society",
+      "short_name": "Disorderly Conduct",
+      "supported": false
+    },
+    {
+      "code": "90D",
+      "name": "Driving Under the Influence",
+      "category": "Crimes Against Society",
+      "short_name": "DUI",
+      "supported": false
+    },
+    {
+      "code": "90F",
+      "name": "Family Offenses, Nonviolent",
+      "category": "Crimes Against Persons",
+      "short_name": "Family Offenses",
+      "supported": false
+    },
+    {
+      "code": "90G",
+      "name": "Liquor Law Violations",
+      "category": "Crimes Against Society",
+      "short_name": "Liquor Laws",
+      "supported": false
+    },
+    {
+      "code": "90J",
+      "name": "Trespass of Real Property",
+      "category": "Crimes Against Property",
+      "short_name": "Trespass",
+      "supported": false
+    },
+    {
+      "code": "90K",
+      "name": "Failure to Appear",
+      "category": "Crimes Against Society",
+      "short_name": "Failure to Appear",
+      "supported": false
+    },
+    {
+      "code": "90L",
+      "name": "Federal Resource Violations",
+      "category": "Crimes Against Society",
+      "short_name": "Resource Violations",
+      "supported": false
+    },
+    {
+      "code": "90M",
+      "name": "Perjury",
+      "category": "Crimes Against Society",
+      "short_name": "Perjury",
+      "supported": false
+    },
+    {
+      "code": "90Z",
+      "name": "All Other Offenses",
+      "category": "Crimes Against Society",
+      "short_name": "Other",
+      "supported": false
+    }
+  ],
+  "fbi_codes": [
+    {
+      "code": 11,
+      "name": "Murder and Nonnegligent Manslaughter",
+      "category": "Violent Crime",
+      "short_name": "Murder",
+      "supported": false
+    },
+    {
+      "code": 12,
+      "name": "Manslaughter by Negligence",
+      "category": "Violent Crime",
+      "short_name": "Manslaughter",
+      "supported": false
+    },
+    {
+      "code": 20,
+      "name": "Rape (Legacy Definition)",
+      "category": "Violent Crime",
+      "short_name": "Rape (Legacy)",
+      "supported": false
+    },
+    {
+      "code": 23,
+      "name": "Rape",
+      "category": "Violent Crime",
+      "short_name": "Rape",
+      "supported": false
+    },
+    {
+      "code": 30,
+      "name": "Robbery",
+      "category": "Violent Crime",
+      "short_name": "Robbery",
+      "supported": false
+    },
+    {
+      "code": 50,
+      "name": "Aggravated Assault",
+      "category": "Violent Crime",
+      "short_name": "Aggravated Assault",
+      "supported": false
+    },
+    {
+      "code": 55,
+      "name": "Simple Assault",
+      "category": "Violent Crime",
+      "short_name": "Assault",
+      "supported": false
+    },
+    {
+      "code": 60,
+      "name": "Burglary/Breaking and Entering",
+      "category": "Property Crime",
+      "short_name": "Burglary",
+      "supported": false
+    },
+    {
+      "code": 70,
+      "name": "Larceny - Theft",
+      "category": "Property Crime",
+      "short_name": "Theft",
+      "supported": false
+    },
+    {
+      "code": 90,
+      "name": "Motor Vehicle Theft",
+      "category": "Property Crime",
+      "short_name": "Motor Vehicle Theft",
+      "supported": false
+    },
+    {
+      "code": 101,
+      "name": "Treason",
+      "category": "National Security",
+      "short_name": "Treason",
+      "supported": false
+    },
+    {
+      "code": 102,
+      "name": "Espionage",
+      "category": "National Security",
+      "short_name": "Espionage",
+      "supported": false
+    },
+    {
+      "code": 110,
+      "name": "Arson",
+      "category": "Property Crime",
+      "short_name": "Arson",
+      "supported": false
+    },
+    {
+      "code": 140,
+      "name": "Prostitution and Commercialized Vice",
+      "category": "Sex Crime",
+      "short_name": "Prostitution/Vice",
+      "supported": false
+    },
+    {
+      "code": 141,
+      "name": "Prostitution",
+      "category": "Sex Crime",
+      "short_name": "Prostitution",
+      "supported": false
+    },
+    {
+      "code": 142,
+      "name": "Assisting or Promoting Prostitution",
+      "category": "Sex Crime",
+      "short_name": "Promoting Prostitution",
+      "supported": false
+    },
+    {
+      "code": 143,
+      "name": "Purchasing Prostitution",
+      "category": "Sex Crime",
+      "short_name": "Purchasing Prostitution",
+      "supported": false
+    },
+    {
+      "code": 150,
+      "name": "Drug Abuse Violations",
+      "category": "Drug Crime",
+      "short_name": "Drug Abuse",
+      "supported": false
+    },
+    {
+      "code": 151,
+      "name": "Drug Sale and Manufacturing - Total",
+      "category": "Drug Crime",
+      "short_name": "Drug Sale - Total",
+      "supported": false
+    },
+    {
+      "code": 152,
+      "name": "Drug Sale and Manufacturing - Opium, Cocaine or Their Derivatives",
+      "category": "Drug Crime",
+      "short_name": "Drug Sale - Opium/Cocaine",
+      "supported": false
+    },
+    {
+      "code": 153,
+      "name": "Drug Sale and Manufacturing - Marijuana",
+      "category": "Drug Crime",
+      "short_name": "Drug Sale - Marijuana",
+      "supported": false
+    },
+    {
+      "code": 154,
+      "name": "Drug Sale and Manufacturing - Synthetic Narcotics",
+      "category": "Drug Crime",
+      "short_name": "Drug Sale - Synthetic Narcotics",
+      "supported": false
+    },
+    {
+      "code": 155,
+      "name": "Drug Sale and Manufacturing - Dangerous Nonnarcotic Drugs",
+      "category": "Drug Crime",
+      "short_name": "Drug Sale - Dangerous Nonnarcotic Drugs",
+      "supported": false
+    },
+    {
+      "code": 156,
+      "name": "Drug Possession - Total",
+      "category": "Drug Crime",
+      "short_name": "Drug Possession - Total",
+      "supported": false
+    },
+    {
+      "code": 157,
+      "name": "Drug Possession - Opium, Cocaine or Their Derivatives",
+      "category": "Drug Crime",
+      "short_name": "Drug Possession - Opium/Cocaine",
+      "supported": false
+    },
+    {
+      "code": 158,
+      "name": "Drug Possession - Marijuana",
+      "category": "Drug Crime",
+      "short_name": "Drug Possession - Marijuana",
+      "supported": false
+    },
+    {
+      "code": 159,
+      "name": "Drug Possession - Synthetic Narcotics",
+      "category": "Drug Crime",
+      "short_name": "Drug Possession - Synthetic Narcotics",
+      "supported": false
+    },
+    {
+      "code": 160,
+      "name": "Drug Possession - Dangerous Nonnarcotic Drugs",
+      "category": "Drug Crime",
+      "short_name": "Drug Possession - Dangerous Nonnarcotic Drugs",
+      "supported": false
+    },
+    {
+      "code": 180,
+      "name": "Forgery and Counterfeiting",
+      "category": "Property Crime",
+      "short_name": "Forgery",
+      "supported": false
+    },
+    {
+      "code": 190,
+      "name": "Fraud",
+      "category": "Property Crime",
+      "short_name": "Fraud",
+      "supported": false
+    },
+    {
+      "code": 200,
+      "name": "Embezzlement",
+      "category": "Property Crime",
+      "short_name": "Embezzlement",
+      "supported": false
+    },
+    {
+      "code": 170,
+      "name": "Gambling - Total",
+      "category": "Public Order Crime",
+      "short_name": "Gambling",
+      "supported": false
+    },
+    {
+      "code": 171,
+      "name": "Bookmaking (Horse and Sport)",
+      "category": "Public Order Crime",
+      "short_name": "Bookmaking",
+      "supported": false
+    },
+    {
+      "code": 172,
+      "name": "Numbers and Lottery",
+      "category": "Public Order Crime",
+      "short_name": "Numbers/Lottery",
+      "supported": false
+    },
+    {
+      "code": 173,
+      "name": "All Other Gambling",
+      "category": "Public Order Crime",
+      "short_name": "Other Gambling",
+      "supported": false
+    },
+    {
+      "code": 210,
+      "name": "Stolen Property (Buying, Receiving, Possessing)",
+      "category": "Property Crime",
+      "short_name": "Stolen Property",
+      "supported": false
+    },
+    {
+      "code": 220,
+      "name": "Vandalism / Destruction of Property",
+      "category": "Property Crime",
+      "short_name": "Vandalism",
+      "supported": false
+    },
+    {
+      "code": 230,
+      "name": "Weapons (Carrying, Possessing, etc.)",
+      "category": "Weapons Crime",
+      "short_name": "Weapons",
+      "supported": false
+    },
+    {
+      "code": 240,
+      "name": "Sex Offenses (Except Rape and Prostitution and Commercialized Vice)",
+      "category": "Sex Crime",
+      "short_name": "Sex Offenses",
+      "supported": false
+    },
+    {
+      "code": 250,
+      "name": "Offenses Against Family and Children",
+      "category": "Public Order Crime",
+      "short_name": "Family/Children Offenses",
+      "supported": false
+    },
+    {
+      "code": 260,
+      "name": "Driving Under the Influence",
+      "category": "Public Order Crime",
+      "short_name": "DUI",
+      "supported": false
+    },
+    {
+      "code": 270,
+      "name": "Liquor Laws",
+      "category": "Public Order Crime",
+      "short_name": "Liquor Laws",
+      "supported": false
+    },
+    {
+      "code": 280,
+      "name": "Drunkenness",
+      "category": "Public Order Crime",
+      "short_name": "Drunkenness",
+      "supported": false
+    },
+    {
+      "code": 290,
+      "name": "Disorderly Conduct",
+      "category": "Public Order Crime",
+      "short_name": "Disorderly Conduct",
+      "supported": false
+    },
+    {
+      "code": 300,
+      "name": "Vagrancy",
+      "category": "Public Order Crime",
+      "short_name": "Vagrancy",
+      "supported": false
+    },
+    {
+      "code": 310,
+      "name": "All Other Offenses (Except Traffic)",
+      "category": "Other",
+      "short_name": "All Other Offenses",
+      "supported": false
+    },
+    {
+      "code": 330,
+      "name": "Curfew and Loitering Laws (Persons Under 18)",
+      "category": "Public Order Crime",
+      "short_name": "Curfew/Loitering",
+      "supported": false
+    }
+  ],
+  "us_territories": [
+    {
+      "name": "Alabama",
+      "abbreviation": "AL"
+    },
+    {
+      "name": "Alaska",
+      "abbreviation": "AK"
+    },
+    {
+      "name": "Arizona",
+      "abbreviation": "AZ"
+    },
+    {
+      "name": "Arkansas",
+      "abbreviation": "AR"
+    },
+    {
+      "name": "California",
+      "abbreviation": "CA"
+    },
+    {
+      "name": "Colorado",
+      "abbreviation": "CO"
+    },
+    {
+      "name": "Connecticut",
+      "abbreviation": "CT"
+    },
+    {
+      "name": "Delaware",
+      "abbreviation": "DE"
+    },
+    {
+      "name": "Florida",
+      "abbreviation": "FL"
+    },
+    {
+      "name": "Georgia",
+      "abbreviation": "GA"
+    },
+    {
+      "name": "Hawaii",
+      "abbreviation": "HI"
+    },
+    {
+      "name": "Idaho",
+      "abbreviation": "ID"
+    },
+    {
+      "name": "Illinois",
+      "abbreviation": "IL"
+    },
+    {
+      "name": "Indiana",
+      "abbreviation": "IN"
+    },
+    {
+      "name": "Iowa",
+      "abbreviation": "IA"
+    },
+    {
+      "name": "Kansas",
+      "abbreviation": "KS"
+    },
+    {
+      "name": "Kentucky",
+      "abbreviation": "KY"
+    },
+    {
+      "name": "Louisiana",
+      "abbreviation": "LA"
+    },
+    {
+      "name": "Maine",
+      "abbreviation": "ME"
+    },
+    {
+      "name": "Maryland",
+      "abbreviation": "MD"
+    },
+    {
+      "name": "Massachusetts",
+      "abbreviation": "MA"
+    },
+    {
+      "name": "Michigan",
+      "abbreviation": "MI"
+    },
+    {
+      "name": "Minnesota",
+      "abbreviation": "MN"
+    },
+    {
+      "name": "Mississippi",
+      "abbreviation": "MS"
+    },
+    {
+      "name": "Missouri",
+      "abbreviation": "MO"
+    },
+    {
+      "name": "Montana",
+      "abbreviation": "MT"
+    },
+    {
+      "name": "Nebraska",
+      "abbreviation": "NE"
+    },
+    {
+      "name": "Nevada",
+      "abbreviation": "NV"
+    },
+    {
+      "name": "New Hampshire",
+      "abbreviation": "NH"
+    },
+    {
+      "name": "New Jersey",
+      "abbreviation": "NJ"
+    },
+    {
+      "name": "New Mexico",
+      "abbreviation": "NM"
+    },
+    {
+      "name": "New York",
+      "abbreviation": "NY"
+    },
+    {
+      "name": "North Carolina",
+      "abbreviation": "NC"
+    },
+    {
+      "name": "North Dakota",
+      "abbreviation": "ND"
+    },
+    {
+      "name": "Ohio",
+      "abbreviation": "OH"
+    },
+    {
+      "name": "Oklahoma",
+      "abbreviation": "OK"
+    },
+    {
+      "name": "Oregon",
+      "abbreviation": "OR"
+    },
+    {
+      "name": "Pennsylvania",
+      "abbreviation": "PA"
+    },
+    {
+      "name": "Rhode Island",
+      "abbreviation": "RI"
+    },
+    {
+      "name": "South Carolina",
+      "abbreviation": "SC"
+    },
+    {
+      "name": "South Dakota",
+      "abbreviation": "SD"
+    },
+    {
+      "name": "Tennessee",
+      "abbreviation": "TN"
+    },
+    {
+      "name": "Texas",
+      "abbreviation": "TX"
+    },
+    {
+      "name": "Utah",
+      "abbreviation": "UT"
+    },
+    {
+      "name": "Vermont",
+      "abbreviation": "VT"
+    },
+    {
+      "name": "Virginia",
+      "abbreviation": "VA"
+    },
+    {
+      "name": "Washington",
+      "abbreviation": "WA"
+    },
+    {
+      "name": "West Virginia",
+      "abbreviation": "WV"
+    },
+    {
+      "name": "Wisconsin",
+      "abbreviation": "WI"
+    },
+    {
+      "name": "Wyoming",
+      "abbreviation": "WY"
+    },
+    {
+      "name": "District of Columbia",
+      "abbreviation": "DC"
+    },
+    {
+      "name": "American Samoa",
+      "abbreviation": "AS"
+    },
+    {
+      "name": "Guam",
+      "abbreviation": "GU"
+    },
+    {
+      "name": "Northern Mariana Islands",
+      "abbreviation": "MP"
+    },
+    {
+      "name": "Puerto Rico",
+      "abbreviation": "PR"
+    },
+    {
+      "name": "U.S. Virgin Islands",
+      "abbreviation": "VI"
+    }
+  ]
+}

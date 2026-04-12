@@ -1,6 +1,6 @@
 import requests
 from . import FRED_API_BASE_URL, FRED_API_KEY
-from .models import FREDData
+from .models import get_data_model
 
 
 class Client:
@@ -15,7 +15,7 @@ class Client:
         self.limited = False
         self.limit_remaining = None
         self.limit_reset = None
-        self.data = FREDData()
+        self.data = get_data_model()
 
     # handle pagination of results gracefully and recursively until all data is fetched
     def _get(
