@@ -7,7 +7,7 @@ click==8.3.2
 libtmux==0.46.2
 csvkit==2.1.0
 tqdm==4.67.1
-pytest==8.3.5
+pytest==9.0.3
 pytest-cov==7.1.0
 pytest-mock==3.14.0
 pytest-randomly==3.16.0
