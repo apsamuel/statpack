@@ -4,6 +4,8 @@ import time
 import pandas as pd
 import re
 import requests
+import json
+import os
 
 us_state_mapping: dict[int, str] = {
     1: "Alabama",
@@ -70,7 +72,6 @@ us_race_mapping: dict[int, str] = {
     8000: "Some Other Race",
 }
 
-
 class State(BaseModel):
     code: int
     name: str
@@ -126,10 +127,8 @@ def _get_state_codes() -> list[State]:
 
 
 class Data(BaseModel):
-    # states: list[State] = [State(code=code, name=name) for code, name in us_state_mapping.items()]
-    # races: list[Race] = [Race(code=code, name=name) for code, name in us_race_mapping.items()]
-    states: list[State] = state_codes
-    counties: list[County] = county_codes
+    states: list[State]
+    counties: list[County]
 
     def get_race_by_name(self, name: str) -> Race | None:
         for race in self.races:
@@ -157,7 +156,6 @@ class Data(BaseModel):
 
 
 def get_data_model() -> Data:
-    # def _get_region
     state_codes = _get_state_codes()
     county_codes = _get_county_codes()
     return Data(states=state_codes, counties=county_codes)

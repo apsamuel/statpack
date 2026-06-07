@@ -1,4 +1,5 @@
 # from os import nice
+from . import seed, load_seed
 from pydantic import BaseModel, Field
 import time
 import pandas as pd
@@ -775,6 +776,9 @@ def get_abbr_from_state(name):
 
 
 def get_data_model() -> Data:
+
+    if load_seed:
+        return Data.model_validate_json(seed.read_text())
     fbi_offense_codes = [FBIOffense(code=code, **info) for code, info in fbi_offense_mapping.items()]
     nibrs_offense_codes_v1 = [NIBRSOffense(code=code, **info) for code, info in nibrs_offense_mapping_v1.items()]
     nibrs_offense_codes_v2 = [NIBRSOffense(code=code, **info) for code, info in nibrs_offense_mapping_v2.items()]

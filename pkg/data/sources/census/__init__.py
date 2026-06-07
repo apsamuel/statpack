@@ -1,9 +1,16 @@
 import os
 
 from sympy import im
+from pathlib import Path
+
+from scripts import seed_data
 
 CENSUS_API_KEY = os.getenv("CENSUS_API_KEY")
 CENSUS_API_BASE_URL = os.getenv("CENSUS_API_BASE_URL")
+
+
+if CENSUS_API_BASE_URL is None or CENSUS_API_KEY is None:
+    raise EnvironmentError("CENSUS_API_BASE_URL and CENSUS_API_KEY must be set in environment variables.")
 
 name = "census"
 description = "U.S. Census Bureau Data"
@@ -18,9 +25,9 @@ supported = [
         "variant": "1-year estimates",
     }
 ]
+load_seed = os.environ.get("LOAD_SEED_DATA", "true").lower() == "true"
+seed = Path(__file__).parent / "data" / "seed.json"
 
-if CENSUS_API_BASE_URL is None or CENSUS_API_KEY is None:
-    raise EnvironmentError("CENSUS_API_BASE_URL and CENSUS_API_KEY must be set in environment variables.")
 
 from .main import (
     get_census_acs_variables,

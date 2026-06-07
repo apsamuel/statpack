@@ -7,3 +7,4 @@ from .common.outputs import write_csv, write_json, describe_frame
 from .data.sources import fbi
 from .data.sources import census
 from .data.sources import fred
+from .data.sources import cdc

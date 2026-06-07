@@ -1,7 +1,13 @@
 import os
+from pathlib import Path
 
 GOV_API_BASE_URL = os.getenv("GOV_API_BASE_URL")
 GOV_API_KEY = os.getenv("GOV_API_KEY")
+
+if GOV_API_BASE_URL is None or GOV_API_KEY is None:
+    raise EnvironmentError(
+        "GOV_API_BASE_URL and GOV_API_KEY (https://api.data.gov/signup/) must be set in environment variables."
+    )
 
 name = "fbi"
 description = "FBI Crime Data Explorer"
@@ -19,11 +25,8 @@ supported = [
     }
 ]
 docs = ["https://ucr.fbi.gov/nibrs/2011/resources/nibrs-offense-codes"]
-
-if GOV_API_BASE_URL is None or GOV_API_KEY is None:
-    raise EnvironmentError(
-        "GOV_API_BASE_URL and GOV_API_KEY (https://api.data.gov/signup/) must be set in environment variables."
-    )
+load_seed = os.environ.get("LOAD_SEED_DATA", "true").lower() == "true"
+seed = Path(__file__).parent / "data" / "seed.json"
 
 
 from .client import Client

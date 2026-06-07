@@ -19,7 +19,7 @@ class Client:
 
     # handle pagination of results gracefully and recursively until all data is fetched
     def _get(
-        self, url_path: str = None, default_return=None, success_codes: list = None, debug: bool = False
+        self, url_path: str = None, default_return=None, success_codes: list = None, debug: bool = False, **kwargs
     ) -> dict | list | None:
         if url_path is None:
             raise ValueError("'url_path' is required")

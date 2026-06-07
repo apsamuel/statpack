@@ -16,6 +16,18 @@ import time
 class Client:
     routes: dict[str, dict[str, str]] = {}
 
+    def __init__(self, api_base_url: str = GOV_API_BASE_URL, api_key: str = GOV_API_KEY):
+        self.api_base_url = api_base_url
+        self.api_key = api_key
+        self.headers = {"X-Api-Key": self.api_key, "User-Agent": "StatPack/1.0", "Accept": "application/json"}
+        self.last: Request | None = None
+        self.requests: int = 0
+        self.failed_requests: list[FailedRequest] = []
+        self.limited = False
+        self.limit_remaining = None
+        self.limit_reset = None
+        self.data = Data()
+
     def _sanitize_column_prefix(self, prefix: str) -> str:
         prefix = prefix.lower()
         prefix = prefix.replace(" ", "_")
@@ -33,20 +45,8 @@ class Client:
         name = re.sub(r"_+$", "", name)
         return name
 
-    def __init__(self, api_base_url: str = GOV_API_BASE_URL, api_key: str = GOV_API_KEY):
-        self.api_base_url = api_base_url
-        self.api_key = api_key
-        self.headers = {"X-Api-Key": self.api_key, "User-Agent": "StatPack/1.0", "Accept": "application/json"}
-        self.last: Request | None = None
-        self.requests: int = 0
-        self.failed_requests: list[FailedRequest] = []
-        self.limited = False
-        self.limit_remaining = None
-        self.limit_reset = None
-        self.data = Data()
-
     def _get(
-        self, url_path: str = None, default_return=None, success_codes: list = None, debug: bool = False
+        self, url_path: str = None, default_return=None, success_codes: list = None, debug: bool = False, **kwargs
     ) -> dict | list:
         if url_path is None:
             raise ValueError("'url_path' must be provided")

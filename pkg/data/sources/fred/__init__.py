@@ -1,8 +1,14 @@
 import os
+from pathlib import Path
 
 
 FRED_API_BASE_URL = os.getenv("FRED_API_BASE_URL")
 FRED_API_KEY = os.getenv("FRED_API_KEY")
+
+if FRED_API_BASE_URL is None or FRED_API_KEY is None:
+    raise EnvironmentError(
+        "FRED_API_BASE_URL and FRED_API_KEY (https://fredaccount.stlouisfed.org/apikey) must be set in environment variables."
+    )
 
 name = "fred"
 description = "Federal Reserve Economic Data (FRED)"
@@ -13,10 +19,8 @@ api = "https://fred.stlouisfed.org/docs/api/fred/"
 about = "https://fredhelp.stlouisfed.org/fred/about/about-fred/what-is-fred/"
 supported = []
 docs = []
+load_seed = os.environ.get("LOAD_SEED_DATA", "true").lower() == "true"
+seed = Path(__file__).parent / "data" / "seed.json"
 
-if FRED_API_BASE_URL is None or FRED_API_KEY is None:
-    raise EnvironmentError(
-        "FRED_API_BASE_URL and FRED_API_KEY (https://fredaccount.stlouisfed.org/apikey) must be set in environment variables."
-    )
 
 from .client import Client

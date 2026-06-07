@@ -1,4 +1,4 @@
-from . import FRED_API_BASE_URL, FRED_API_KEY
+from . import FRED_API_BASE_URL, FRED_API_KEY, seed, load_seed
 from pydantic import BaseModel, Field
 import requests
 
@@ -62,16 +62,14 @@ def _get_series(categories: list[Category]) -> list[Series]:
     return series_list
 
 
-# categories = _get_categories()
-# series = _get_series(categories)
-
-
 class Data(BaseModel):
     categories: list[Category]
     series: list[Series]
 
 
 def get_data_model():
+    if load_seed:
+        return Data.model_validate_json(seed.read_text())
     categories = _get_categories()
     series = _get_series(categories)
     return Data(categories=categories, series=series)

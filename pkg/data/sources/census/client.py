@@ -20,7 +20,9 @@ class Client:
         self.data = get_data_model()
         self.latest_census_year = date.today().year - 1
 
-    def _get(self, url_path: str = None, default_return=None, success_codes: list = None, debug: bool = False):
+    def _get(
+        self, url_path: str = None, default_return=None, success_codes: list = None, debug: bool = False, **kwargs
+    ):
         if url_path is None:
             raise ValueError("URL path is required")
 
