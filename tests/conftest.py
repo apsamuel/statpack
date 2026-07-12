@@ -1,9 +1,8 @@
 import importlib
-from io import StringIO
-from unittest.mock import patch
 
 import pytest
 import responses as resp
+from click.testing import CliRunner
 
 
 @pytest.fixture
@@ -12,7 +11,7 @@ def fbi_main(monkeypatch):
     monkeypatch.setenv("GOV_API_BASE_URL", "https://example.test")
     monkeypatch.setenv("GOV_API_KEY", "test-api-key")
 
-    module = importlib.import_module("pkg.data.sources.fbi.main")
+    module = importlib.import_module("statpack.data.sources.fbi.main")
     return importlib.reload(module)
 
 
@@ -37,22 +36,15 @@ def cli_runner(monkeypatch, tmp_path):
     monkeypatch.setenv("GOV_API_KEY", "test-api-key")
 
     def run(argv: list[str]):
-        import main as cli_main  # top-level main.py
+        import statpack.cli as cli_main  # src/statpack/cli.py
+
         importlib.reload(cli_main)
 
-        stdout_buf = StringIO()
-        stderr_buf = StringIO()
+        runner = CliRunner()
+        result = runner.invoke(cli_main.cli, argv)
 
-        exit_code = 0
-        with patch("sys.argv", ["main.py"] + argv):
-            with patch("sys.stdout", stdout_buf):
-                with patch("sys.stderr", stderr_buf):
-                    try:
-                        cli_main.main()
-                    except SystemExit as exc:
-                        exit_code = exc.code if exc.code is not None else 0
-
-        return stdout_buf.getvalue(), stderr_buf.getvalue(), exit_code
+        exit_code = result.exit_code if result.exit_code is not None else 0
+        return result.stdout, result.stderr, exit_code
 
     run.tmp_path = tmp_path
     return run

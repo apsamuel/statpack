@@ -38,7 +38,7 @@ class TestOutputFormatter:
     def _load(self, monkeypatch):
         monkeypatch.setenv("GOV_API_BASE_URL", "https://example.test")
         monkeypatch.setenv("GOV_API_KEY", "test-api-key")
-        import main as m
+        import statpack.cli as m
 
         self.m = importlib.reload(m)
 
@@ -107,7 +107,7 @@ class TestFBICommandsDispatch:
     def _load(self, monkeypatch):
         monkeypatch.setenv("GOV_API_BASE_URL", "https://example.test")
         monkeypatch.setenv("GOV_API_KEY", "test-api-key")
-        import main as m
+        import statpack.cli as m
 
         self.m = importlib.reload(m)
 
@@ -217,7 +217,7 @@ class TestCLIIntegration:
         assert code != 0
 
     def test_fbi_agencies_stdout_csv(self, cli_runner, mocker):
-        import pkg.data.sources.fbi as fbi_pkg
+        import statpack.data.sources.fbi as fbi_pkg
 
         mocker.patch.object(
             fbi_pkg, "get_reporting_agencies", return_value=_simple_df()
@@ -229,7 +229,7 @@ class TestCLIIntegration:
         assert "state" in stdout
 
     def test_fbi_agencies_stdout_json(self, cli_runner, mocker):
-        import pkg.data.sources.fbi as fbi_pkg
+        import statpack.data.sources.fbi as fbi_pkg
 
         mocker.patch.object(
             fbi_pkg, "get_reporting_agencies", return_value=_simple_df()
@@ -242,7 +242,7 @@ class TestCLIIntegration:
         assert parsed == [{"state": "NY", "value": 42}]
 
     def test_fbi_agencies_write_to_file(self, cli_runner, mocker, tmp_path):
-        import pkg.data.sources.fbi as fbi_pkg
+        import statpack.data.sources.fbi as fbi_pkg
 
         mocker.patch.object(
             fbi_pkg, "get_reporting_agencies", return_value=_simple_df()
@@ -293,7 +293,7 @@ class TestCLIIntegration:
         assert code != 0
 
     def test_exception_in_command_exits_with_code_1(self, cli_runner, mocker):
-        import pkg.data.sources.fbi as fbi_pkg
+        import statpack.data.sources.fbi as fbi_pkg
 
         mocker.patch.object(
             fbi_pkg,

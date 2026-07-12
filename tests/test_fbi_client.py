@@ -24,9 +24,8 @@ import responses as resp
 from unittest.mock import MagicMock
 import pandas as pd
 
-from pkg.data.sources.fbi.client import Client, Request, FailedRequest
-from pkg.data.sources.fbi.models import USTerritory
-
+from statpack.data.sources.fbi.client import Client, Request, FailedRequest
+from statpack.data.sources.fbi.models import USTerritory
 
 # ---------------------------------------------------------------------------
 # Shared fixtures
@@ -133,7 +132,7 @@ class TestClientInit:
         assert client.failed_requests == []
 
     def test_data_attribute_is_fbi_data(self, client):
-        from pkg.data.sources.fbi.models import Data
+        from statpack.data.sources.fbi.models import Data
 
         assert isinstance(client.data, Data)
 
