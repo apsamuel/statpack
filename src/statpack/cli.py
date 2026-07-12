@@ -16,18 +16,46 @@ from pathlib import Path
 import click
 import pandas as pd
 
-from pkg.data.sources.fbi.cli import fbi
-from pkg.data.sources.census import (
+from statpack.data.sources.fbi.cli import fbi
+from statpack.data.sources.census import (
     get_census_acs_variables,
     get_census_acs_detailed,
     get_census_acs_detailed_by_state,
     get_census_acs_detailed_by_state_county,
 )
 
-
 # ---------------------------------------------------------------------------
 # Output helpers (shared by census commands until census/cli.py is created)
 # ---------------------------------------------------------------------------
+
+
+def _to_table(df: pd.DataFrame, max_cell_width: int = 48) -> str:
+    """Render a DataFrame as an aligned, kubectl-style plain text table."""
+
+    def _stringify(value) -> str:
+        if pd.isna(value):
+            return ""
+        text = str(value).replace("\n", "\\n")
+        if len(text) > max_cell_width:
+            return text[: max_cell_width - 3] + "..."
+        return text
+
+    table_df = df
+    headers = [str(col).upper() for col in table_df.columns]
+    rows = [[_stringify(value) for value in row] for row in table_df.itertuples(index=False, name=None)]
+
+    widths = [len(header) for header in headers]
+    for row in rows:
+        for idx, value in enumerate(row):
+            widths[idx] = max(widths[idx], len(value))
+
+    header_line = "  ".join(headers[idx].ljust(widths[idx]) for idx in range(len(headers)))
+    body_lines = ["  ".join(row[idx].ljust(widths[idx]) for idx in range(len(row))) for row in rows]
+
+    if not body_lines:
+        return header_line
+
+    return "\n".join([header_line, *body_lines])
 
 
 def _format_dataframe(df: pd.DataFrame, output_format: str) -> str:
@@ -42,6 +70,8 @@ def _format_dataframe(df: pd.DataFrame, output_format: str) -> str:
         return df.to_html(index=False)
     if output_format == "markdown":
         return df.to_markdown(index=False)
+    if output_format == "table":
+        return _to_table(df)
     return str(df)
 
 
@@ -83,7 +113,7 @@ def _output_options(fn):
         "output_format",
         default="csv",
         show_default=True,
-        type=click.Choice(["json", "csv", "tsv", "html", "markdown"]),
+        type=click.Choice(["json", "csv", "tsv", "html", "markdown", "table"]),
         help="Output format.",
     )(fn)
     return fn

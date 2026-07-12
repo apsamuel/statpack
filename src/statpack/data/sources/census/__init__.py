@@ -1,9 +1,6 @@
 import os
 
-from sympy import im
 from pathlib import Path
-
-from scripts import seed_data
 
 CENSUS_API_KEY = os.getenv("CENSUS_API_KEY")
 CENSUS_API_BASE_URL = os.getenv("CENSUS_API_BASE_URL")
