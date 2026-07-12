@@ -1,13 +1,11 @@
-from calendar import c
 import re
-from unittest import result
+from typing import Any
 
 import requests
 from . import GOV_API_BASE_URL, GOV_API_KEY
 from ..models import Request, FailedRequest
 from .models import Data, USTerritory
 
-from urllib.parse import urlparse
 import pandas as pd
 
 import time
@@ -16,7 +14,7 @@ import time
 class Client:
     routes: dict[str, dict[str, str]] = {}
 
-    def __init__(self, api_base_url: str = GOV_API_BASE_URL, api_key: str = GOV_API_KEY):
+    def __init__(self, api_base_url: str | None = GOV_API_BASE_URL, api_key: str | None = GOV_API_KEY):
         self.api_base_url = api_base_url
         self.api_key = api_key
         self.headers = {"X-Api-Key": self.api_key, "User-Agent": "StatPack/1.0", "Accept": "application/json"}
@@ -28,12 +26,12 @@ class Client:
         self.limit_reset = None
         self.data = Data()
 
-    def _sanitize_column_prefix(self, prefix: str) -> str:
+    def _clean_column_prefix(self, prefix: str) -> str:
         prefix = prefix.lower()
         prefix = prefix.replace(" ", "_")
         return prefix
 
-    def _sanitize_column_name(self, name: str) -> str:
+    def _clean_column_name(self, name: str) -> str:
         name = name.lower()
         # name = name.replace(" ", "")
         name = name.replace(" ", "_")
@@ -45,9 +43,14 @@ class Client:
         name = re.sub(r"_+$", "", name)
         return name
 
-    def _get(
-        self, url_path: str = None, default_return=None, success_codes: list = None, debug: bool = False, **kwargs
-    ) -> dict | list:
+    def get(
+        self,
+        url_path: str | None = None,
+        default_return: Any = None,
+        success_codes: list | None = None,
+        debug: bool = False,
+        **kwargs,
+    ) -> Any:
         if url_path is None:
             raise ValueError("'url_path' must be provided")
 
@@ -59,14 +62,6 @@ class Client:
 
         # support url_path with or without leading slash
         leading_slash = "" if url_path.startswith("/") else "/"
-
-        # construct full URL
-        parsed_url = urlparse(f"{self.api_base_url}{leading_slash}{url_path}{separator}")
-        # extract query parameters from url_path as a dict
-        # potentially used for preemptive error handling, logging, or other purposes
-        # query = dict(
-        #     [part.split("=", 1) for part in parsed_url.query.split("&") if "=" in part]
-        # )
 
         url = f"{self.api_base_url}{leading_slash}{url_path}{separator}api_key={self.api_key}"
 
@@ -80,7 +75,9 @@ class Client:
 
         # return the response data as a native Python object (dict, list, etc.)
         if response.status_code in success_codes:
-            self.last = Request(url=url, params=None, request_headers=self.headers, response_headers=response.headers)
+            self.last = Request(
+                url=url, params=None, request_headers=self.headers, response_headers=dict(response.headers)
+            )
             return response.json()
         else:
             # log the failed request details for debugging and analysis and rate limit handling
@@ -135,9 +132,9 @@ class Client:
 
     def get_agencies_by_territory(
         self,
-        territory: str = None,
-        default_return=None,
-        success_codes: list = None,
+        territory: str | None = None,
+        default_return: Any = None,
+        success_codes: list | None = None,
         raw: bool = False,
         debug: bool = False,
     ) -> list[dict] | pd.DataFrame:
@@ -151,18 +148,22 @@ class Client:
             debug (bool, optional): If True, enables debug logging. Defaults to False.
 
         """
-        url_path = lambda territory: f"crime/fbi/cde/agency/byStateAbbr/{territory}"
+        url_path = lambda terr: f"crime/fbi/cde/agency/byStateAbbr/{terr}"
         results = []
         if territory:
-            territory = self.data.get_territory_by_abbr(territory) or self.data.get_territory_by_name(territory)
-            data = self._get(
-                url_path=url_path(territory.abbreviation),
+            territory_obj = self.data.get_territory_by_abbr(territory) or self.data.get_territory_by_name(territory)
+            if territory_obj is None:
+                return pd.DataFrame() if not raw else []
+            data = self.get(
+                url_path=url_path(territory_obj.abbreviation),
                 default_return=default_return,
                 success_codes=success_codes,
                 debug=debug,
             )
             (
-                print(f"found {len(data.keys())} agencies for territory {territory.name} ({territory.abbreviation})")
+                print(
+                    f"found {len(data.keys())} agencies for territory {territory_obj.name} ({territory_obj.abbreviation})"
+                )
                 if debug
                 else None
             )
@@ -176,18 +177,16 @@ class Client:
                 return results
             return pd.DataFrame(results)
 
-        for territory in self.data.us_territories:
-            data = self._get(
-                url_path=url_path(territory.abbreviation),
+        for terr in self.data.us_territories:
+            data = self.get(
+                url_path=url_path(terr.abbreviation),
                 default_return=default_return,
                 success_codes=success_codes,
                 debug=debug,
             )
             if data is not None:
                 (
-                    print(
-                        f"found {len(data.keys())} agencies for territory {territory.name} ({territory.abbreviation})"
-                    )
+                    print(f"found {len(data.keys())} agencies for territory {terr.name} ({terr.abbreviation})")
                     if debug
                     else None
                 )
@@ -195,30 +194,28 @@ class Client:
                     results.extend(data[location])
 
         return pd.DataFrame(results) if not raw else results
-        # if raw:
-        #     return results
-
-        # return pd.DataFrame(results)
 
     def get_arrest_counts_by_state(
         self,
-        territory: str = None,
+        territory: str | None = None,
         offense_code: str = "all",
-        start_date: str = None,
-        end_date: str = None,
-        default_return=None,
-        success_codes: list = None,
+        start_date: str | None = None,
+        end_date: str | None = None,
+        default_return: Any = None,
+        success_codes: list | None = None,
         raw: bool = False,
         debug: bool = False,
     ):
         url_path = (
-            lambda territory, offense_code, start_date, end_date: f"crime/fbi/cde/arrest/state/{territory}/{offense_code}?type=counts&from={start_date}&to={end_date}"
+            lambda terr, offense_code, start_date, end_date: f"crime/fbi/cde/arrest/state/{terr}/{offense_code}?type=counts&from={start_date}&to={end_date}"
         )
         results = []
         if territory:
-            territory = self.data.get_territory_by_abbr(territory) or self.data.get_territory_by_name(territory)
-            data = self._get(
-                url_path=url_path(territory.abbreviation, offense_code, start_date, end_date),
+            territory_obj = self.data.get_territory_by_abbr(territory) or self.data.get_territory_by_name(territory)
+            if territory_obj is None:
+                return pd.DataFrame() if not raw else []
+            data = self.get(
+                url_path=url_path(territory_obj.abbreviation, offense_code, start_date, end_date),
                 default_return=default_return,
                 success_codes=success_codes,
                 debug=debug,
@@ -229,16 +226,16 @@ class Client:
             # populations.population {'New York': {'01-2025': 20002427, '02-2025': 20002427, '03-2025': 20002427, '04-2025': 20002427, '05-2025': 20002427, '06-2025': 20002427}, 'United States': {'01-2025': 345206793, '02-2025': 345206793, '03-2025': 345206793, '04-2025': 345206793, '05-2025': 345206793, '06-2025': 345206793}}
             # populations.participated_population {'New York': {'01-2025': 14678214, '02-2025': 14702062, '03-2025': 14711092, '04-2025': 14720611, '05-2025': 14711358, '06-2025': 14728066}, 'United States': {'01-2025': 314995268, '02-2025': 313004395, '03-2025': 311656141, '04-2025': 310452899, '05-2025': 310254293, '06-2025': 309658518}}
 
-            territory_rates = data.get("rates", {}).get(territory.name + " Arrests", {})
+            territory_rates = data.get("rates", {}).get(territory_obj.name + " Arrests", {})
             us_rates = data.get("rates", {}).get("United States Arrests", {})
 
-            territory_totals = data.get("actuals", {}).get(territory.name + " Arrests", {})
+            territory_totals = data.get("actuals", {}).get(territory_obj.name + " Arrests", {})
 
-            territory_population = data.get("populations", {}).get("population", {}).get(territory.name, {})
+            territory_population = data.get("populations", {}).get("population", {}).get(territory_obj.name, {})
             us_population = data.get("populations", {}).get("population", {}).get("United States", {})
 
             territory_participated_population = (
-                data.get("populations", {}).get("participated_population", {}).get(territory.name, {})
+                data.get("populations", {}).get("participated_population", {}).get(territory_obj.name, {})
             )
             us_participated_population = (
                 data.get("populations", {}).get("participated_population", {}).get("United States", {})
@@ -258,7 +255,7 @@ class Client:
                 results.append(
                     {
                         "date": date,
-                        "territory": territory.name,
+                        "territory": territory_obj.name,
                         "us": "United States",
                         "territory_rate": territory_rates.get(date),
                         "us_rate": us_rates.get(date),
@@ -273,23 +270,25 @@ class Client:
 
     def get_arrest_totals_by_state(
         self,
-        territory: str = None,
+        territory: str | None = None,
         offense_code: str = "all",
-        start_date: str = None,
-        end_date: str = None,
-        default_return=None,
-        success_codes: list = None,
+        start_date: str | None = None,
+        end_date: str | None = None,
+        default_return: Any = None,
+        success_codes: list | None = None,
         raw: bool = False,
         debug: bool = False,
     ):
         url_path = (
-            lambda territory, offense_code, start_date, end_date: f"crime/fbi/cde/arrest/state/{territory}/{offense_code}?type=totals&from={start_date}&to={end_date}"
+            lambda terr, offense_code, start_date, end_date: f"crime/fbi/cde/arrest/state/{terr}/{offense_code}?type=totals&from={start_date}&to={end_date}"
         )
         results = []
         if territory:
-            territory = self.data.get_territory_by_abbr(territory) or self.data.get_territory_by_name(territory)
-            data = self._get(
-                url_path=url_path(territory.abbreviation, offense_code, start_date, end_date),
+            territory_obj = self.data.get_territory_by_abbr(territory) or self.data.get_territory_by_name(territory)
+            if territory_obj is None:
+                return pd.DataFrame() if not raw else []
+            data = self.get(
+                url_path=url_path(territory_obj.abbreviation, offense_code, start_date, end_date),
                 default_return=default_return,
                 success_codes=success_codes,
                 debug=debug,
@@ -298,15 +297,15 @@ class Client:
             if data:
                 data_prefixes = [k for k in data.keys() if k not in ("cde_properties")]
                 row = {
-                    "territory": territory.name,
+                    "territory": territory_obj.name,
                     "us": "United States",
                     "start_date": start_date,
                     "end_date": end_date,
                 }
                 for data_prefix in data_prefixes:
                     for data_title, total in data[data_prefix].items():
-                        column_prefix = self._sanitize_column_prefix(data_prefix)
-                        column_title = self._sanitize_column_name(data_title)
+                        column_prefix = self._clean_column_prefix(data_prefix)
+                        column_title = self._clean_column_name(data_title)
                         column_name = f"{column_prefix}.{column_title}"
                         row[column_name] = total
                 results.append(row)
@@ -315,37 +314,39 @@ class Client:
 
     def get_expanded_homicide_counts_by_state(
         self,
-        territory: str = None,
-        start_date: str = None,
-        end_date: str = None,
-        default_return=None,
-        success_codes: list = None,
+        territory: str | None = None,
+        start_date: str | None = None,
+        end_date: str | None = None,
+        default_return: Any = None,
+        success_codes: list | None = None,
         raw: bool = False,
         debug: bool = False,
     ):
         url_path = (
-            lambda territory, start_date, end_date: f"crime/fbi/cde/shr/state/{territory}?type=counts&from={start_date}&to={end_date}"
+            lambda terr, start_date, end_date: f"crime/fbi/cde/shr/state/{terr}?type=counts&from={start_date}&to={end_date}"
         )
         results = []
 
         if territory:
-            territory = self.data.get_territory_by_abbr(territory) or self.data.get_territory_name(territory)
-            data = self._get(
-                url_path=url_path(territory.abbreviation, start_date, end_date),
+            territory_obj = self.data.get_territory_by_abbr(territory) or self.data.get_territory_by_name(territory)
+            if territory_obj is None:
+                return pd.DataFrame() if not raw else []
+            data = self.get(
+                url_path=url_path(territory_obj.abbreviation, start_date, end_date),
                 default_return=default_return,
                 success_codes=success_codes,
                 debug=debug,
             )
 
             # these are labeled actuals, but they are per capita rates
-            per_capita_rates = data.get("actuals", {}).get(territory.name + " Offenses", {})
+            per_capita_rates = data.get("actuals", {}).get(territory_obj.name + " Offenses", {})
 
             dates = set(per_capita_rates.keys())
             for date in sorted(list(dates)):
                 results.append(
                     {
                         "date": date,
-                        "territory": territory.name,
+                        "territory": territory_obj.name,
                         "us": "United States",
                         "per_capita_rate": per_capita_rates.get(date),
                     }
@@ -355,66 +356,81 @@ class Client:
 
     def get_expanded_homicide_totals_by_state(
         self,
-        territory: str = None,
-        start_date: str = None,
-        end_date: str = None,
-        default_return=None,
-        success_codes: list = None,
+        territory: str | None = None,
+        start_date: str | None = None,
+        end_date: str | None = None,
+        default_return: Any = None,
+        success_codes: list | None = None,
         raw: bool = False,
         debug: bool = False,
     ):
         url_path = (
-            lambda territory, start_date, end_date: f"crime/fbi/cde/shr/state/{territory}?type=totals&from={start_date}&to={end_date}"
+            lambda terr, start_date, end_date: f"crime/fbi/cde/shr/state/{terr}?type=totals&from={start_date}&to={end_date}"
         )
         results = []
 
         if territory:
-            territory = self.data.get_territory_by_abbr(territory) or self.data.get_territory_by_name(territory)
-            data = self._get(
-                url_path=url_path(territory.abbreviation, start_date, end_date),
+            territory_obj = self.data.get_territory_by_abbr(territory) or self.data.get_territory_by_name(territory)
+            if territory_obj is None:
+                return pd.DataFrame() if not raw else []
+            data = self.get(
+                url_path=url_path(territory_obj.abbreviation, start_date, end_date),
                 default_return=default_return,
                 success_codes=success_codes,
                 debug=debug,
             )
             data_prefixes = [k for k in data.keys() if k not in ("cde_properties")]
-            row = {"territory": territory.name, "us": "United States", "start_date": start_date, "end_date": end_date}
+            row = {
+                "territory": territory_obj.name,
+                "us": "United States",
+                "start_date": start_date,
+                "end_date": end_date,
+            }
             # dict_keys(['victim', 'offense', 'offender',])
             for data_prefix in data_prefixes:
                 for data_category, totals in data[data_prefix].items():
                     # victim - dict_keys(['age', 'sex', 'race', 'ethnicity'])
-                    column_prefix = self._sanitize_column_prefix(data_prefix)
-                    column_category = self._sanitize_column_name(data_category)
+                    column_prefix = self._clean_column_prefix(data_prefix)
+                    column_category = self._clean_column_name(data_category)
                     column_name = f"{column_prefix}.{column_category}"
                     # dict_keys(['0-9', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80-89', 'Unknown', '90-Older'])
                     for key, value in data[data_prefix][data_category].items():
-                        column_target = self._sanitize_column_name(key)
+                        column_target = self._clean_column_name(key)
                         row[f"{column_name}.{column_target}"] = value
             results.append(row)
-        return pd.DataFrame(results) if not raw else data
+        return pd.DataFrame(results) if not raw else results
 
     def get_nibrs_counts_by_state(
         self,
-        territory: str = None,
-        offense_code: str = None,
-        start_date: str = None,
-        end_date: str = None,
-        default_return=None,
-        success_codes: list = None,
+        territory: str | None = None,
+        offense_code: str | None = None,
+        start_date: str | None = None,
+        end_date: str | None = None,
+        default_return: Any = None,
+        success_codes: list | None = None,
         raw: bool = False,
         debug: bool = False,
     ):
 
-        territory: USTerritory = self.data.get_territory_by_abbr(territory) or self.data.get_territory_by_name(
+        if territory is None:
+            return pd.DataFrame() if not raw else []
+        territory_obj: USTerritory | None = self.data.get_territory_by_abbr(
             territory
+        ) or self.data.get_territory_by_name(territory)
+        if territory_obj is None:
+            return pd.DataFrame() if not raw else []
+        (
+            print(f"fetching NIBRS counts for territory {territory_obj.name} ({territory_obj.abbreviation})")
+            if debug
+            else None
         )
-        print(f"fetching NIBRS counts for territory {territory.name} ({territory.abbreviation})") if debug else None
         url_path = (
-            lambda territory, offense_code, start_date, end_date: f"crime/fbi/cde/nibrs/state/{territory}/{offense_code}?type=counts&from={start_date}&to={end_date}"
+            lambda terr, offense_code, start_date, end_date: f"crime/fbi/cde/nibrs/state/{terr}/{offense_code}?type=counts&from={start_date}&to={end_date}"
         )
 
         results = []
-        data = self._get(
-            url_path=url_path(territory.abbreviation, offense_code, start_date, end_date),
+        data = self.get(
+            url_path=url_path(territory_obj.abbreviation, offense_code, start_date, end_date),
             default_return=default_return,
             success_codes=success_codes,
             debug=debug,
@@ -429,19 +445,19 @@ class Client:
             population_data = populations_data.get("population") or {}
             participated_population_data = populations_data.get("participated_population") or {}
 
-            territory_rates = rates_data.get(territory.name + " Offenses", {})
-            territory_clearance_rates = rates_data.get(territory.name + " Clearances", {})
+            territory_rates = rates_data.get(territory_obj.name + " Offenses", {})
+            territory_clearance_rates = rates_data.get(territory_obj.name + " Clearances", {})
 
             us_rates = rates_data.get("United States Offenses", {})
             us_clearance_rates = rates_data.get("United States Clearances", {})
 
-            territory_totals = actuals_data.get(territory.name + " Offenses", {})
-            territory_clearance_totals = actuals_data.get(territory.name + " Clearances", {})
+            territory_totals = actuals_data.get(territory_obj.name + " Offenses", {})
+            territory_clearance_totals = actuals_data.get(territory_obj.name + " Clearances", {})
 
-            territory_population = population_data.get(territory.name, {})
+            territory_population = population_data.get(territory_obj.name, {})
             us_population = population_data.get("United States", {})
 
-            territory_participated_population = participated_population_data.get(territory.name, {})
+            territory_participated_population = participated_population_data.get(territory_obj.name, {})
             us_participated_population = participated_population_data.get("United States", {})
 
             dates = (
@@ -461,7 +477,7 @@ class Client:
                 results.append(
                     {
                         "date": date,
-                        "territory": territory.name,
+                        "territory": territory_obj.name,
                         "us": "United States",
                         "territory_rate": territory_rates.get(date),
                         "territory_clearance_rate": territory_clearance_rates.get(date),
