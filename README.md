@@ -50,10 +50,10 @@ python main.py <source> <command> [command-args] [output-args]
 
 ## Common Output Args (all leaf commands)
 
-| Arg | Required | Default | Description |
-| --- | --- | --- | --- |
-| `--output` | No | `stdout` | Output destination (`stdout` or `file:/path/to/file`) |
-| `--format` | No | `csv` | Output format: `json`, `csv`, `tsv`, `html`, `markdown`, `parquet` |
+| Arg        | Required | Default  | Description                                                     |
+| ---------- | -------- | -------- | --------------------------------------------------------------- |
+| `--output` | No       | `stdout` | Output destination (`stdout` or `file:/path/to/file`)           |
+| `--format` | No       | `csv`    | Output format:`json`, `csv`, `tsv`, `html`, `markdown`, `table` |
 
 ## FBI Commands
 
@@ -81,13 +81,13 @@ Fetch arrests by state.
 python main.py fbi arrests-by-state --state NY --offense 11 --start-date 01-2020 --end-date 12-2024 --format json
 ```
 
-| Arg | Required | Type | Description |
-| --- | --- | --- | --- |
-| `--state` | No | string | State abbreviation or name (defaults to all states at CLI layer) |
-| `--offense` | No | int | FBI offense code (defaults to all offenses) |
-| `--start-date` | Yes | string | Start date in `MM-YYYY` format |
-| `--end-date` | Yes | string | End date in `MM-YYYY` format |
-| `--breakdown` | No | string | Demographic breakdown hint (example: `by_race`, `by_age`) |
+| Arg            | Required | Type   | Description                                                      |
+| -------------- | -------- | ------ | ---------------------------------------------------------------- |
+| `--state`      | No       | string | State abbreviation or name (defaults to all states at CLI layer) |
+| `--offense`    | No       | int    | FBI offense code (defaults to all offenses)                      |
+| `--start-date` | Yes      | string | Start date in`MM-YYYY` format                                    |
+| `--end-date`   | Yes      | string | End date in`MM-YYYY` format                                      |
+| `--breakdown`  | No       | string | Demographic breakdown hint (example:`by_race`, `by_age`)         |
 
 Behavior note:
 
@@ -102,12 +102,12 @@ Fetch arrests by agency ORI code.
 python main.py fbi arrests-by-origin --ori-code AL0430200 --offense 11 --start-date 01-2020 --end-date 12-2024 --format csv
 ```
 
-| Arg | Required | Type | Description |
-| --- | --- | --- | --- |
-| `--ori-code` | Yes | string | Agency ORI code |
-| `--offense` | Yes | int | FBI offense code |
-| `--start-date` | Yes | string | Start date in `MM-YYYY` format |
-| `--end-date` | Yes | string | End date in `MM-YYYY` format |
+| Arg            | Required | Type   | Description                   |
+| -------------- | -------- | ------ | ----------------------------- |
+| `--ori-code`   | Yes      | string | Agency ORI code               |
+| `--offense`    | Yes      | int    | FBI offense code              |
+| `--start-date` | Yes      | string | Start date in`MM-YYYY` format |
+| `--end-date`   | Yes      | string | End date in`MM-YYYY` format   |
 
 ### `nibrs-by-state`
 
@@ -117,12 +117,12 @@ Fetch NIBRS data by state and offense code.
 python main.py fbi nibrs-by-state --nibrs-code HOM --start-date 01-2020 --end-date 12-2024 --format csv
 ```
 
-| Arg | Required | Type | Description |
-| --- | --- | --- | --- |
-| `--state` | No | string | State abbreviation or name (default: all states) |
-| `--nibrs-code` | Yes | string | NIBRS offense code (`HOM`, `ASS`, `ROB`, etc.) |
-| `--start-date` | Yes | string | Start date in `MM-YYYY` format |
-| `--end-date` | Yes | string | End date in `MM-YYYY` format |
+| Arg            | Required | Type   | Description                                      |
+| -------------- | -------- | ------ | ------------------------------------------------ |
+| `--state`      | No       | string | State abbreviation or name (default: all states) |
+| `--nibrs-code` | Yes      | string | NIBRS offense code (`HOM`, `ASS`, `ROB`, etc.)   |
+| `--start-date` | Yes      | string | Start date in`MM-YYYY` format                    |
+| `--end-date`   | Yes      | string | End date in`MM-YYYY` format                      |
 
 ### `summarized`
 
@@ -132,12 +132,12 @@ Fetch summarized offense trend data by state.
 python main.py fbi summarized --state NY --offense HOM --start-date 01-2020 --end-date 12-2024 --format csv
 ```
 
-| Arg | Required | Type | Description |
-| --- | --- | --- | --- |
-| `--state` | No | string | State abbreviation (default: all states) |
-| `--offense` | No | enum | One of: `V`, `ASS`, `LAR`, `MVT`, `HOM`, `RPE`, `ROB`, `ARS`, `P` |
-| `--start-date` | Yes | string | Start date in `MM-YYYY` format |
-| `--end-date` | Yes | string | End date in `MM-YYYY` format |
+| Arg            | Required | Type   | Description                                                      |
+| -------------- | -------- | ------ | ---------------------------------------------------------------- |
+| `--state`      | No       | string | State abbreviation (default: all states)                         |
+| `--offense`    | No       | enum   | One of:`V`, `ASS`, `LAR`, `MVT`, `HOM`, `RPE`, `ROB`, `ARS`, `P` |
+| `--start-date` | Yes      | string | Start date in`MM-YYYY` format                                    |
+| `--end-date`   | Yes      | string | End date in`MM-YYYY` format                                      |
 
 ### `expanded-homicide`
 
@@ -147,11 +147,11 @@ Fetch expanded homicide counts by state.
 python main.py fbi expanded-homicide --state NY --start-date 01-2020 --end-date 12-2024 --format csv
 ```
 
-| Arg | Required | Type | Description |
-| --- | --- | --- | --- |
-| `--state` | No | string | State abbreviation (default: all states) |
-| `--start-date` | Yes | string | Start date in `MM-YYYY` format |
-| `--end-date` | Yes | string | End date in `MM-YYYY` format |
+| Arg            | Required | Type   | Description                              |
+| -------------- | -------- | ------ | ---------------------------------------- |
+| `--state`      | No       | string | State abbreviation (default: all states) |
+| `--start-date` | Yes      | string | Start date in`MM-YYYY` format            |
+| `--end-date`   | Yes      | string | End date in`MM-YYYY` format              |
 
 ## Census Commands
 
@@ -169,10 +169,10 @@ List available ACS variables for a dataset.
 python main.py census acs-variables --year 2024 --dataset acs/acs1 --format markdown
 ```
 
-| Arg | Required | Type | Default | Description |
-| --- | --- | --- | --- | --- |
-| `--year` | No | int | `2024` | Survey year |
-| `--dataset` | No | string | `acs/acs1` | Census dataset identifier |
+| Arg         | Required | Type   | Default    | Description               |
+| ----------- | -------- | ------ | ---------- | ------------------------- |
+| `--year`    | No       | int    | `2024`     | Survey year               |
+| `--dataset` | No       | string | `acs/acs1` | Census dataset identifier |
 
 ### `acs-detailed`
 
@@ -182,11 +182,11 @@ Fetch ACS data at national level.
 python main.py census acs-detailed --variables B01001_001E,B01001_002E --year 2024 --dataset acs/acs1 --format json
 ```
 
-| Arg | Required | Type | Default | Description |
-| --- | --- | --- | --- | --- |
-| `--variables` | Yes | string | - | Comma-separated variable codes |
-| `--year` | No | int | `2024` | Survey year |
-| `--dataset` | No | string | `acs/acs1` | Census dataset identifier |
+| Arg           | Required | Type   | Default    | Description                    |
+| ------------- | -------- | ------ | ---------- | ------------------------------ |
+| `--variables` | Yes      | string | -          | Comma-separated variable codes |
+| `--year`      | No       | int    | `2024`     | Survey year                    |
+| `--dataset`   | No       | string | `acs/acs1` | Census dataset identifier      |
 
 ### `acs-by-state`
 
@@ -196,12 +196,12 @@ Fetch ACS data by state.
 python main.py census acs-by-state --variables B01001_001E --states NY,CA,TX --year 2024 --format json
 ```
 
-| Arg | Required | Type | Default | Description |
-| --- | --- | --- | --- | --- |
-| `--variables` | Yes | string | - | Comma-separated variable codes |
-| `--states` | Yes | string | - | Comma-separated state abbreviations |
-| `--year` | No | int | `2024` | Survey year |
-| `--dataset` | No | string | `acs/acs1` | Census dataset identifier |
+| Arg           | Required | Type   | Default    | Description                         |
+| ------------- | -------- | ------ | ---------- | ----------------------------------- |
+| `--variables` | Yes      | string | -          | Comma-separated variable codes      |
+| `--states`    | Yes      | string | -          | Comma-separated state abbreviations |
+| `--year`      | No       | int    | `2024`     | Survey year                         |
+| `--dataset`   | No       | string | `acs/acs1` | Census dataset identifier           |
 
 ### `acs-by-state-county`
 
@@ -211,12 +211,12 @@ Fetch ACS data by state and county.
 python main.py census acs-by-state-county --variables B01001_001E --states NY,CA --year 2024 --format csv
 ```
 
-| Arg | Required | Type | Default | Description |
-| --- | --- | --- | --- | --- |
-| `--variables` | Yes | string | - | Comma-separated variable codes |
-| `--states` | Yes | string | - | Comma-separated state abbreviations |
-| `--year` | No | int | `2024` | Survey year |
-| `--dataset` | No | string | `acs/acs1` | Census dataset identifier |
+| Arg           | Required | Type   | Default    | Description                         |
+| ------------- | -------- | ------ | ---------- | ----------------------------------- |
+| `--variables` | Yes      | string | -          | Comma-separated variable codes      |
+| `--states`    | Yes      | string | -          | Comma-separated state abbreviations |
+| `--year`      | No       | int    | `2024`     | Survey year                         |
+| `--dataset`   | No       | string | `acs/acs1` | Census dataset identifier           |
 
 ## Output Examples
 
@@ -224,6 +224,12 @@ Write to stdout:
 
 ```bash
 python main.py fbi list-reporting-agencies --output stdout --format markdown
+```
+
+Kubernetes-style aligned table output:
+
+```bash
+python main.py fbi list-reporting-agencies --output stdout --format table
 ```
 
 Write to file:
