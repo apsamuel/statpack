@@ -18,7 +18,6 @@ from unittest.mock import patch
 import pandas as pd
 import pytest
 
-
 # ---------------------------------------------------------------------------
 # Helpers shared across tests
 # ---------------------------------------------------------------------------
@@ -63,9 +62,7 @@ class TestOutputFormatter:
 
     def test_format_markdown_contains_pipe(self, mocker):
         mocker.patch.object(
-            pd.DataFrame,
-            "to_markdown",
-            return_value="| state | value |\n|-------|-------|\n| NY    | 42    |",
+            pd.DataFrame, "to_markdown", return_value="| state | value |\n|-------|-------|\n| NY    | 42    |"
         )
         out = self.m.OutputFormatter.format_dataframe(_simple_df(), "markdown")
         assert "|" in out
@@ -130,71 +127,53 @@ class TestFBICommandsDispatch:
         return argparse.Namespace(**defaults)
 
     def test_agencies_calls_get_reporting_agencies(self, mocker):
-        mock_fn = mocker.patch.object(
-            self.m, "get_reporting_agencies", return_value=_simple_df()
-        )
+        mock_fn = mocker.patch.object(self.m, "get_reporting_agencies", return_value=_simple_df())
         result = self.m.FBICommands.agencies(self._args())
         mock_fn.assert_called_once()
         assert isinstance(result, pd.DataFrame)
 
     def test_arrests_by_state_totals_path(self, mocker):
-        mock_fn = mocker.patch.object(
-            self.m, "get_arrest_totals_by_state", return_value=_simple_df()
-        )
+        mock_fn = mocker.patch.object(self.m, "get_arrest_totals_by_state", return_value=_simple_df())
         self.m.FBICommands.arrests_by_state(self._args(state="NY", breakdown=None))
         _, kwargs = mock_fn.call_args
         assert kwargs["state_abbr"] == "NY"
 
     def test_arrests_by_state_breakdown_path(self, mocker):
-        mock_fn = mocker.patch.object(
-            self.m, "get_arrest_counts_by_state", return_value=_simple_df()
-        )
+        mock_fn = mocker.patch.object(self.m, "get_arrest_counts_by_state", return_value=_simple_df())
         self.m.FBICommands.arrests_by_state(self._args(state="CA", breakdown="by_race"))
         _, kwargs = mock_fn.call_args
         assert kwargs["state_abbr"] == "CA"
 
     def test_arrests_by_origin_totals_path(self, mocker):
-        mock_fn = mocker.patch.object(
-            self.m, "get_arrest_totals_by_origin", return_value=_simple_df()
-        )
+        mock_fn = mocker.patch.object(self.m, "get_arrest_totals_by_origin", return_value=_simple_df())
         self.m.FBICommands.arrests_by_origin(self._args(breakdown=None))
         _, kwargs = mock_fn.call_args
         assert kwargs["origin_code"] == "AL0430200"
 
     def test_arrests_by_origin_breakdown_path(self, mocker):
-        mock_fn = mocker.patch.object(
-            self.m, "get_arrest_counts_by_origin", return_value=_simple_df()
-        )
+        mock_fn = mocker.patch.object(self.m, "get_arrest_counts_by_origin", return_value=_simple_df())
         self.m.FBICommands.arrests_by_origin(self._args(breakdown="by_age"))
         _, kwargs = mock_fn.call_args
         assert kwargs["origin_code"] == "AL0430200"
 
     def test_nibrs_by_state_returns_dataframe(self, mocker):
-        mocker.patch.object(
-            self.m, "get_nibrs_totals_by_state", return_value=_simple_df()
-        )
+        mocker.patch.object(self.m, "get_nibrs_totals_by_state", return_value=_simple_df())
         result = self.m.FBICommands.nibrs_by_state(self._args())
         assert isinstance(result, pd.DataFrame)
 
     def test_nibrs_by_state_converts_list_to_dataframe(self, mocker):
-        mocker.patch.object(
-            self.m, "get_nibrs_totals_by_state", return_value=[{"a": 1}]
-        )
+        mocker.patch.object(self.m, "get_nibrs_totals_by_state", return_value=[{"a": 1}])
         result = self.m.FBICommands.nibrs_by_state(self._args())
         assert isinstance(result, pd.DataFrame)
 
     def test_expanded_homicide_passes_state(self, mocker):
-        mock_fn = mocker.patch.object(
-            self.m, "get_expanded_homicide_counts_by_state", return_value=_simple_df()
-        )
+        mock_fn = mocker.patch.object(self.m, "get_expanded_homicide_counts_by_state", return_value=_simple_df())
         self.m.FBICommands.expanded_homicide_counts_by_state(self._args(state="TX"))
         _, kwargs = mock_fn.call_args
         assert kwargs["state_abbr"] == "TX"
 
     def test_expanded_homicide_none_state_passes_none(self, mocker):
-        mock_fn = mocker.patch.object(
-            self.m, "get_expanded_homicide_counts_by_state", return_value=_simple_df()
-        )
+        mock_fn = mocker.patch.object(self.m, "get_expanded_homicide_counts_by_state", return_value=_simple_df())
         self.m.FBICommands.expanded_homicide_counts_by_state(self._args(state=None))
         _, kwargs = mock_fn.call_args
         assert kwargs["state_abbr"] is None
@@ -219,24 +198,16 @@ class TestCLIIntegration:
     def test_fbi_agencies_stdout_csv(self, cli_runner, mocker):
         import statpack.data.sources.fbi as fbi_pkg
 
-        mocker.patch.object(
-            fbi_pkg, "get_reporting_agencies", return_value=_simple_df()
-        )
-        stdout, _, code = cli_runner(
-            ["fbi", "get-reporting-agencies", "--output", "stdout", "--format", "csv"]
-        )
+        mocker.patch.object(fbi_pkg, "get_reporting_agencies", return_value=_simple_df())
+        stdout, _, code = cli_runner(["fbi", "get-reporting-agencies", "--output", "stdout", "--format", "csv"])
         assert code == 0
         assert "state" in stdout
 
     def test_fbi_agencies_stdout_json(self, cli_runner, mocker):
         import statpack.data.sources.fbi as fbi_pkg
 
-        mocker.patch.object(
-            fbi_pkg, "get_reporting_agencies", return_value=_simple_df()
-        )
-        stdout, _, code = cli_runner(
-            ["fbi", "get-reporting-agencies", "--output", "stdout", "--format", "json"]
-        )
+        mocker.patch.object(fbi_pkg, "get_reporting_agencies", return_value=_simple_df())
+        stdout, _, code = cli_runner(["fbi", "get-reporting-agencies", "--output", "stdout", "--format", "json"])
         assert code == 0
         parsed = json.loads(stdout)
         assert parsed == [{"state": "NY", "value": 42}]
@@ -244,20 +215,9 @@ class TestCLIIntegration:
     def test_fbi_agencies_write_to_file(self, cli_runner, mocker, tmp_path):
         import statpack.data.sources.fbi as fbi_pkg
 
-        mocker.patch.object(
-            fbi_pkg, "get_reporting_agencies", return_value=_simple_df()
-        )
+        mocker.patch.object(fbi_pkg, "get_reporting_agencies", return_value=_simple_df())
         dest = tmp_path / "agencies.csv"
-        _, stderr, code = cli_runner(
-            [
-                "fbi",
-                "get-reporting-agencies",
-                "--output",
-                f"file:{dest}",
-                "--format",
-                "csv",
-            ]
-        )
+        _, stderr, code = cli_runner(["fbi", "get-reporting-agencies", "--output", f"file:{dest}", "--format", "csv"])
         assert code == 0
         assert dest.exists()
         assert "NY" in dest.read_text()
@@ -295,13 +255,120 @@ class TestCLIIntegration:
     def test_exception_in_command_exits_with_code_1(self, cli_runner, mocker):
         import statpack.data.sources.fbi as fbi_pkg
 
-        mocker.patch.object(
-            fbi_pkg,
-            "get_reporting_agencies",
-            side_effect=RuntimeError("simulated failure"),
-        )
-        _, stderr, code = cli_runner(
-            ["fbi", "get-reporting-agencies", "--output", "stdout"]
-        )
+        mocker.patch.object(fbi_pkg, "get_reporting_agencies", side_effect=RuntimeError("simulated failure"))
+        _, stderr, code = cli_runner(["fbi", "get-reporting-agencies", "--output", "stdout"])
         assert code == 1
         assert "simulated failure" in stderr
+
+
+# ---------------------------------------------------------------------------
+# --offense-name resolution (namespace-aware)
+# ---------------------------------------------------------------------------
+
+
+class TestOffenseNameResolution:
+    """--offense-name resolves against the correct code namespace per command."""
+
+    def _patch_client_method(self, mocker, method_name):
+        """Patch a Client method and return the MagicMock for assertions."""
+        import statpack.data.sources.fbi.cli as fbi_cli
+
+        mock_method = mocker.MagicMock(return_value=_simple_df())
+        mocker.patch.object(fbi_cli.Client, method_name, mock_method)
+        return mock_method
+
+    def test_arrest_offense_name_resolves_to_fbi_code(self, cli_runner, mocker):
+        mock_method = self._patch_client_method(mocker, "get_arrest_counts_by_state")
+        _, _, code = cli_runner(
+            [
+                "fbi",
+                "get-arrest-counts-by-state",
+                "--territory",
+                "NY",
+                "--offense-name",
+                "Aggravated Assault",
+                "--start-date",
+                "01-2025",
+                "--end-date",
+                "02-2025",
+            ]
+        )
+        assert code == 0
+        assert mock_method.call_args.kwargs["offense_code"] == "50"
+
+    def test_nibrs_offense_name_resolves_to_nibrs_code(self, cli_runner, mocker):
+        mock_method = self._patch_client_method(mocker, "get_nibrs_counts_by_state")
+        _, _, code = cli_runner(
+            [
+                "fbi",
+                "get-nibrs-counts-by-state",
+                "--territory",
+                "NY",
+                "--offense-name",
+                "Aggravated Assault",
+                "--start-date",
+                "01-2025",
+                "--end-date",
+                "02-2025",
+            ]
+        )
+        assert code == 0
+        # NIBRS namespace must NOT reuse the FBI arrest code (50).
+        assert mock_method.call_args.kwargs["offense_code"] == "13A"
+
+    def test_offense_code_and_name_are_mutually_exclusive(self, cli_runner, mocker):
+        self._patch_client_method(mocker, "get_arrest_counts_by_state")
+        _, stderr, code = cli_runner(
+            [
+                "fbi",
+                "get-arrest-counts-by-state",
+                "--territory",
+                "NY",
+                "--offense-code",
+                "50",
+                "--offense-name",
+                "Aggravated Assault",
+                "--start-date",
+                "01-2025",
+                "--end-date",
+                "02-2025",
+            ]
+        )
+        assert code != 0
+        assert "mutually exclusive" in stderr
+
+    def test_unknown_offense_name_errors(self, cli_runner, mocker):
+        self._patch_client_method(mocker, "get_arrest_counts_by_state")
+        _, stderr, code = cli_runner(
+            [
+                "fbi",
+                "get-arrest-counts-by-state",
+                "--territory",
+                "NY",
+                "--offense-name",
+                "Not A Real Offense",
+                "--start-date",
+                "01-2025",
+                "--end-date",
+                "02-2025",
+            ]
+        )
+        assert code != 0
+        assert "No FBI offense matches" in stderr
+
+    def test_arrest_defaults_to_all_when_no_offense_given(self, cli_runner, mocker):
+        mock_method = self._patch_client_method(mocker, "get_arrest_counts_by_state")
+        _, _, code = cli_runner(
+            [
+                "fbi",
+                "get-arrest-counts-by-state",
+                "--territory",
+                "NY",
+                "--start-date",
+                "01-2025",
+                "--end-date",
+                "02-2025",
+            ]
+        )
+        assert code == 0
+        assert mock_method.call_args.kwargs["offense_code"] == "all"

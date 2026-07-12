@@ -1,4 +1,5 @@
 # from os import nice
+from typing import NotRequired, TypedDict
 from . import seed, load_seed
 from pydantic import BaseModel, Field
 import time
@@ -7,53 +8,53 @@ import re
 
 _SUPPORTED_FBI_CODES: frozenset[int] = frozenset(
     {
-        "310",
-        "110",
-        "50",
-        "60",
-        "101",
-        "330",
-        "290",
-        "260",
-        "150",
-        "158",
-        "157",
-        "160",
-        "159",
-        "156",
-        "153",
-        "152",
-        "155",
-        "154",
-        "151",
-        "280",
-        "200",
-        "180",
-        "190",
-        "173",
-        "171",
-        "172",
-        "170",
-        "102",
-        "70",
-        "270",
-        "12",
-        "90",
-        "11",
-        "250",
-        "140",
-        "142",
-        "141",
-        "143",
-        "23",
-        "20",
-        "30",
-        "240",
-        "55",
-        "210",
-        "300",
-        "220",
-        "230",
+        310,
+        110,
+        50,
+        60,
+        101,
+        330,
+        290,
+        260,
+        150,
+        158,
+        157,
+        160,
+        159,
+        156,
+        153,
+        152,
+        155,
+        154,
+        151,
+        280,
+        200,
+        180,
+        190,
+        173,
+        171,
+        172,
+        170,
+        102,
+        70,
+        270,
+        12,
+        90,
+        11,
+        250,
+        140,
+        142,
+        141,
+        143,
+        23,
+        20,
+        30,
+        240,
+        55,
+        210,
+        300,
+        220,
+        230,
     }
 )
 # Codes present in the FBI Crime Data Explorer NIBRS drop-down (supported-offense-codes.html)
@@ -177,7 +178,14 @@ class State(BaseModel):
     region: str = Field(..., description="State Region")
 
 
-fbi_offense_mapping: dict[int, str] = {
+class _OffenseInfo(TypedDict):
+    name: str
+    category: str
+    short_name: str
+    supported: NotRequired[bool]
+
+
+fbi_offense_mapping: dict[int, _OffenseInfo] = {
     11: {"name": "Murder and Nonnegligent Manslaughter", "category": "Violent Crime", "short_name": "Murder"},
     12: {"name": "Manslaughter by Negligence", "category": "Violent Crime", "short_name": "Manslaughter"},
     20: {"name": "Rape (Legacy Definition)", "category": "Violent Crime", "short_name": "Rape (Legacy)"},
@@ -275,7 +283,7 @@ fbi_offense_mapping: dict[int, str] = {
     },
 }
 
-nibrs_offense_mapping_v1: dict[str, dict[str, str | bool]] = {
+nibrs_offense_mapping_v1: dict[str, _OffenseInfo] = {
     "ASS": {"name": "Aggravated Assault", "category": "Violent Crime", "short_name": "Aggravated Assault"},
     "13A": {"name": "Aggravated Assault", "category": "Violent Crime", "short_name": "Aggravated Assault"},
     "HOM": {"name": "Homicide", "category": "Violent Crime", "short_name": "Homicide"},
@@ -438,7 +446,7 @@ nibrs_offense_mapping_v1: dict[str, dict[str, str | bool]] = {
     "26E": {"name": "Wire Fraud", "category": "White Collar Crime", "short_name": "Wire Fraud"},
 }
 
-nibrs_offense_mapping_v2: dict[str, dict[str, str | bool]] = {
+nibrs_offense_mapping_v2: dict[str, _OffenseInfo] = {
     "09A": {
         "name": "Murder and Nonnegligent Manslaughter",
         "category": "Crimes Against Persons",
@@ -753,14 +761,48 @@ class Data(BaseModel):
         return [offense for offense in self.fbi_codes if regex.search(getattr(offense, key, ""))]
 
 
-def get_offense_from_code(code: int) -> str:
+def get_offense_from_code(code: int) -> str | None:
     return fbi_offense_mapping.get(code, {}).get("name", None)
 
 
-def get_code_from_offense(name: str) -> int:
+def get_code_from_offense(name: str) -> int | None:
     for code, info in fbi_offense_mapping.items():
         if info.get("name", "").lower() == name.lower():
             return code
+    return None
+
+
+def get_fbi_code_from_offense_name(name: str) -> str | None:
+    """Resolve an FBI (numeric namespace) offense code from an offense name.
+
+    Matches the full ``name`` first, then ``short_name``, case-insensitively.
+    Returns the code as a string, or ``None`` if no match is found. This only
+    searches ``fbi_offense_mapping`` and never the NIBRS namespace.
+    """
+    target = name.strip().lower()
+    for code, info in fbi_offense_mapping.items():
+        if info.get("name", "").lower() == target:
+            return str(code)
+    for code, info in fbi_offense_mapping.items():
+        if info.get("short_name", "").lower() == target:
+            return str(code)
+    return None
+
+
+def get_nibrs_code_from_offense_name(name: str) -> str | None:
+    """Resolve a NIBRS (alphanumeric namespace) offense code from an offense name.
+
+    Matches the full ``name`` first, then ``short_name``, case-insensitively.
+    Returns the code as a string, or ``None`` if no match is found. This only
+    searches ``nibrs_offense_mapping_v2`` and never the FBI arrest namespace.
+    """
+    target = name.strip().lower()
+    for code, info in nibrs_offense_mapping_v2.items():
+        if info.get("name", "").lower() == target:
+            return str(code)
+    for code, info in nibrs_offense_mapping_v2.items():
+        if info.get("short_name", "").lower() == target:
+            return str(code)
     return None
 
 

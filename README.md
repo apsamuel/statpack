@@ -81,13 +81,14 @@ Fetch arrests by state.
 python main.py fbi arrests-by-state --state NY --offense 11 --start-date 01-2020 --end-date 12-2024 --format json
 ```
 
-| Arg            | Required | Type   | Description                                                      |
-| -------------- | -------- | ------ | ---------------------------------------------------------------- |
-| `--state`      | No       | string | State abbreviation or name (defaults to all states at CLI layer) |
-| `--offense`    | No       | int    | FBI offense code (defaults to all offenses)                      |
-| `--start-date` | Yes      | string | Start date in`MM-YYYY` format                                    |
-| `--end-date`   | Yes      | string | End date in`MM-YYYY` format                                      |
-| `--breakdown`  | No       | string | Demographic breakdown hint (example:`by_race`, `by_age`)         |
+| Arg              | Required | Type   | Description                                                                                      |
+| ---------------- | -------- | ------ | ------------------------------------------------------------------------------------------------ |
+| `--state`        | No       | string | State abbreviation or name (defaults to all states at CLI layer)                                 |
+| `--offense`      | No       | int    | FBI offense code (defaults to all offenses)                                                      |
+| `--offense-name` | No       | string | FBI offense name or short name resolved to a code (mutually exclusive with the offense code arg) |
+| `--start-date`   | Yes      | string | Start date in`MM-YYYY` format                                                                    |
+| `--end-date`     | Yes      | string | End date in`MM-YYYY` format                                                                      |
+| `--breakdown`    | No       | string | Demographic breakdown hint (example:`by_race`, `by_age`)                                         |
 
 Behavior note:
 
@@ -117,12 +118,13 @@ Fetch NIBRS data by state and offense code.
 python main.py fbi nibrs-by-state --nibrs-code HOM --start-date 01-2020 --end-date 12-2024 --format csv
 ```
 
-| Arg            | Required | Type   | Description                                      |
-| -------------- | -------- | ------ | ------------------------------------------------ |
-| `--state`      | No       | string | State abbreviation or name (default: all states) |
-| `--nibrs-code` | Yes      | string | NIBRS offense code (`HOM`, `ASS`, `ROB`, etc.)   |
-| `--start-date` | Yes      | string | Start date in`MM-YYYY` format                    |
-| `--end-date`   | Yes      | string | End date in`MM-YYYY` format                      |
+| Arg              | Required | Type   | Description                                                                                      |
+| ---------------- | -------- | ------ | ------------------------------------------------------------------------------------------------ |
+| `--state`        | No       | string | State abbreviation or name (default: all states)                                                 |
+| `--nibrs-code`   | Yes      | string | NIBRS offense code (`HOM`, `ASS`, `ROB`, etc.)                                                   |
+| `--offense-name` | No       | string | NIBRS offense name or short name resolved to a code (mutually exclusive with the NIBRS code arg) |
+| `--start-date`   | Yes      | string | Start date in`MM-YYYY` format                                                                    |
+| `--end-date`     | Yes      | string | End date in`MM-YYYY` format                                                                      |
 
 ### `summarized`
 

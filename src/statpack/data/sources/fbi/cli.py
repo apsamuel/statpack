@@ -5,6 +5,44 @@ import click
 import pandas as pd
 
 from .client import Client
+from .models import get_fbi_code_from_offense_name, get_nibrs_code_from_offense_name
+
+# ---------------------------------------------------------------------------
+# Offense name/code resolution
+# ---------------------------------------------------------------------------
+
+# Namespace-aware resolvers. FBI arrest codes (numeric) and NIBRS codes
+# (alphanumeric) are DIFFERENT code systems, so each command must resolve names
+# against the correct namespace to avoid mapping a name to the wrong code.
+_OFFENSE_RESOLVERS = {"fbi": get_fbi_code_from_offense_name, "nibrs": get_nibrs_code_from_offense_name}
+
+
+def _resolve_offense(offense_code, offense_name, namespace: str, required: bool = False):
+    """Resolve the effective offense code from --offense-code / --offense-name.
+
+    ``namespace`` selects the code system ("fbi" or "nibrs"). ``--offense-code``
+    and ``--offense-name`` are mutually exclusive. When ``--offense-name`` is
+    given it is resolved against the namespace-specific lookup table only.
+    """
+    if offense_name:
+        if offense_code:
+            raise click.UsageError("--offense-code and --offense-name are mutually exclusive; provide only one.")
+        resolved = _OFFENSE_RESOLVERS[namespace](offense_name)
+        if resolved is None:
+            raise click.BadParameter(
+                f"No {namespace.upper()} offense matches name {offense_name!r}. "
+                "Names must match an offense name or short name exactly (case-insensitive). "
+                "Use --offense-code instead, or see the offense code data files under "
+                "src/statpack/data/sources/fbi/data/.",
+                param_hint="--offense-name",
+            )
+        return resolved
+
+    if required and not offense_code:
+        raise click.UsageError("Provide --offense-code or --offense-name.")
+
+    return offense_code
+
 
 # ---------------------------------------------------------------------------
 # Output helpers
@@ -137,17 +175,23 @@ def get_reporting_agencies(ctx, territory, output_format, output_dest, raw, debu
 
 @fbi.command("get-arrest-counts-by-state")
 @click.option("--territory", required=True, metavar="STATE", help="State abbreviation or name.")
+@click.option("--offense-code", "offense_code", default=None, metavar="CODE", help="FBI offense code (default: all).")
 @click.option(
-    "--offense-code", "offense_code", default="all", show_default=True, metavar="CODE", help="FBI offense code."
+    "--offense-name",
+    "offense_name",
+    default=None,
+    metavar="NAME",
+    help="FBI offense name or short name to resolve to a code (mutually exclusive with --offense-code).",
 )
 @click.option("--start-date", "start_date", required=True, metavar="MM-YYYY", help="Start date.")
 @click.option("--end-date", "end_date", required=True, metavar="MM-YYYY", help="End date.")
 @_output_options
 @click.pass_context
 def get_arrest_counts_by_state(
-    ctx, territory, offense_code, start_date, end_date, output_format, output_dest, raw, debug
+    ctx, territory, offense_code, offense_name, start_date, end_date, output_format, output_dest, raw, debug
 ):
     """Fetch arrest counts (demographic breakdown) by state."""
+    offense_code = _resolve_offense(offense_code, offense_name, namespace="fbi") or "all"
     client: Client = ctx.obj["client"]
     result = client.get_arrest_counts_by_state(
         territory=territory, offense_code=offense_code, start_date=start_date, end_date=end_date, raw=raw, debug=debug
@@ -157,17 +201,23 @@ def get_arrest_counts_by_state(
 
 @fbi.command("get-arrest-totals-by-state")
 @click.option("--territory", required=True, metavar="STATE", help="State abbreviation or name.")
+@click.option("--offense-code", "offense_code", default=None, metavar="CODE", help="FBI offense code (default: all).")
 @click.option(
-    "--offense-code", "offense_code", default="all", show_default=True, metavar="CODE", help="FBI offense code."
+    "--offense-name",
+    "offense_name",
+    default=None,
+    metavar="NAME",
+    help="FBI offense name or short name to resolve to a code (mutually exclusive with --offense-code).",
 )
 @click.option("--start-date", "start_date", required=True, metavar="MM-YYYY", help="Start date.")
 @click.option("--end-date", "end_date", required=True, metavar="MM-YYYY", help="End date.")
 @_output_options
 @click.pass_context
 def get_arrest_totals_by_state(
-    ctx, territory, offense_code, start_date, end_date, output_format, output_dest, raw, debug
+    ctx, territory, offense_code, offense_name, start_date, end_date, output_format, output_dest, raw, debug
 ):
     """Fetch arrest totals by state."""
+    offense_code = _resolve_offense(offense_code, offense_name, namespace="fbi") or "all"
     client: Client = ctx.obj["client"]
     result = client.get_arrest_totals_by_state(
         territory=territory, offense_code=offense_code, start_date=start_date, end_date=end_date, raw=raw, debug=debug
@@ -207,15 +257,23 @@ def get_expanded_homicide_totals_by_state(ctx, territory, start_date, end_date, 
 
 @fbi.command("get-nibrs-counts-by-state")
 @click.option("--territory", required=True, metavar="STATE", help="State abbreviation or name.")
-@click.option("--offense-code", "offense_code", required=True, metavar="CODE", help="NIBRS offense code.")
+@click.option("--offense-code", "offense_code", default=None, metavar="CODE", help="NIBRS offense code.")
+@click.option(
+    "--offense-name",
+    "offense_name",
+    default=None,
+    metavar="NAME",
+    help="NIBRS offense name or short name to resolve to a code (mutually exclusive with --offense-code).",
+)
 @click.option("--start-date", "start_date", required=True, metavar="MM-YYYY", help="Start date.")
 @click.option("--end-date", "end_date", required=True, metavar="MM-YYYY", help="End date.")
 @_output_options
 @click.pass_context
 def get_nibrs_counts_by_state(
-    ctx, territory, offense_code, start_date, end_date, output_format, output_dest, raw, debug
+    ctx, territory, offense_code, offense_name, start_date, end_date, output_format, output_dest, raw, debug
 ):
     """Fetch NIBRS incident-based offense counts by state."""
+    offense_code = _resolve_offense(offense_code, offense_name, namespace="nibrs", required=True)
     client: Client = ctx.obj["client"]
     result = client.get_nibrs_counts_by_state(
         territory=territory, offense_code=offense_code, start_date=start_date, end_date=end_date, raw=raw, debug=debug
