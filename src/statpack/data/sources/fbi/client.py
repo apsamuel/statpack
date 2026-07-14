@@ -225,7 +225,6 @@ class Client:
             # actuals {'New York Arrests': {'01-2025': 27942, '02-2025': 25288, '03-2025': 28925, '04-2025': 29110, '05-2025': 29602, '06-2025': 28217}}
             # populations.population {'New York': {'01-2025': 20002427, '02-2025': 20002427, '03-2025': 20002427, '04-2025': 20002427, '05-2025': 20002427, '06-2025': 20002427}, 'United States': {'01-2025': 345206793, '02-2025': 345206793, '03-2025': 345206793, '04-2025': 345206793, '05-2025': 345206793, '06-2025': 345206793}}
             # populations.participated_population {'New York': {'01-2025': 14678214, '02-2025': 14702062, '03-2025': 14711092, '04-2025': 14720611, '05-2025': 14711358, '06-2025': 14728066}, 'United States': {'01-2025': 314995268, '02-2025': 313004395, '03-2025': 311656141, '04-2025': 310452899, '05-2025': 310254293, '06-2025': 309658518}}
-
             territory_rates = data.get("rates", {}).get(territory_obj.name + " Arrests", {})
             us_rates = data.get("rates", {}).get("United States Arrests", {})
 
@@ -309,6 +308,53 @@ class Client:
                         column_name = f"{column_prefix}.{column_title}"
                         row[column_name] = total
                 results.append(row)
+
+        return pd.DataFrame(results) if not raw else results
+
+    def get_arrest_race_breakdown_by_state(
+        self,
+        territory: str | None = None,
+        offense_code: str = "all",
+        start_date: str | None = None,
+        end_date: str | None = None,
+        table: str = "Arrestee Race",
+        default_return: Any = None,
+        success_codes: list | None = None,
+        raw: bool = False,
+        debug: bool = False,
+    ):
+        """Fetch the arrestee race (or other demographic) breakdown for a single state.
+
+        Uses the arrest ``type=totals`` endpoint, which returns aggregate demographic
+        breakdown tables (e.g. ``"Arrestee Race"``) over the requested date range. The
+        ``type=counts`` endpoint, by contrast, returns a monthly rate time-series with no
+        demographic dimension.
+
+        Returns records shaped ``{"territory", "race", "count"}`` (default) or a DataFrame.
+        """
+        url_path = (
+            lambda terr, offense_code, start_date, end_date: f"crime/fbi/cde/arrest/state/{terr}/{offense_code}?type=totals&from={start_date}&to={end_date}"
+        )
+        results = []
+        if territory:
+            territory_obj = self.data.get_territory_by_abbr(territory) or self.data.get_territory_by_name(territory)
+            if territory_obj is None:
+                return pd.DataFrame() if not raw else []
+            data = self.get(
+                url_path=url_path(territory_obj.abbreviation, offense_code, start_date, end_date),
+                default_return=default_return,
+                success_codes=success_codes,
+                debug=debug,
+            )
+            if data:
+                available = {k.lower(): k for k in data.keys() if k != "cde_properties"}
+                if table.lower() not in available:
+                    raise ValueError(
+                        f"Table {table!r} not found in response. Available tables: {sorted(available.values())}"
+                    )
+                breakdown = data[available[table.lower()]]
+                for label, count in breakdown.items():
+                    results.append({"territory": territory_obj.name, "race": label, "count": count})
 
         return pd.DataFrame(results) if not raw else results
 

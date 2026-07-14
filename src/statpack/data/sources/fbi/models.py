@@ -806,6 +806,53 @@ def get_nibrs_code_from_offense_name(name: str) -> str | None:
     return None
 
 
+# Offense code namespaces, keyed by the identifier used at the CLI/analysis
+# layer. "fbi" is the numeric arrest-code system; "nibrs" is the alphanumeric
+# incident-based system. These are DIFFERENT code systems and must never be
+# cross-mapped.
+_OFFENSE_NAMESPACES: dict[str, list] = {"fbi": fbi_offense_codes, "nibrs": nibrs_offense_codes_v2}
+
+
+def _offense_sort_key(code: str) -> tuple[int, int, str]:
+    """Sort numeric codes numerically and alphanumeric codes lexically after them."""
+    return (0, int(code), "") if code.isdigit() else (1, 0, code)
+
+
+def list_offense_options(namespace: str, supported_only: bool = False, category: str | None = None) -> list[dict]:
+    """Return offense options for a code namespace as a list of plain dicts.
+
+    ``namespace`` is ``"fbi"`` (numeric arrest codes) or ``"nibrs"``
+    (alphanumeric incident codes). Each dict has keys: ``namespace``, ``code``,
+    ``name``, ``short_name``, ``category`` and ``supported``. Results are sorted
+    by code. Optionally restrict to endpoint-supported codes and/or a single
+    category (case-insensitive).
+    """
+    key = namespace.strip().lower()
+    if key not in _OFFENSE_NAMESPACES:
+        raise ValueError(f"Unknown offense namespace {namespace!r}; expected one of {sorted(_OFFENSE_NAMESPACES)}.")
+
+    wanted_category = category.strip().lower() if category is not None else None
+    options: list[dict] = []
+    for offense in _OFFENSE_NAMESPACES[key]:
+        if supported_only and not offense.supported:
+            continue
+        if wanted_category is not None and offense.category.lower() != wanted_category:
+            continue
+        options.append(
+            {
+                "namespace": key,
+                "code": str(offense.code),
+                "name": offense.name,
+                "short_name": offense.short_name,
+                "category": offense.category,
+                "supported": offense.supported,
+            }
+        )
+
+    options.sort(key=lambda item: _offense_sort_key(item["code"]))
+    return options
+
+
 def get_state_from_abbr(abbr):
     return us_territory_mapping.get(abbr, {}).get("name", None)
 

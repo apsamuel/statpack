@@ -31,6 +31,7 @@ from .main import (
     get_census_acs_detailed,
     get_census_acs_detailed_by_state,
     get_census_acs_detailed_by_state_county,
+    get_census_population_by_race,
 )
 
 from .client import Client

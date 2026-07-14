@@ -16,6 +16,15 @@ from .models import get_fbi_code_from_offense_name, get_nibrs_code_from_offense_
 # against the correct namespace to avoid mapping a name to the wrong code.
 _OFFENSE_RESOLVERS = {"fbi": get_fbi_code_from_offense_name, "nibrs": get_nibrs_code_from_offense_name}
 
+# Which offense code namespace each offense-consuming entrypoint expects. Used by
+# `list-offense-codes` to show the applicable options for a given command.
+_OFFENSE_COMMAND_NAMESPACES = {
+    "get-arrest-counts-by-state": "fbi",
+    "get-arrest-totals-by-state": "fbi",
+    "per-capita-by-race": "fbi",
+    "get-nibrs-counts-by-state": "nibrs",
+}
+
 
 def _resolve_offense(offense_code, offense_name, namespace: str, required: bool = False):
     """Resolve the effective offense code from --offense-code / --offense-name.
@@ -42,6 +51,18 @@ def _resolve_offense(offense_code, offense_name, namespace: str, required: bool 
         raise click.UsageError("Provide --offense-code or --offense-name.")
 
     return offense_code
+
+
+def _year_from_month_year(value: str | None) -> int | None:
+    """Extract the 4-digit year from an ``MM-YYYY`` date string, or None if unparseable."""
+    if not value:
+        return None
+    parts = str(value).split("-")
+    for token in reversed(parts):
+        token = token.strip()
+        if len(token) == 4 and token.isdigit():
+            return int(token)
+    return None
 
 
 # ---------------------------------------------------------------------------
@@ -158,6 +179,62 @@ def fbi(ctx: click.Context) -> None:
 # ---------------------------------------------------------------------------
 # Subcommands
 # ---------------------------------------------------------------------------
+
+
+@fbi.command("list-offense-codes")
+@click.option(
+    "--namespace",
+    type=click.Choice(["fbi", "nibrs"]),
+    default=None,
+    help="Offense code system to list. Omit to list both.",
+)
+@click.option(
+    "--command",
+    "command_name",
+    default=None,
+    metavar="COMMAND",
+    help="List codes applicable to a specific entrypoint (e.g. get-nibrs-counts-by-state).",
+)
+@click.option("--category", default=None, metavar="CATEGORY", help="Filter to a single offense category.")
+@click.option("--supported-only", is_flag=True, default=False, help="Only list codes supported by the endpoint.")
+@_output_options
+@click.pass_context
+def list_offense_codes(ctx, namespace, command_name, category, supported_only, output_format, output_dest, raw, debug):
+    """List the offense codes applicable to the FBI arrest / NIBRS entrypoints."""
+    from .models import list_offense_options
+
+    if command_name is not None:
+        resolved_ns = _OFFENSE_COMMAND_NAMESPACES.get(command_name)
+        if resolved_ns is None:
+            raise click.BadParameter(
+                f"Command {command_name!r} does not take an offense code. "
+                f"Commands with offense codes: {', '.join(sorted(_OFFENSE_COMMAND_NAMESPACES))}.",
+                param_hint="--command",
+            )
+        if namespace is not None and namespace != resolved_ns:
+            raise click.UsageError(
+                f"--namespace {namespace!r} conflicts with --command {command_name!r} "
+                f"(which uses the {resolved_ns!r} namespace)."
+            )
+        namespaces = [resolved_ns]
+    elif namespace is not None:
+        namespaces = [namespace]
+    else:
+        namespaces = ["fbi", "nibrs"]
+
+    options: list[dict] = []
+    for ns in namespaces:
+        options.extend(list_offense_options(ns, supported_only=supported_only, category=category))
+
+    if raw:
+        _emit(options, output_format, output_dest, raw=True)
+        return
+
+    columns = ["code", "namespace", "name", "short_name", "category", "supported"]
+    df = pd.DataFrame(options, columns=columns)
+    if not df.empty:
+        df = df.set_index("code")
+    _emit(df, output_format, output_dest, raw=False)
 
 
 @fbi.command("get-reporting-agencies")
@@ -277,6 +354,72 @@ def get_nibrs_counts_by_state(
     client: Client = ctx.obj["client"]
     result = client.get_nibrs_counts_by_state(
         territory=territory, offense_code=offense_code, start_date=start_date, end_date=end_date, raw=raw, debug=debug
+    )
+    _emit(result, output_format, output_dest, raw)
+
+
+@fbi.command("per-capita-by-race")
+@click.option("--state", required=True, metavar="STATE", help="State abbreviation or name.")
+@click.option("--offense-code", "offense_code", default=None, metavar="CODE", help="FBI offense code (default: all).")
+@click.option(
+    "--offense-name",
+    "offense_name",
+    default=None,
+    metavar="NAME",
+    help="FBI offense name or short name to resolve to a code (mutually exclusive with --offense-code).",
+)
+@click.option("--start-date", "start_date", required=True, metavar="MM-YYYY", help="Start date.")
+@click.option("--end-date", "end_date", required=True, metavar="MM-YYYY", help="End date.")
+@click.option(
+    "--year",
+    default=None,
+    type=int,
+    metavar="YYYY",
+    help="Census population estimate year (denominator). Defaults to the end-date year.",
+)
+@_output_options
+@click.pass_context
+def per_capita_by_race(
+    ctx, state, offense_code, offense_name, start_date, end_date, year, output_format, output_dest, raw, debug
+):
+    """Per-capita arrest rates by race (FBI arrests / Census population)."""
+    # Lazy import so the FBI CLI never requires Census credentials unless this command runs.
+    from statpack.data.analysis import per_capita_by_race as _per_capita_by_race
+
+    start_year = _year_from_month_year(start_date)
+    end_year = _year_from_month_year(end_date)
+
+    # Default the population (denominator) year to the arrest window so the numerator
+    # and denominator refer to the same period instead of a hard-coded calendar year.
+    if year is None:
+        year = end_year
+        if year is not None:
+            click.echo(f"--year not set; using {year} (from --end-date) as the population year.", err=True)
+
+    # Warn on time-alignment problems that distort the per-capita rate.
+    if start_year is not None and end_year is not None:
+        if start_year != end_year:
+            click.echo(
+                f"Warning: arrest range spans {start_year}-{end_year} ({end_year - start_year + 1} years) but the "
+                f"population denominator is a single year ({year}); the rate is not annualized and will be inflated.",
+                err=True,
+            )
+        elif year is not None and year != end_year:
+            click.echo(
+                f"Warning: population year ({year}) does not match the arrest year ({end_year}); "
+                "numerator and denominator refer to different periods.",
+                err=True,
+            )
+
+    offense_code = _resolve_offense(offense_code, offense_name, namespace="fbi") or "all"
+    result = _per_capita_by_race(
+        state=state,
+        offense_code=offense_code,
+        start_date=start_date,
+        end_date=end_date,
+        year=year,
+        raw=raw,
+        debug=debug,
     )
     _emit(result, output_format, output_dest, raw)
 
